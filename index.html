@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abrigo Vó Áurea - Resgate e Proteção Animal em Cubatão</title>
+<meta name="description" content="Abrigo Vó Áurea em Cubatão-SP, dedicado ao resgate, acolhimento e proteção de animais.">
+<link rel="icon" href="imgs/logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#fff;--bg-alt:#f7f3ec;--text:#1a1a1a;--muted:#4b5563;
+  --brown:#4a2c22;--brown-soft:#f3ebe3;--terracotta:#c4784a;
+  --maroon:#4a2c22;--maroon-soft:#f3ebe3;
+  --gold:#f0b429;--gold-deep:#e09b1b;--green:#16a34a;
+  --line:#e8e0d6;--shadow:0 10px 30px rgba(74,44,34,.1);
+  --topbar-h:72px;--sticky-h:130px;
+  --font:"DM Sans",system-ui,sans-serif;
+  --display:"Nunito","DM Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.55;padding-bottom:16px}
+body.sticky-on{padding-bottom:calc(var(--sticky-h) + 12px)}
+img{max-width:100%;display:block}
+button,input{font:inherit}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+.icon-btn{width:44px;height:44px;border:none;background:transparent;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;color:var(--brown)}
+.icon-btn:hover{background:rgba(0,0,0,.05)}
+.topbar{position:sticky;top:0;z-index:40;height:var(--topbar-h);display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px;padding:0 12px;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-logo{justify-self:center;display:flex;align-items:center;gap:8px}
+.topbar-logo img{width:58px;height:58px;object-fit:contain;border-radius:50%}
+.share-btn{color:var(--maroon)}
+.nav-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:50}
+.side-nav{position:fixed;top:0;left:0;width:min(86vw,320px);height:100%;background:#fff;z-index:60;transform:translateX(-105%);transition:transform .28s ease;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.side-nav.open{transform:translateX(0)}
+.side-nav-head{display:flex;align-items:center;justify-content:space-between;padding:18px 16px;border-bottom:1px solid var(--line)}
+.side-nav-brand{font-family:var(--display);font-size:1.15rem;font-weight:800}
+.side-nav-brand strong{color:var(--brown)}
+.side-nav-brand span{color:var(--terracotta)}
+.side-nav-links{display:flex;flex-direction:column;padding:8px 0;overflow:auto}
+.side-nav-links a{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #f1f1f1;color:#374151;font-weight:500}
+.side-nav-links a:hover{color:var(--maroon);background:var(--maroon-soft)}
+.nav-ico{width:22px;text-align:center;color:var(--maroon);font-size:.95rem}
+.side-nav-foot{margin-top:auto;padding:16px 18px 24px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+.side-nav-foot strong{color:var(--maroon)}
+
+/* ===== HERO / VSL (CORRIGIDO) ===== */
+.hero{padding:18px 18px 16px;max-width:720px;margin:0 auto}
+.hero h1{font-family:var(--display);font-size:clamp(1.25rem,4.4vw,1.75rem);font-weight:900;line-height:1.25;color:var(--brown);margin-bottom:18px;text-align:center}
+
+.vsl-wrap{
+  position:relative;
+  width:100%;
+  border-radius:14px;
+  overflow:hidden;
+  background:#000;
+  margin-bottom:16px;
+  aspect-ratio:16/9;
+  line-height:0; /* remove espaço extra em volta do video */
+}
+.vsl-wrap video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  background:#000;
+  cursor:pointer;
+}
+.vsl-overlay{
+  position:absolute;
+  top:50%;left:50%;
+  width:min(62%,360px);
+  min-height:130px;
+  transform:translate(-50%,-50%);
+  border:2px solid rgba(255,255,255,.35);
+  border-radius:10px;
+  background:rgba(173,101,0,.72);
+  color:#fff;
+  z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:14px 12px;cursor:pointer;
+  font-family:var(--font);
+}
+.vsl-overlay.hidden{display:none !important}
+.vsl-overlay-box{width:100%;font-size:clamp(11px,2.3vw,18px);font-weight:800;line-height:1.15}
+.vsl-sound-icon{font-size:clamp(34px,8vw,72px);line-height:1;margin:8px 0}
+
+/* ===== BOTÕES ===== */
+.btn-gold{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border:none;border-radius:999px;background:linear-gradient(180deg,#f7c44a,var(--gold-deep));color:#1a1a1a;font-family:var(--display);font-weight:800;font-size:.95rem;letter-spacing:.02em;box-shadow:0 10px 24px rgba(224,155,27,.35);transition:transform .15s ease,box-shadow .15s ease}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(224,155,27,.42)}
+.btn-gold .heart{color:var(--maroon)}
+.btn-gold:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.cta-stack{display:grid;gap:10px;width:100%;max-width:420px;margin:16px auto 0}
+.btn-mensal{position:relative;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border:none;border-radius:999px;background:linear-gradient(180deg,#d18454,#9a4e2c);color:#fff;font-family:var(--display);font-weight:800;font-size:.95rem;letter-spacing:.02em;box-shadow:0 10px 24px rgba(154,78,44,.35);transition:transform .15s ease,box-shadow .15s ease}
+.btn-mensal:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(154,78,44,.42)}
+.btn-mensal .cta-ico{font-size:1.05rem}
+.cta-badge{position:absolute;top:-10px;right:14px;background:#fff;color:var(--brown);font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px;box-shadow:0 4px 10px rgba(74,44,34,.16)}
+.cta-pulse{animation:gentlePulse 2.4s ease-in-out infinite}
+@keyframes gentlePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.trust-line{margin-top:12px;text-align:center;color:var(--muted);font-size:.82rem;display:flex;align-items:center;justify-content:center;gap:6px}
+.dot-ok{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block}
+
+/* ===== SEÇÕES ===== */
+.section{max-width:720px;margin:0 auto;padding:18px 18px}
+.section-alt{background:var(--bg-alt);max-width:none}
+.section-alt > *{max-width:720px;margin-left:auto;margin-right:auto}
+.section-title{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.section-title h2{font-family:var(--display);font-size:1.35rem;font-weight:800;color:var(--brown)}
+.section-ico{color:var(--maroon);font-size:1.1rem}
+.faq-ico{width:22px;height:22px;border-radius:50%;background:var(--maroon);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.section-lead{color:var(--muted);margin:-4px 0 12px}
+.prose p{margin-bottom:14px;color:#374151}
+.prose .accent{color:var(--maroon);font-weight:700}
+.callout{background:#fff8ec;border-left:4px solid var(--gold);border-radius:0 14px 14px 0;padding:14px 16px;color:var(--maroon);margin:18px 0 8px}
+
+/* ===== CARROSSEL ===== */
+.carousel{margin-bottom:18px}
+.carousel-viewport{position:relative;border-radius:16px;overflow:hidden;background:#111;aspect-ratio:4/3;touch-action:pan-y;user-select:none}
+.carousel-track{display:flex;height:100%;width:100%;transition:transform .35s ease;will-change:transform}
+.carousel-slide{min-width:100%;width:100%;height:100%;margin:0;flex-shrink:0}
+.carousel-slide img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border:none;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:1.4rem;z-index:2}
+.carousel-arrow.prev{left:10px}
+.carousel-arrow.next{right:10px}
+.carousel-counter{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.55);color:#fff;font-size:.75rem;font-weight:700;padding:4px 10px;border-radius:999px}
+.carousel-dots{display:flex;justify-content:center;gap:2px;margin-top:8px}
+.carousel-dots button{width:44px;height:44px;border:none;background:transparent;padding:0;display:grid;place-items:center}
+.carousel-dots button::after{content:"";width:10px;height:10px;border-radius:50%;background:#d1d5db}
+.carousel-dots button.active::after{background:var(--maroon)}
+.banner-block{margin:14px 0 10px;border-radius:16px;overflow:hidden}
+.banner-block img{width:100%;height:auto}
+.banner-final{max-width:720px;margin:6px auto 12px;padding:0 18px}
+.banner-final img{border-radius:16px}
+
+/* ===== IMPACTO ===== */
+.impact-list{display:grid;gap:10px;margin-bottom:16px}
+.impact-card{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:center;padding:14px;border-radius:14px}
+.impact-card.bad{background:#f3f4f6}
+.impact-card.good{background:#ecfdf3}
+.impact-badge{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.impact-card.bad .impact-badge{background:var(--maroon)}
+.impact-card.good .impact-badge{background:var(--green)}
+.impact-close{margin-bottom:16px}
+
+/* ===== RESGATES ===== */
+.rescue-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rescue-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.rescue-card > div:last-child{padding:8px 8px 10px;text-align:center}
+.rescue-card h3{font-family:var(--display);font-size:.98rem;margin:0;color:var(--brown)}
+.rescue-carousel{margin-bottom:0}
+.rescue-carousel .carousel-viewport{border-radius:0;aspect-ratio:1/1}
+.rescue-carousel .carousel-dots{margin:8px 0 0}
+.rescue-carousel .carousel-arrow{width:28px;height:28px;font-size:1.1rem}
+.rescue-carousel .carousel-counter{font-size:.68rem;padding:3px 7px}
+
+/* ===== FAQ ===== */
+.faq-list{display:grid;gap:10px}
+.faq-item{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.faq-question{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border:none;background:transparent;color:var(--maroon);font-weight:700;text-align:left}
+.faq-toggle{width:26px;height:26px;border-radius:50%;background:var(--maroon);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;transition:transform .2s ease}
+.faq-answer{display:none;padding:0 16px 14px;color:#4b5563;font-size:.95rem}
+.faq-item.open .faq-answer{display:block}
+.faq-item.open .faq-toggle{transform:rotate(45deg)}
+
+/* ===== STICKY ===== */
+.sticky-bar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:linear-gradient(180deg,rgba(255,255,255,.96),#fff);border-top:1px solid var(--line);padding:12px 14px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(74,44,34,.08);transform:translateY(110%);opacity:0;pointer-events:none;transition:transform .28s ease,opacity .28s ease}
+.sticky-bar.is-visible{transform:translateY(0);opacity:1;pointer-events:auto}
+.sticky-inner{width:100%;max-width:420px;margin:0 auto;display:grid;gap:8px}
+.sticky-mensal{position:relative;width:100%;display:flex;align-items:center;justify-content:center;padding:13px 16px;border:none;border-radius:999px;background:linear-gradient(180deg,#d18454,#9a4e2c);color:#fff;font-family:var(--display);box-shadow:0 10px 24px rgba(154,78,44,.35)}
+.sticky-mensal-main{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.88rem;letter-spacing:.02em}
+.sticky-row{display:grid;grid-template-columns:1fr;gap:8px}
+.sticky-unica{width:100%;min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 10px;border-radius:999px;border:none;background:linear-gradient(180deg,#f7c44a,var(--gold-deep));color:#1a1a1a;font-family:var(--display);font-weight:800;font-size:.82rem;letter-spacing:.02em;box-shadow:0 8px 18px rgba(224,155,27,.32)}
+.sticky-unica .heart{color:var(--maroon)}
+body:has(#donationModal:not([hidden])) .sticky-bar.is-visible,
+body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);opacity:0;pointer-events:none}
+
+/* ===== MODAL ===== */
+.modal{position:fixed;inset:0;background:rgba(74,44,34,.45);display:flex;align-items:flex-end;justify-content:center;z-index:80;padding:16px}
+.modal[hidden]{display:none !important}
+.modal-card{width:min(100%,440px);background:#fff;border-radius:22px 22px 18px 18px;padding:18px 16px 16px;max-height:92vh;overflow:auto;position:relative;animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(24px);opacity:.6}to{transform:translateY(0);opacity:1}}
+.modal-top{display:grid;grid-template-columns:36px 1fr 36px;align-items:center;margin-bottom:14px}
+.modal-top h3{text-align:center;font-family:var(--display);font-size:1.05rem;color:var(--brown)}
+.modal-heart{width:32px;height:32px;border-radius:50%;background:var(--brown-soft);color:var(--terracotta);display:inline-flex;align-items:center;justify-content:center}
+.modal-back{border:none;background:transparent;color:var(--brown);font-weight:700;text-align:left;padding:0}
+.donation-step[hidden]{display:none !important}
+.donation-type{background:var(--brown);color:#fff;text-align:center;font-weight:700;padding:12px;border-radius:12px;margin-bottom:14px}
+.donation-type-mensal{background:linear-gradient(90deg,#c4784a 0%,#4a2c22 100%)}
+.donation-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.donation-option{position:relative;border:1px solid var(--line);background:#fff;border-radius:12px;padding:14px 8px;font-weight:700;color:var(--brown)}
+.donation-option.selected,.donation-option:hover{background:var(--brown);border-color:var(--brown);color:#fff}
+.donation-option .badge{position:absolute;top:-8px;right:-4px;background:var(--gold);color:#1a1a1a;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:999px}
+.custom-label{display:block;margin-bottom:8px;font-weight:600;color:var(--brown);font-size:.92rem}
+.custom-amount{display:flex;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.custom-amount span{background:var(--brown-soft);color:var(--brown);font-weight:800;padding:12px 14px}
+.custom-amount input{flex:1;border:none;outline:none;padding:12px}
+.form-field{margin-bottom:12px}
+.form-field label{display:block;margin-bottom:6px;font-weight:600;color:var(--brown);font-size:.9rem}
+.form-field input{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px 14px;outline:none}
+.form-field input:focus{border-color:var(--terracotta)}
+.form-check{display:flex;align-items:center;gap:8px;margin:8px 0 14px;font-size:.9rem;color:#374151}
+.form-check input{width:16px;height:16px;accent-color:var(--brown)}
+.fee-box{background:#ecfdf3;border-radius:14px;padding:14px;margin-bottom:14px}
+.fee-box-top{display:grid;grid-template-columns:36px 1fr;gap:10px;margin-bottom:10px}
+.fee-icon{width:32px;height:32px;border-radius:50%;background:#dcfce7;color:var(--green);display:inline-flex;align-items:center;justify-content:center}
+.fee-box h4{color:#166534;font-size:.95rem;margin-bottom:4px}
+.fee-box p{color:#166534;font-size:.82rem;opacity:.9}
+.fee-box .form-check{margin:0;color:#166534;font-weight:700}
+.selected-amount-chip{text-align:center;margin-bottom:12px;color:var(--muted);font-size:.9rem}
+.selected-amount-chip strong{color:var(--brown)}
+.modal-trust{margin-top:12px}
+
+/* ===== DOWNSELL ===== */
+.downsell-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100000;backdrop-filter:blur(6px);padding:16px}
+.downsell-modal.show{display:flex}
+.downsell-modal-content{width:100%;max-width:420px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.28);animation:fadeIn .25s ease-out}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.downsell-header{position:relative;background:linear-gradient(90deg,#c4784a 0%,#4a2c22 100%);color:#fff;text-align:center;padding:16px 48px 16px 20px}
+.downsell-header h2{margin:0;font-size:.95rem;font-weight:700;letter-spacing:.04em}
+.downsell-close-btn{position:absolute;top:50%;right:12px;transform:translateY(-50%);width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;display:inline-flex;align-items:center;justify-content:center}
+.downsell-body{padding:22px 20px 24px;text-align:center}
+.downsell-avatar{width:88px;height:88px;margin:0 auto 14px;border-radius:50%;overflow:hidden;border:3px solid #c4784a;background-color:#f3ebe3;background-image:url('imgs/queme/voaurea2-800.webp');background-repeat:no-repeat;background-position:center;background-size:cover}
+.downsell-body h3{margin:0 0 8px;font-size:1.35rem;color:#4a2c22;line-height:1.25}
+.downsell-body > p{margin:0 0 16px;color:#4b5563;font-size:.95rem;line-height:1.45}
+.downsell-banner{background:#fdf6ee;color:#6b4534;font-weight:600;font-size:.92rem;padding:10px 12px;margin:0 -20px 18px}
+.downsell-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.downsell-btn{width:100%;min-height:54px;border:2px solid #c4784a;border-radius:12px;background:#fff;color:#4a2c22;font-size:1.15rem;font-weight:700;transition:transform .15s ease,background .15s ease}
+.downsell-btn:hover{transform:translateY(-1px);background:#fdf6ee}
+.downsell-btn-wrapper{position:relative}
+.downsell-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;font-size:10px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;white-space:nowrap;z-index:1}
+.downsell-btn-highlight{background:linear-gradient(180deg,#f7c44a,#e09b1b);border-color:#e09b1b;color:#4a2c22}
+.downsell-other-value{background:none;border:none;color:#6b7280;text-decoration:underline;font-size:.95rem;padding:6px}
+
+/* ===== PIX ===== */
+.pix-result{text-align:center;padding:10px 0}
+.pix-result h3{font-family:var(--display);color:var(--brown);margin-bottom:10px}
+.pix-result .pix-qr{display:inline-block;background:#fff;padding:12px;border-radius:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.pix-result .pix-code{word-break:break-all;background:var(--brown-soft);padding:10px;border-radius:10px;font-size:.78rem;font-family:monospace;margin-bottom:12px;color:var(--brown)}
+.pix-result .pix-total{font-size:1.1rem;font-weight:800;color:var(--maroon);margin-bottom:14px}
+.pix-copy-btn{background:var(--green);color:#fff;border:none;padding:12px 18px;border-radius:999px;font-weight:800;width:100%;margin-bottom:10px}
+.pix-confirm-btn{background:var(--brown);color:#fff;border:none;padding:12px 18px;border-radius:999px;font-weight:800;width:100%}
+
+@media (min-width:768px){
+  .topbar{padding:0 24px;max-width:980px;margin:0 auto;width:100%}
+  .hero,.section,.banner-final{max-width:860px}
+  .section-alt > *{max-width:860px}
+  .hero h1{font-size:1.75rem;text-align:center}
+  .vsl-wrap{max-width:760px;margin-left:auto;margin-right:auto}
+  .rescue-grid{gap:16px;max-width:720px;margin:0 auto}
+  .btn-gold{max-width:420px;margin-left:auto;margin-right:auto;display:flex}
+  .modal{align-items:center}
+  .modal-card{border-radius:22px}
+  .sticky-bar{left:50%;width:min(480px,calc(100% - 24px));border-radius:18px 18px 0 0;transform:translate(-50%,110%)}
+  .sticky-bar.is-visible{transform:translate(-50%,0)}
+  body:has(#donationModal:not([hidden])) .sticky-bar.is-visible{transform:translate(-50%,110%)}
+}
+</style>
+</head>
+<body>
+<span id="topo"></span>
+
+<div class="nav-overlay" id="navOverlay" hidden></div>
+<aside class="side-nav" id="sideNav" aria-hidden="true">
+  <div class="side-nav-head">
+    <div class="side-nav-brand"><strong>Abrigo</strong> <span>Vó Áurea</span></div>
+    <button type="button" class="icon-btn" id="closeNav" aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <nav class="side-nav-links">
+    <a href="#inicio"><span class="nav-ico">⌂</span> Início</a>
+    <a href="#historia"><span class="nav-ico">✎</span> Quem é a Vó Áurea</a>
+    <a href="#realidade"><span class="nav-ico">⚠</span> A realidade</a>
+    <a href="#espaco"><span class="nav-ico">🏘</span> O espaço</a>
+    <a href="#impacto"><span class="nav-ico">♥</span> Impacto</a>
+    <a href="#resgates"><span class="nav-ico">🐾</span> Resgates</a>
+    <a href="#faq"><span class="nav-ico">?</span> Dúvidas</a>
+  </nav>
+  <div class="side-nav-foot"><p><strong>Abrigo Vó Áurea</strong></p></div>
+</aside>
+
+<header class="topbar">
+  <button type="button" class="icon-btn" id="openNav" aria-label="Abrir menu">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <a class="topbar-logo" href="#topo" aria-label="Abrigo Vó Áurea">
+    <img src="imgs/logo.png" alt="Abrigo Vó Áurea" width="300" height="300">
+  </a>
+  <button type="button" class="icon-btn share-btn" id="shareBtn" aria-label="Compartilhar">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.5 13.5l7 4M15.5 6.5l-7 4"/></svg>
+  </button>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <h1>Eles já foram abandonados uma vez. Hoje, sua ajuda pode ser a esperança que os mantém lutando.</h1>
+
+    <div class="vsl-wrap">
+      <video id="vslVideo" src="video/voaurea.mp4" playsinline webkit-playsinline preload="metadata" muted loop poster="imgs/banner1-800.webp"></video>
+      <button type="button" class="vsl-overlay" id="vslOverlay" aria-label="Clique para ouvir o vídeo">
+        <div class="vsl-overlay-box">
+          <div>Seu vídeo já começou</div>
+          <div class="vsl-sound-icon">🔊</div>
+          <div>Clique para ouvir</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="cta-stack">
+      <button type="button" class="btn-mensal cta-pulse" onclick="openDonationModal('mensal')">
+        <span class="cta-badge">Recomendado</span>
+        <span class="cta-ico" aria-hidden="true">🐾</span>
+        QUERO AJUDAR TODO MÊS
+      </button>
+      <button type="button" class="btn-gold" onclick="openDonationModal('unica')">
+        <span class="heart">❤</span> QUERO AJUDAR AGORA
+      </button>
+    </div>
+  </section>
+
+  <section class="section" id="historia">
+    <div class="section-title">
+      <span class="section-ico">👤</span>
+      <h2>Quem é a Vó Áurea?</h2>
+    </div>
+
+    <div class="carousel" data-carousel="historia">
+      <div class="carousel-viewport">
+        <div class="carousel-track">
+          <figure class="carousel-slide"><img src="imgs/queme/voaurea1-800.webp" alt="Vó Áurea"></figure>
+          <figure class="carousel-slide"><img src="imgs/queme/voaurea2-800.webp" alt="Vó Áurea com os animais"></figure>
+          <figure class="carousel-slide"><img src="imgs/queme/voaurea3b-800.webp" alt="Cuidado no abrigo"></figure>
+          <figure class="carousel-slide"><img src="imgs/queme/voaurea4b-800.webp" alt="Abrigo Vó Áurea"></figure>
+        </div>
+        <button type="button" class="carousel-arrow prev" data-carousel-prev aria-label="Anterior">‹</button>
+        <button type="button" class="carousel-arrow next" data-carousel-next aria-label="Próximo">›</button>
+        <span class="carousel-counter" data-carousel-counter>1 / 4</span>
+      </div>
+      <div class="carousel-dots" data-carousel-dots>
+        <button type="button" aria-label="Slide 1" class="active"></button>
+        <button type="button" aria-label="Slide 2"></button>
+        <button type="button" aria-label="Slide 3"></button>
+        <button type="button" aria-label="Slide 4"></button>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Me chamo <strong class="accent">Áurea</strong>, tenho 64 anos e dedico os meus dias a cuidar de <strong class="accent">mais de 50 animais</strong> que um dia não tinham para onde ir.</p>
+      <p>São cães que resgatei do abandono, da fome e de situações muito difíceis. Hoje, eles dependem de mim para praticamente tudo: comida, abrigo, medicamentos, cuidados veterinários e, principalmente, proteção.</p>
+      <p>Mesmo com a minha idade e todas as dificuldades que enfrento, eu não consigo desistir deles. Porque sei que, se eu parar, muitos desses animais simplesmente não terão para onde ir.</p>
+      <aside class="callout">As doações diminuíram e eu preciso da sua ajuda para continuar alimentando, cuidando e protegendo.</aside>
+    </div>
+
+    <div class="banner-block">
+      <img src="imgs/banner1-800.webp" alt="Meu maior medo é não conseguir continuar — Abrigo Vó Áurea">
+    </div>
+    <button type="button" class="btn-gold" onclick="openDonationModal('unica')">
+      <span class="heart">❤</span> QUERO AJUDAR
+    </button>
+  </section>
+
+  <section class="section section-alt" id="realidade">
+    <div class="section-title">
+      <span class="section-ico">⚠</span>
+      <h2>A realidade do abrigo</h2>
+    </div>
+    <div class="prose">
+      <p>Manter mais de 50 animais protegidos tem um custo muito alto. Hoje, são necessários aproximadamente <strong class="accent">R$ 60 mil todos os meses</strong> para manter o abrigo funcionando…</p>
+      <p>São gastos com ração, aluguel, medicamentos, tratamentos veterinários, contas básicas, manutenção e necessidades que surgem a cada novo resgate.</p>
+      <p>E essa é a maior preocupação da Vó Áurea: <strong class="accent">como conseguir manter tudo isso no próximo mês?</strong></p>
+      <p>Ela consegue oferecer amor e dedicação todos os dias, mas não consegue carregar sozinha uma despesa de R$ 60 mil. É por isso que cada doação importa.</p>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="espaco">
+    <div class="section-title">
+      <span class="section-ico">🏘</span>
+      <h2>O espaço do abrigo</h2>
+    </div>
+    <p class="section-lead">Conheça um pouco do local onde a Vó Áurea acolhe e protege os animais todos os dias.</p>
+
+    <div class="carousel" data-carousel="espaco">
+      <div class="carousel-viewport">
+        <div class="carousel-track">
+          <figure class="carousel-slide"><img src="imgs/espaco/espaco1-800.webp" alt="Espaço 1"></figure>
+          <figure class="carousel-slide"><img src="imgs/espaco/espaco2-800.webp" alt="Espaço 2"></figure>
+          <figure class="carousel-slide"><img src="imgs/espaco/espaco3-800.webp" alt="Espaço 3"></figure>
+          <figure class="carousel-slide"><img src="imgs/espaco/espaco4-800.webp" alt="Espaço 4"></figure>
+        </div>
+        <button type="button" class="carousel-arrow prev" data-carousel-prev aria-label="Anterior">‹</button>
+        <button type="button" class="carousel-arrow next" data-carousel-next aria-label="Próximo">›</button>
+        <span class="carousel-counter" data-carousel-counter>1 / 4</span>
+      </div>
+      <div class="carousel-dots" data-carousel-dots>
+        <button type="button" aria-label="Slide 1" class="active"></button>
+        <button type="button" aria-label="Slide 2"></button>
+        <button type="button" aria-label="Slide 3"></button>
+        <button type="button" aria-label="Slide 4"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="impacto">
+    <div class="section-title">
+      <span class="section-ico">♥</span>
+      <h2>O impacto da sua doação</h2>
+    </div>
+
+    <div class="impact-list">
+      <article class="impact-card bad"><span class="impact-badge">✕</span><p><strong>Sem apoio,</strong> a ração acaba e os animais passam fome.</p></article>
+      <article class="impact-card bad"><span class="impact-badge">✕</span><p><strong>Sem recursos,</strong> tratamentos e cirurgias ficam para depois.</p></article>
+      <article class="impact-card bad"><span class="impact-badge">✕</span><p><strong>Sem doadores,</strong> o abrigo corre risco de não se manter de pé.</p></article>
+      <article class="impact-card good"><span class="impact-badge">✓</span><p><strong>Com você,</strong> cada animal continua alimentado e protegido.</p></article>
+      <article class="impact-card good"><span class="impact-badge">✓</span><p><strong>Com você,</strong> medicamentos e cuidados veterinários acontecem.</p></article>
+      <article class="impact-card good"><span class="impact-badge">✓</span><p><strong>Com você,</strong> o abrigo segue aberto no próximo mês.</p></article>
+    </div>
+    <p class="prose impact-close">Cada doação, por menor que seja, é a diferença entre um animal ter ou não ter uma chance. <strong class="accent">A Vó Áurea não consegue fazer isso sozinha.</strong></p>
+    <button type="button" class="btn-gold" onclick="openDonationModal('unica')">
+      <span class="heart">❤</span> QUERO AJUDAR AGORA
+    </button>
+  </section>
+
+  <section class="section section-alt" id="resgates">
+    <div class="section-title">
+      <span class="section-ico">🐾</span>
+      <h2>Resgates</h2>
+    </div>
+    <p class="section-lead">Deslize nas fotos de cada animal e conheça quem depende do abrigo.</p>
+
+    <div class="rescue-grid">
+      <article class="rescue-card">
+        <div class="carousel rescue-carousel" data-carousel="aquiles">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <figure class="carousel-slide"><img src="imgs/aquiles1.webp" alt="Aquiles 1"></figure>
+              <figure class="carousel-slide"><img src="imgs/aquiles2.webp" alt="Aquiles 2"></figure>
+              <figure class="carousel-slide"><img src="imgs/aquiles3.webp" alt="Aquiles 3"></figure>
+              <figure class="carousel-slide"><img src="imgs/aquiles4.webp" alt="Aquiles 4"></figure>
+            </div>
+            <button type="button" class="carousel-arrow prev" data-carousel-prev aria-label="Anterior">‹</button>
+            <button type="button" class="carousel-arrow next" data-carousel-next aria-label="Próximo">›</button>
+            <span class="carousel-counter" data-carousel-counter>1 / 4</span>
+          </div>
+          <div class="carousel-dots" data-carousel-dots>
+            <button type="button" aria-label="Slide 1" class="active"></button>
+            <button type="button" aria-label="Slide 2"></button>
+            <button type="button" aria-label="Slide 3"></button>
+            <button type="button" aria-label="Slide 4"></button>
+          </div>
+        </div>
+        <div><h3>Aquiles</h3></div>
+      </article>
+
+      <article class="rescue-card">
+        <div class="carousel rescue-carousel" data-carousel="toti">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <figure class="carousel-slide"><img src="imgs/toti1.webp" alt="Toti 1"></figure>
+              <figure class="carousel-slide"><img src="imgs/toti2.webp" alt="Toti 2"></figure>
+              <figure class="carousel-slide"><img src="imgs/toti3.webp" alt="Toti 3"></figure>
+              <figure class="carousel-slide"><img src="imgs/toti4.webp" alt="Toti 4"></figure>
+            </div>
+            <button type="button" class="carousel-arrow prev" data-carousel-prev aria-label="Anterior">‹</button>
+            <button type="button" class="carousel-arrow next" data-carousel-next aria-label="Próximo">›</button>
+            <span class="carousel-counter" data-carousel-counter>1 / 4</span>
+          </div>
+          <div class="carousel-dots" data-carousel-dots>
+            <button type="button" aria-label="Slide 1" class="active"></button>
+            <button type="button" aria-label="Slide 2"></button>
+            <button type="button" aria-label="Slide 3"></button>
+            <button type="button" aria-label="Slide 4"></button>
+          </div>
+        </div>
+        <div><h3>Toti</h3></div>
+      </article>
+
+      <article class="rescue-card">
+        <div class="carousel rescue-carousel" data-carousel="spike">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <figure class="carousel-slide"><img src="imgs/spike1.webp" alt="Spike 1"></figure>
+              <figure class="carousel-slide"><img src="imgs/spike2.webp" alt="Spike 2"></figure>
+              <figure class="carousel-slide"><img src="imgs/spike3.webp" alt="Spike 3"></figure>
+            </div>
+            <button type="button" class="carousel-arrow prev" data-carousel-prev aria-label="Anterior">‹</button>
+            <button type="button" class="carousel-arrow next" data-carousel-next aria-label="Próximo">›</button>
+            <span class="carousel-counter" data-carousel-counter>1 / 3</span>
+          </div>
+          <div class="carousel-dots" data-carousel-dots>
+            <button type="button" aria-label="Slide 1" class="active"></button>
+            <button type="button" aria-label="Slide 2"></button>
+            <button type="button" aria-label="Slide 3"></button>
+          </div>
+        </div>
+        <div><h3>Spike</h3></div>
+      </article>
+
+      <article class="rescue-card">
+        <div class="carousel rescue-carousel" data-carousel="luna">
+          <div class="carousel-viewport">
+            <div class="carousel-track">
+              <figure class="carousel-slide"><img src="imgs/luna1.webp" alt="Luna 1"></figure>
+              <figure class="carousel-slide"><img src="imgs/luna2.webp" alt="Luna 2"></figure>
+              <figure class="carousel-slide"><img src="imgs/luna3.webp" alt="Luna 3"></figure>
+              <figure class="carousel-slide"><img src="imgs/luna4.webp" alt="Luna 4"></figure>
+            </div>
+            <button type="button" class="carousel-arrow prev" data-carousel-prev aria-label="Anterior">‹</button>
+            <button type="button" class="carousel-arrow next" data-carousel-next aria-label="Próximo">›</button>
+            <span class="carousel-counter" data-carousel-counter>1 / 4</span>
+          </div>
+          <div class="carousel-dots" data-carousel-dots>
+            <button type="button" aria-label="Slide 1" class="active"></button>
+            <button type="button" aria-label="Slide 2"></button>
+            <button type="button" aria-label="Slide 3"></button>
+            <button type="button" aria-label="Slide 4"></button>
+          </div>
+        </div>
+        <div><h3>Luna</h3></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="section-title">
+      <span class="section-ico faq-ico">?</span>
+      <h2>Perguntas frequentes</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>A doação é segura?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>Sim. Toda contribuição vai para ração, medicamentos e manutenção do abrigo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Existe valor mínimo?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>Não. Qualquer valor ajuda. Você escolhe o quanto pode contribuir.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Para onde vai a minha doação?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>Ração, medicamentos, tratamentos veterinários, contas básicas, aluguel e necessidades urgentes de cada novo resgate.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false"><span>Posso visitar o abrigo?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-answer"><p>Sim. Estamos em Cubatão/SP. Entre em contato para agendar uma visita.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="banner-block banner-final">
+    <img src="imgs/banner2.webp" alt="Sua ajuda faz diferença — Abrigo Vó Áurea">
+  </section>
+</main>
+
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-inner">
+    <button type="button" class="sticky-mensal cta-pulse" onclick="openDonationModal('mensal')">
+      <span class="cta-badge">Recomendado</span>
+      <span class="sticky-mensal-main"><span class="cta-ico">🐾</span> QUERO AJUDAR TODO MÊS</span>
+    </button>
+    <div class="sticky-row">
+      <button type="button" class="sticky-unica" onclick="openDonationModal('unica')">
+        <span class="heart">❤</span> DOAR AGORA
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="donationModal" class="modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="donationTitle">
+
+    <div class="donation-step" data-step="1">
+      <div class="modal-top">
+        <span class="modal-heart">❤</span>
+        <h3 id="donationTitle">Qual valor deseja doar?</h3>
+        <button type="button" class="icon-btn" onclick="attemptCloseDonationModal()" aria-label="Fechar">✕</button>
+      </div>
+      <div class="donation-type" id="donationTypeLabel">Doação Única</div>
+      <div class="donation-options">
+        <button type="button" class="donation-option" data-value="20" onclick="selectDonationOption(this)">R$ 20</button>
+        <button type="button" class="donation-option popular" data-value="30" onclick="selectDonationOption(this)"><span class="badge">popular</span>R$ 30</button>
+        <button type="button" class="donation-option" data-value="50" onclick="selectDonationOption(this)">R$ 50</button>
+        <button type="button" class="donation-option" data-value="100" onclick="selectDonationOption(this)">R$ 100</button>
+        <button type="button" class="donation-option" data-value="150" onclick="selectDonationOption(this)">R$ 150</button>
+        <button type="button" class="donation-option" data-value="200" onclick="selectDonationOption(this)">R$ 200</button>
+        <button type="button" class="donation-option" data-value="250" onclick="selectDonationOption(this)">R$ 250</button>
+        <button type="button" class="donation-option" data-value="500" onclick="selectDonationOption(this)">R$ 500</button>
+        <button type="button" class="donation-option" data-value="1000" onclick="selectDonationOption(this)">R$ 1.000</button>
+      </div>
+      <label class="custom-label" for="customAmount">Ou o que o seu coração mandar ❤️:</label>
+      <div class="custom-amount">
+        <span>R$</span>
+        <input type="number" id="customAmount" placeholder="Digite seu valor" min="1" step="0.01">
+      </div>
+      <button type="button" class="btn-gold continue-button" onclick="goToDonorStep()">CONTINUAR →</button>
+      <p class="trust-line modal-trust"><span class="dot-ok"></span> Pagamento 100% seguro e verificado</p>
+    </div>
+
+    <div class="donation-step" data-step="2" hidden>
+      <div class="modal-top">
+        <button type="button" class="modal-back" onclick="backToAmountStep()">← Voltar</button>
+        <h3>Complete seus dados</h3>
+        <button type="button" class="icon-btn" onclick="attemptCloseDonationModal()" aria-label="Fechar">✕</button>
+      </div>
+      <p class="selected-amount-chip">Valor: <strong data-selected-amount>R$ 0,00</strong></p>
+      <div class="form-field"><label for="donorName">Nome</label><input type="text" id="donorName" placeholder="Seu nome completo" autocomplete="name"></div>
+      <label class="form-check"><input type="checkbox" id="donorAnonymous"> Quero doar anonimamente</label>
+      <div class="form-field"><label for="donorWhatsapp">WhatsApp (opcional)</label><input type="tel" id="donorWhatsapp" placeholder="(00) 00000-0000" inputmode="tel"></div>
+      <div class="form-field"><label for="donorEmail">E-mail (opcional)</label><input type="email" id="donorEmail" placeholder="seu@email.com" autocomplete="email"></div>
+      <div class="fee-box">
+        <div class="fee-box-top">
+          <span class="fee-icon">💚</span>
+          <div><h4>Ajude com os custos da sua doação</h4><p>Cubra os custos de R$ 4,99 do Pix e garanta que sua doação chegue completa.</p></div>
+        </div>
+        <label class="form-check"><input type="checkbox" id="coverFee"> Cobrir a taxa (+ R$ 4,99)</label>
+      </div>
+      <button type="button" class="btn-gold" id="generatePixBtn" onclick="generatePixDonation()">◆ GERAR PIX AGORA</button>
+      <p class="trust-line modal-trust"><span class="dot-ok"></span> Pagamento 100% seguro e verificado</p>
+    </div>
+
+    <div class="donation-step" data-step="2-mensal" hidden>
+      <div class="modal-top">
+        <button type="button" class="modal-back" onclick="backToAmountStep()">← Voltar</button>
+        <h3>Complete seus dados</h3>
+        <button type="button" class="icon-btn" onclick="attemptCloseDonationModal()" aria-label="Fechar">✕</button>
+      </div>
+      <div class="donation-type donation-type-mensal">Doação Mensal</div>
+      <p class="selected-amount-chip">Valor mensal: <strong data-selected-amount-mensal>R$ 0,00</strong></p>
+      <div class="form-field"><label for="donorNameMensal">Nome completo *</label><input type="text" id="donorNameMensal" placeholder="Digite seu nome completo" autocomplete="name" maxlength="100"></div>
+      <div class="form-field"><label for="donorDocumentMensal">CPF ou CNPJ *</label><input type="text" id="donorDocumentMensal" placeholder="000.000.000-00" inputmode="numeric" maxlength="18"></div>
+      <div class="form-field"><label for="donorWhatsappMensal">WhatsApp (opcional)</label><input type="tel" id="donorWhatsappMensal" placeholder="(00) 00000-0000" inputmode="tel"></div>
+      <div class="form-field"><label for="donorEmailMensal">E-mail (opcional)</label><input type="email" id="donorEmailMensal" placeholder="seu@email.com" autocomplete="email"></div>
+      <button type="button" class="btn-gold" id="generatePixMensalBtn" onclick="generatePixMensal()">◆ GERAR PIX MENSAL</button>
+      <p class="trust-line modal-trust"><span class="dot-ok"></span> Pagamento 100% seguro e verificado</p>
+    </div>
+
+    <div class="donation-step" data-step="3" hidden>
+      <div class="modal-top">
+        <span class="modal-heart">◆</span>
+        <h3>Pague com Pix</h3>
+        <button type="button" class="icon-btn" onclick="attemptCloseDonationModal()" aria-label="Fechar">✕</button>
+      </div>
+      <div class="pix-result">
+        <h3>Escaneie o QR Code</h3>
+        <div class="pix-qr"><img id="pixQrImg" src="" alt="QR Code Pix" width="220" height="220"></div>
+        <div class="pix-code" id="pixCodeText"></div>
+        <div class="pix-total" id="pixTotalText"></div>
+        <button type="button" class="pix-copy-btn" id="pixCopyBtn">📋 Copiar código Pix</button>
+        <button type="button" class="pix-confirm-btn" id="pixConfirmBtn">Já paguei ✓</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="downsellModal" class="downsell-modal" aria-hidden="true">
+  <div class="downsell-modal-content">
+    <div class="downsell-header">
+      <h2>🚨 SUA AJUDA É URGENTE</h2>
+      <button class="downsell-close-btn" type="button" onclick="closeDownsellModal(true)" aria-label="Fechar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="downsell-body">
+      <div class="downsell-avatar" role="img" aria-label="Animais do Abrigo Vó Áurea"></div>
+      <h3>Não saia sem ajudar os animais</h3>
+      <p>Cada doação garante ração, remédios e cuidado para quem depende do Abrigo Vó Áurea.</p>
+      <div class="downsell-banner">Escolha um valor e ajude agora.</div>
+      <div class="downsell-grid">
+        <button type="button" class="downsell-btn" onclick="selectDownsellAmount(20)">R$20</button>
+        <div class="downsell-btn-wrapper">
+          <span class="downsell-badge">💖 MAIS ESCOLHIDO</span>
+          <button type="button" class="downsell-btn downsell-btn-highlight" onclick="selectDownsellAmount(30)">R$30</button>
+        </div>
+        <button type="button" class="downsell-btn" onclick="selectDownsellAmount(50)">R$50</button>
+        <button type="button" class="downsell-btn" onclick="selectDownsellAmount(70)">R$70</button>
+      </div>
+      <button type="button" class="downsell-other-value" onclick="backToDonationFromDownsell()">Escolher outro valor</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API_CRIAR_PAGAMENTO = "api/criar-pagamento.js";
+const API_APROVAR_PAGAMENTO = "api/aprovar-pagamento.js";
+
+let donationState = { type:'unica', amount:0, donor:{}, pixData:null, downsellShown:false };
+
+function formatBRL(v){ return 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+function $(s,c=document){ return c.querySelector(s); }
+function $$(s,c=document){ return [...c.querySelectorAll(s)]; }
+
+const sideNav = $('#sideNav');
+const navOverlay = $('#navOverlay');
+$('#openNav').addEventListener('click', () => { sideNav.classList.add('open'); sideNav.setAttribute('aria-hidden','false'); navOverlay.hidden = false; });
+$('#closeNav').addEventListener('click', () => { sideNav.classList.remove('open'); sideNav.setAttribute('aria-hidden','true'); navOverlay.hidden = true; });
+navOverlay.addEventListener('click', () => { sideNav.classList.remove('open'); sideNav.setAttribute('aria-hidden','true'); navOverlay.hidden = true; });
+$$('.side-nav-links a').forEach(a => a.addEventListener('click', () => { sideNav.classList.remove('open'); navOverlay.hidden = true; }));
+
+$('#shareBtn').addEventListener('click', async () => {
+  const data = { title:'Abrigo Vó Áurea', text:'Ajude o Abrigo Vó Áurea a continuar cuidando de mais de 50 animais.', url: location.href };
+  try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); alert('Link copiado!'); } } catch(e){}
+});
+
+// ============ VSL PLAYER (CORRIGIDO) ============
+(function(){
+  const video = document.getElementById('vslVideo');
+  const overlay = document.getElementById('vslOverlay');
+  if (!video || !overlay) return;
+
+  // Vídeo já começa mudo (autoplay funciona em todos navegadores)
+  video.muted = true;
+  video.playsInline = true;
+
+  // Tenta autoplay assim que possível
+  const tryPlay = () => {
+    video.play().catch(() => {
+      // Autoplay bloqueado: usuario precisa clicar
+    });
+  };
+  tryPlay();
+
+  // Clique no overlay: ativa som e toca
+  overlay.addEventListener('click', function(e){
+    e.stopPropagation();
+    overlay.classList.add('hidden');
+    video.muted = false;
+    video.volume = 1;
+    video.play().catch(()=>{});
+  });
+
+  // Clique no vídeo: se ainda não começou, ativa som
+  video.addEventListener('click', function(){
+    if (!overlay.classList.contains('hidden')) {
+      overlay.classList.add('hidden');
+      video.muted = false;
+      video.volume = 1;
+    } else {
+      // Alterna play/pause
+      if (video.paused) video.play().catch(()=>{}); else video.pause();
+    }
+  });
+
+  // Se o vídeo terminar e o overlay ainda estiver visível, esconde
+  video.addEventListener('playing', () => {
+    // Já tá rodando
+  });
+})();
+
+$$('[data-carousel]').forEach(carousel => {
+  const track = $('.carousel-track', carousel);
+  const slides = $$('.carousel-slide', carousel);
+  const dots = $$('[data-carousel-dots] button', carousel);
+  const counter = $('[data-carousel-counter]', carousel);
+  const prev = $('[data-carousel-prev]', carousel);
+  const next = $('[data-carousel-next]', carousel);
+  let index = 0, autoplay = null, startX = 0, currentX = 0, dragging = false;
+
+  function goTo(i){ index = (i+slides.length)%slides.length; track.style.transform = `translateX(-${index*100}%)`; dots.forEach((d,k)=>d.classList.toggle('active',k===index)); if (counter) counter.textContent = `${index+1} / ${slides.length}`; }
+  function nextSlide(){ goTo(index+1); }
+  function prevSlide(){ goTo(index-1); }
+  prev && prev.addEventListener('click', () => { prevSlide(); resetAutoplay(); });
+  next && next.addEventListener('click', () => { nextSlide(); resetAutoplay(); });
+  dots.forEach((d,k) => d.addEventListener('click', () => { goTo(k); resetAutoplay(); }));
+
+  const vp = $('.carousel-viewport', carousel);
+  vp.addEventListener('touchstart', e => { startX = e.touches[0].clientX; dragging = true; }, {passive:true});
+  vp.addEventListener('touchmove', e => { if (dragging) currentX = e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', () => { if (!dragging) return; const diff = currentX-startX; if (Math.abs(diff)>40) diff<0 ? nextSlide() : prevSlide(); dragging = false; startX = currentX = 0; resetAutoplay(); });
+
+  function startAutoplay(){ autoplay = setInterval(nextSlide, 6000); }
+  function resetAutoplay(){ clearInterval(autoplay); startAutoplay(); }
+  startAutoplay();
+  vp.addEventListener('mouseenter', () => clearInterval(autoplay));
+  vp.addEventListener('mouseleave', startAutoplay);
+  goTo(0);
+});
+
+$$('.faq-question').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item'); const isOpen = item.classList.contains('open');
+    $$('.faq-item').forEach(i => { i.classList.remove('open'); $('.faq-question', i).setAttribute('aria-expanded','false'); });
+    if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+  });
+});
+
+(function(){
+  const bar = $('#stickyBar'); const hero = $('#inicio');
+  const obs = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.target === hero) {
+      if (!e.isIntersecting) { bar.classList.add('is-visible'); document.body.classList.add('sticky-on'); }
+      else { bar.classList.remove('is-visible'); document.body.classList.remove('sticky-on'); }
+    }
+  }), { threshold: 0.1 });
+  if (hero) obs.observe(hero);
+})();
+
+const donationModal = $('#donationModal');
+const donationSteps = $$('.donation-step', donationModal);
+function showStep(step){ donationSteps.forEach(s => s.hidden = s.dataset.step !== String(step)); }
+
+function openDonationModal(type='unica'){
+  donationState.type = type; donationState.amount = 0; donationState.pixData = null;
+  $('#donationTypeLabel').textContent = type === 'mensal' ? 'Doação Mensal' : 'Doação Única';
+  $$('.donation-option').forEach(o => o.classList.remove('selected'));
+  $('#customAmount').value = '';
+  showStep(1); donationModal.hidden = false; document.body.style.overflow = 'hidden';
+}
+function closeDonationModal(){ donationModal.hidden = true; document.body.style.overflow = ''; }
+function attemptCloseDonationModal(){
+  if (donationState.downsellShown) { closeDonationModal(); return; }
+  const step1 = $('.donation-step[data-step="1"]', donationModal);
+  if (!step1.hidden && donationState.amount > 0 && !donationState.downsellShown) { showDownsell(); return; }
+  closeDonationModal();
+}
+function selectDonationOption(btn){
+  $$('.donation-option').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected'); donationState.amount = parseFloat(btn.dataset.value);
+  $('#customAmount').value = '';
+}
+$('#customAmount').addEventListener('input', e => {
+  const v = parseFloat(e.target.value);
+  if (!isNaN(v) && v > 0) { $$('.donation-option').forEach(o => o.classList.remove('selected')); donationState.amount = v; }
+  else donationState.amount = 0;
+});
+function goToDonorStep(){
+  if (!donationState.amount || donationState.amount < 1) { alert('Escolha um valor para continuar.'); return; }
+  if (donationState.type === 'mensal') { $('[data-selected-amount-mensal]').textContent = formatBRL(donationState.amount); showStep('2-mensal'); }
+  else { $('[data-selected-amount]').textContent = formatBRL(donationState.amount); showStep(2); }
+}
+function backToAmountStep(){ showStep(1); }
+
+async function generatePixDonation(){
+  const name = $('#donorName').value.trim(); const anon = $('#donorAnonymous').checked;
+  const whats = $('#donorWhatsapp').value.trim(); const email = $('#donorEmail').value.trim();
+  const coverFee = $('#coverFee').checked;
+  if (!anon && !name) { alert('Informe seu nome ou marque "doar anonimamente".'); return; }
+  const total = donationState.amount + (coverFee ? 4.99 : 0);
+  const btn = $('#generatePixBtn'); btn.disabled = true; btn.textContent = 'Gerando Pix...';
+  donationState.donor = { name: anon ? 'Anônimo' : name, whatsapp: whats, email, anonymous: anon };
+  try {
+    const res = await fetch(API_CRIAR_PAGAMENTO, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'unica', amount:donationState.amount, coverFee, total, donor:donationState.donor })});
+    const data = await res.json(); if (!data.success) throw new Error(data.message || 'Erro ao gerar Pix');
+    showPixResult(data);
+  } catch(err){ alert('Erro ao gerar Pix: ' + err.message); }
+  finally { btn.disabled = false; btn.textContent = '◆ GERAR PIX AGORA'; }
+}
+async function generatePixMensal(){
+  const name = $('#donorNameMensal').value.trim(); const doc = $('#donorDocumentMensal').value.trim();
+  const whats = $('#donorWhatsappMensal').value.trim(); const email = $('#donorEmailMensal').value.trim();
+  if (!name) { alert('Informe seu nome completo.'); return; }
+  if (!doc) { alert('Informe seu CPF ou CNPJ.'); return; }
+  const btn = $('#generatePixMensalBtn'); btn.disabled = true; btn.textContent = 'Gerando Pix...';
+  donationState.donor = { name, document: doc, whatsapp: whats, email };
+  try {
+    const res = await fetch(API_CRIAR_PAGAMENTO, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'mensal', amount:donationState.amount, donor:donationState.donor })});
+    const data = await res.json(); if (!data.success) throw new Error(data.message || 'Erro ao gerar Pix');
+    showPixResult(data);
+  } catch(err){ alert('Erro ao gerar Pix: ' + err.message); }
+  finally { btn.disabled = false; btn.textContent = '◆ GERAR PIX MENSAL'; }
+}
+function showPixResult(data){
+  donationState.pixData = data;
+  $('#pixQrImg').src = data.qrCodeImage || '';
+  $('#pixCodeText').textContent = data.pixCode || '';
+  $('#pixTotalText').textContent = 'Total: ' + formatBRL(data.total || donationState.amount);
+  showStep(3);
+}
+$('#pixCopyBtn').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText($('#pixCodeText').textContent); $('#pixCopyBtn').textContent = '✓ Copiado!'; setTimeout(()=> $('#pixCopyBtn').textContent = '📋 Copiar código Pix', 2000); } catch(e){}
+});
+$('#pixConfirmBtn').addEventListener('click', async () => {
+  const btn = $('#pixConfirmBtn'); btn.disabled = true; btn.textContent = 'Verificando...';
+  try {
+    const res = await fetch(API_APROVAR_PAGAMENTO, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ transactionId: donationState.pixData?.transactionId, ...donationState })});
+    const data = await res.json();
+    if (data.success) { alert('Doação confirmada! Muito obrigado ❤️'); closeDonationModal(); }
+    else alert('Ainda não identificamos o pagamento. Aguarde alguns instantes.');
+  } catch(e){ alert('Doação registrada! Obrigado ❤️'); closeDonationModal(); }
+  finally { btn.disabled = false; btn.textContent = 'Já paguei ✓'; }
+});
+
+const downsellModal = $('#downsellModal');
+function showDownsell(){ downsellModal.classList.add('show'); downsellModal.setAttribute('aria-hidden','false'); }
+function closeDownsellModal(alsoClose){ downsellModal.classList.remove('show'); downsellModal.setAttribute('aria-hidden','true'); if (alsoClose) closeDonationModal(); }
+function selectDownsellAmount(v){
+  donationState.amount = v; donationState.downsellShown = true;
+  closeDownsellModal(false); showStep(2);
+  $('[data-selected-amount]').textContent = formatBRL(v);
+}
+function backToDonationFromDownsell(){ closeDownsellModal(false); showStep(1); }
+
+function maskPhone(v){ return v.replace(/\D/g,'').replace(/^(\d{2})(\d)/, '($1) $2').replace(/(\d{5})(\d)/, '$1-$2').slice(0, 15); }
+function maskDoc(v){
+  v = v.replace(/\D/g,'').slice(0,14);
+  if (v.length <= 11) return v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  return v.replace(/^(\d{2})(\d)/, '$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d)/, '$1-$2');
+}
+['donorWhatsapp','donorWhatsappMensal'].forEach(id => { const el = document.getElementById(id); el && el.addEventListener('input', e => e.target.value = maskPhone(e.target.value)); });
+document.getElementById('donorDocumentMensal')?.addEventListener('input', e => e.target.value = maskDoc(e.target.value));
+
+donationModal.addEventListener('click', e => { if (e.target === donationModal) attemptCloseDonationModal(); });
+downsellModal.addEventListener('click', e => { if (e.target === downsellModal) closeDownsellModal(true); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (downsellModal.classList.contains('show')) closeDownsellModal(true);
+    else if (!donationModal.hidden) attemptCloseDonationModal();
+  }
+});
+</script>
+</body>
+</html>
