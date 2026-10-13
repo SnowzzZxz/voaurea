@@ -18,9 +18,9 @@ a{color:inherit;text-decoration:none}
 .login-box{background:var(--card);padding:32px;border-radius:16px;border:1px solid var(--border);width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .login-box h1{font-size:1.3rem;margin-bottom:8px;text-align:center}
 .login-box p{color:var(--muted);font-size:.88rem;text-align:center;margin-bottom:20px}
-.login-box input{width:100%;padding:12px 14px;margin-bottom:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem;outline:none}
+.login-box input{width:100%;padding:12px 14px;margin-bottom:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem;outline:none;font-family:inherit}
 .login-box input:focus{border-color:var(--green)}
-.login-box button{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem}
+.login-box button{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem;font-family:inherit}
 .login-box button:hover{background:#15803d}
 .login-erro{color:var(--red);font-size:.85rem;text-align:center;margin-top:10px;min-height:20px}
 
@@ -39,10 +39,12 @@ a{color:inherit;text-decoration:none}
 .site-banner{padding:12px 18px;border-radius:10px;margin-bottom:20px;font-size:.9rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .site-banner.on{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
 .site-banner.off{background:#3a0505;color:#fca5a5;border:1px solid var(--red)}
+.site-banner.loading{background:var(--card-hover);color:var(--muted);border:1px solid var(--border)}
 .toggle{position:relative;width:50px;height:26px;background:#3a3f4c;border-radius:999px;cursor:pointer;transition:.2s}
 .toggle.on{background:var(--green)}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
 .toggle.on::after{left:27px}
+.toggle.disabled{opacity:.5;pointer-events:none}
 
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
@@ -168,11 +170,11 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
     </div>
   </div>
 
-  <div class="site-banner on" id="siteBanner">
-    <span id="siteBannerText">Site ativo e recebendo doações</span>
+  <div class="site-banner loading" id="siteBanner">
+    <span id="siteBannerText">Carregando status do site...</span>
     <div style="display:flex;align-items:center;gap:10px">
-      <span id="siteToggleLabel" style="font-size:.85rem">Ativo</span>
-      <div class="toggle on" id="toggleSite" onclick="toggleSite()"></div>
+      <span id="siteToggleLabel" style="font-size:.85rem">—</span>
+      <div class="toggle" id="toggleSite" onclick="toggleSite()"></div>
     </div>
   </div>
 
@@ -321,14 +323,14 @@ function toast(msg, tipo='green') {
   const el = document.getElementById('toast');
   el.className = 'toast show ' + tipo;
   el.textContent = msg;
-  setTimeout(() => el.classList.remove('show'), 3000);
+  setTimeout(() => el.classList.remove('show'), 4000);
 }
 function calcTaxa(v) {
   return v <= 1000 ? 0.50 : 0.50 + (v - 1000) * 0.01;
 }
 
 /* ============================================================
-   STORAGE
+   STORAGE LOCAL
    ============================================================ */
 function getConfig() {
   try {
@@ -366,7 +368,7 @@ async function buscarZPay() {
           const data = await resp.json();
           let lista = data.payments || data.data || data.transactions || data.charges || data.results;
           if (Array.isArray(lista) && lista.length > 0) {
-            console.log('✅ Z.PAY respondeu em', base + rota, 'com', lista.length, 'itens');
+            console.log('✅ Z.PAY respondeu:', base + rota, lista.length, 'itens');
             return lista;
           }
         }
@@ -377,7 +379,27 @@ async function buscarZPay() {
 }
 
 /* ============================================================
-   CARREGAR
+   CARREGAR STATUS DO SITE (via API)
+   ============================================================ */
+async function carregarStatusSite() {
+  try {
+    const res = await fetch('/api/site-info', { cache: 'no-store' });
+    const data = await res.json();
+    // Atualiza o config local com o que vem do servidor
+    if (typeof data.ativo === 'boolean') {
+      const c = getConfig();
+      c.site_ativo = data.ativo;
+      setConfig(c);
+    }
+    renderBanner();
+  } catch (e) {
+    console.warn('Erro ao carregar status do site:', e.message);
+    renderBanner();
+  }
+}
+
+/* ============================================================
+   CARREGAR TUDO
    ============================================================ */
 async function carregarTudo() {
   try {
@@ -619,12 +641,52 @@ function mudarPeriodo(dias, btn) {
   renderGrafico();
 }
 
-function toggleSite() {
+// ===== PAUSAR/ATIVAR SITE (via API + GitHub) =====
+async function toggleSite() {
   const c = getConfig();
-  c.site_ativo = !c.site_ativo;
-  setConfig(c);
-  renderBanner();
-  toast(c.site_ativo ? '✅ Site ativado' : '⏸️ Site pausado', c.site_ativo ? 'green' : 'yellow');
+  const novo = !c.site_ativo;
+
+  const msg = novo
+    ? '✅ Ativar o site público?\n\nVisitantes voltarão a ver o site normal.'
+    : '⏸️ PAUSAR o site público?\n\nVisitantes verão a tela de manutenção.\n\nLeva ~30s pra aplicar.';
+  if (!confirm(msg)) return;
+
+  const toggle = document.getElementById('toggleSite');
+  const label = document.getElementById('siteToggleLabel');
+  const banner = document.getElementById('siteBanner');
+  const bannerText = document.getElementById('siteBannerText');
+
+  toggle.classList.add('disabled');
+  banner.className = 'site-banner loading';
+  bannerText.textContent = novo ? 'Ativando site...' : 'Pausando site...';
+  label.textContent = 'Aguarde...';
+
+  try {
+    const res = await fetch('/api/admin/toggle-site', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ site_ativo: novo }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      c.site_ativo = novo;
+      setConfig(c);
+      renderBanner();
+      toast(
+        novo ? '✅ Site ativado! Aguarde ~30s.' : '⏸️ Site pausado! Aguarde ~30s.',
+        novo ? 'green' : 'yellow'
+      );
+    } else {
+      toast('❌ Erro: ' + data.message, 'red');
+      renderBanner();
+    }
+  } catch (e) {
+    toast('❌ Erro de rede: ' + e.message, 'red');
+    renderBanner();
+  } finally {
+    toggle.classList.remove('disabled');
+  }
 }
 
 function toggleTheme() {
@@ -765,8 +827,10 @@ function iniciarDashboard() {
   document.getElementById('themeBtn').textContent = tema === 'dark' ? '☀️ Claro' : '🌙 Escuro';
   todasDoacoes = getDoacoes();
   renderTudo();
+  carregarStatusSite();
   carregarTudo();
   setInterval(carregarTudo, 30000);
+  setInterval(carregarStatusSite, 60000);
 }
 
 // Auto-login
@@ -776,7 +840,6 @@ if (localStorage.getItem('admin_logado') === '1') {
   iniciarDashboard();
 }
 
-// Enter no login
 document.getElementById('loginPass')?.addEventListener('keypress', e => {
   if (e.key === 'Enter') fazerLogin();
 });
