@@ -6,20 +6,23 @@
 <title>Dashboard — Abrigo Vó Áurea</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-:root[data-theme="dark"]{
-  --bg:#0f1117;--card:#1a1d27;--card-hover:#232732;--text:#f0f0f0;--muted:#8b93a7;
-  --green:#16a34a;--green-soft:#052e16;--red:#ef4444;--yellow:#f59e0b;
-  --blue:#3b82f6;--purple:#8b5cf6;--border:#2a2e3a;
-}
-:root[data-theme="light"]{
-  --bg:#f6f7f9;--card:#ffffff;--card-hover:#f3f4f6;--text:#1a1d27;--muted:#6b7280;
-  --green:#16a34a;--green-soft:#ecfdf3;--red:#dc2626;--yellow:#d97706;
-  --blue:#2563eb;--purple:#7c3aed;--border:#e5e7eb;
-}
+:root[data-theme="dark"]{--bg:#0f1117;--card:#1a1d27;--card-hover:#232732;--text:#f0f0f0;--muted:#8b93a7;--green:#16a34a;--green-soft:#052e16;--red:#ef4444;--yellow:#f59e0b;--blue:#3b82f6;--border:#2a2e3a}
+:root[data-theme="light"]{--bg:#f6f7f9;--card:#fff;--card-hover:#f3f4f6;--text:#1a1d27;--muted:#6b7280;--green:#16a34a;--green-soft:#ecfdf3;--red:#dc2626;--yellow:#d97706;--blue:#2563eb;--border:#e5e7eb}
 *{box-sizing:border-box;margin:0;padding:0}
 html{transition:background .2s}
 body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px;transition:background .2s,color .2s}
 a{color:inherit;text-decoration:none}
+
+/* LOGIN */
+.login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.login-box{background:var(--card);padding:32px;border-radius:16px;border:1px solid var(--border);width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login-box h1{font-size:1.3rem;margin-bottom:8px;text-align:center}
+.login-box p{color:var(--muted);font-size:.88rem;text-align:center;margin-bottom:20px}
+.login-box input{width:100%;padding:12px 14px;margin-bottom:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem;outline:none}
+.login-box input:focus{border-color:var(--green)}
+.login-box button{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem}
+.login-box button:hover{background:#15803d}
+.login-erro{color:var(--red);font-size:.85rem;text-align:center;margin-top:10px;min-height:20px}
 
 /* HEADER */
 .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;gap:12px}
@@ -30,13 +33,18 @@ a{color:inherit;text-decoration:none}
 .btn:hover{background:var(--card-hover);transform:translateY(-1px)}
 .btn.primary{background:var(--green);border-color:var(--green);color:#fff}
 .btn.primary:hover{background:#15803d}
+.btn.danger{background:var(--red);border-color:var(--red);color:#fff}
 
-/* SITE TOGGLE */
+/* BANNER */
 .site-banner{padding:12px 18px;border-radius:10px;margin-bottom:20px;font-size:.9rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .site-banner.on{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
 .site-banner.off{background:#3a0505;color:#fca5a5;border:1px solid var(--red)}
+.toggle{position:relative;width:50px;height:26px;background:#3a3f4c;border-radius:999px;cursor:pointer;transition:.2s}
+.toggle.on{background:var(--green)}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
+.toggle.on::after{left:27px}
 
-/* GRID CARDS */
+/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
 .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border);transition:.2s}
 .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
@@ -45,14 +53,14 @@ a{color:inherit;text-decoration:none}
 .card-value.green{color:var(--green)}
 .card-value.yellow{color:var(--yellow)}
 .card-value.blue{color:var(--blue)}
-.card-sub{color:var(--muted);font-size:.82rem;margin-top:4px;display:flex;align-items:center;gap:6px}
+.card-sub{color:var(--muted);font-size:.82rem;margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .variation{font-size:.75rem;font-weight:700;padding:2px 6px;border-radius:4px}
 .variation.up{background:var(--green-soft);color:var(--green)}
 .variation.down{background:#3a0505;color:var(--red)}
 
 /* CHART */
 .chart-box{background:var(--card);padding:20px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border)}
-.chart-box h3{margin-bottom:14px;font-size:.95rem;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.chart-box h3{margin-bottom:14px;font-size:.95rem;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .chart-toggle{display:flex;gap:4px}
 .chart-toggle button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:.75rem;cursor:pointer}
 .chart-toggle button.active{background:var(--green);border-color:var(--green);color:#fff}
@@ -63,6 +71,14 @@ a{color:inherit;text-decoration:none}
 .meta-head .pct{color:var(--green)}
 .meta-track{height:12px;background:var(--card-hover);border-radius:999px;overflow:hidden}
 .meta-fill{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:inherit;transition:width .8s ease}
+
+/* FEED */
+.feed{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border);margin-bottom:20px}
+.feed h3{font-size:.95rem;color:var(--muted);margin-bottom:12px;font-weight:600}
+.feed-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.feed-item:last-child{border-bottom:none}
+.feed-item .nome{font-weight:600}
+.feed-item .valor{color:var(--green);font-weight:700}
 
 /* FILTROS */
 .filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
@@ -76,7 +92,6 @@ th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);fo
 th{background:var(--card-hover);color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--card-hover)}
-
 .status{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:700}
 .status.paid{background:var(--green-soft);color:var(--green)}
 .status.pending{background:#3a2e05;color:var(--yellow)}
@@ -84,16 +99,7 @@ tr:hover td{background:var(--card-hover)}
 tr.big-donation td{background:linear-gradient(90deg,transparent,rgba(240,180,41,.08))}
 tr.big-donation td:first-child::before{content:"⭐ ";font-size:.9rem}
 tr.big-donation .valor{color:var(--yellow);font-weight:800}
-
 .empty{padding:40px;text-align:center;color:var(--muted);background:var(--card);border-radius:12px;border:1px solid var(--border)}
-
-/* FEED DE ÚLTIMAS */
-.feed{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border);margin-bottom:20px}
-.feed h3{font-size:.95rem;color:var(--muted);margin-bottom:12px;font-weight:600}
-.feed-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
-.feed-item:last-child{border-bottom:none}
-.feed-item .nome{font-weight:600}
-.feed-item .valor{color:var(--green);font-weight:700}
 
 /* MODAL */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:100;backdrop-filter:blur(4px)}
@@ -103,167 +109,211 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 .modal-card .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:.9rem;gap:12px}
 .modal-card .row:last-child{border-bottom:none}
 .modal-card .row strong{color:var(--muted);font-weight:500}
+.modal-card textarea{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:monospace;font-size:.82rem;min-height:200px;margin-top:12px;outline:none}
 .modal-close{margin-top:16px;background:var(--card-hover);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:8px;cursor:pointer;width:100%;font-weight:600}
-
-/* LOADING */
-.skeleton{background:linear-gradient(90deg,var(--card),var(--card-hover),var(--card));background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;height:1.5rem;margin:6px 0}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.modal-actions{display:flex;gap:8px;margin-top:12px}
 
 /* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--card);border:1px solid var(--border);padding:14px 18px;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.25);font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:10px;transform:translateX(120%);transition:transform .3s ease;z-index:200;max-width:320px}
 .toast.show{transform:translateX(0)}
 .toast.green{border-color:var(--green)}
 .toast.yellow{border-color:var(--yellow)}
+.toast.red{border-color:var(--red)}
 
-/* RESPONSIVO */
 @media(max-width:640px){
   body{padding:12px}
   .header h1{font-size:1.15rem}
   .card-value{font-size:1.35rem}
   th,td{padding:8px 10px;font-size:.82rem}
-  th:nth-child(4),td:nth-child(4){display:none}
+  th:nth-child(5),td:nth-child(5){display:none}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div>
-    <h1>🐾 Dashboard — Abrigo Vó Áurea</h1>
-    <div class="sub" id="lastUpdate">Carregando...</div>
-  </div>
-  <div class="header-actions">
-    <a href="/" target="_blank" class="btn">🌐 Ver site</a>
-    <button class="btn" onclick="exportarCSV()">📥 CSV</button>
-    <button class="btn" onclick="toggleTheme()" id="themeBtn">🌙 Escuro</button>
-    <button class="btn primary" onclick="carregar()">🔄 Atualizar</button>
+<!-- TELA DE LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h1>🐾 Dashboard Admin</h1>
+    <p>Abrigo Vó Áurea</p>
+    <input type="text" id="loginUser" placeholder="Usuário" autocomplete="username">
+    <input type="password" id="loginPass" placeholder="Senha" autocomplete="current-password" onkeypress="if(event.key==='Enter')fazerLogin()">
+    <button onclick="fazerLogin()">Entrar</button>
+    <div class="login-erro" id="loginErro"></div>
   </div>
 </div>
 
-<!-- BANNER SITE -->
-<div class="site-banner on" id="siteBanner" style="display:none">
-  <span id="siteBannerText">Site ativo</span>
-  <span style="font-size:.78rem;font-weight:500;opacity:.8">Edite o <code>config.json</code> no GitHub pra alterar</span>
-</div>
+<!-- DASHBOARD (escondido até logar) -->
+<div id="dashboard" style="display:none">
 
-<!-- STATS -->
-<div class="grid">
-  <div class="card">
-    <div class="card-label">Total bruto</div>
-    <div class="card-value green" id="totalBruto">—</div>
-    <div class="card-sub"><span id="totalCount">—</span></div>
-  </div>
-  <div class="card">
-    <div class="card-label">Líquido (após taxa)</div>
-    <div class="card-value" id="totalLiquido">—</div>
-    <div class="card-sub">O que cai na conta</div>
-  </div>
-  <div class="card">
-    <div class="card-label">Últimos 7 dias</div>
-    <div class="card-value" id="seteDias">—</div>
-    <div class="card-sub">
-      <span id="seteDiasCount">—</span>
-      <span class="variation" id="variacao">—</span>
+  <div class="header">
+    <div>
+      <h1>🐾 Dashboard — Abrigo Vó Áurea</h1>
+      <div class="sub" id="lastUpdate">Carregando...</div>
+    </div>
+    <div class="header-actions">
+      <a href="/" target="_blank" class="btn">🌐 Ver site</a>
+      <button class="btn" onclick="exportarCSV()">📥 CSV</button>
+      <button class="btn" onclick="abrirImportar()">📋 Importar</button>
+      <button class="btn" onclick="abrirConfig()">⚙️ Config</button>
+      <button class="btn" onclick="toggleTheme()" id="themeBtn">☀️ Claro</button>
+      <button class="btn primary" onclick="carregarTudo()">🔄 Atualizar</button>
+      <button class="btn danger" onclick="sair()">🚪 Sair</button>
     </div>
   </div>
-  <div class="card">
-    <div class="card-label">Ticket médio</div>
-    <div class="card-value yellow" id="ticketMedio">—</div>
-    <div class="card-sub">Por doação paga</div>
-  </div>
-  <div class="card">
-    <div class="card-label">Hoje</div>
-    <div class="card-value blue" id="hojeBruto">—</div>
-    <div class="card-sub" id="hojeCount">—</div>
-  </div>
-</div>
 
-<!-- META -->
-<div class="meta-box" id="metaBox" style="display:none">
-  <div class="meta-head">
-    <span>🎯 Meta mensal</span>
-    <span class="pct" id="metaPct">0%</span>
-  </div>
-  <div class="meta-track"><div class="meta-fill" id="metaFill" style="width:0%"></div></div>
-  <div class="card-sub" style="margin-top:8px" id="metaText">R$ 0 / R$ 60.000</div>
-</div>
-
-<!-- GRÁFICO -->
-<div class="chart-box">
-  <h3>
-    📈 Doações por dia
-    <div class="chart-toggle">
-      <button class="active" onclick="mudarPeriodo(7,this)">7 dias</button>
-      <button onclick="mudarPeriodo(30,this)">30 dias</button>
-      <button onclick="mudarPeriodo(90,this)">90 dias</button>
+  <div class="site-banner on" id="siteBanner">
+    <span id="siteBannerText">Site ativo e recebendo doações</span>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span id="siteToggleLabel" style="font-size:.85rem">Ativo</span>
+      <div class="toggle on" id="toggleSite" onclick="toggleSite()"></div>
     </div>
-  </h3>
-  <canvas id="chart" height="80"></canvas>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-label">Total bruto</div>
+      <div class="card-value green" id="totalBruto">R$ 0,00</div>
+      <div class="card-sub"><span id="totalCount">0 doações pagas</span></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Líquido (após taxa)</div>
+      <div class="card-value" id="totalLiquido">R$ 0,00</div>
+      <div class="card-sub">O que cai na conta</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Últimos 7 dias</div>
+      <div class="card-value" id="seteDias">R$ 0,00</div>
+      <div class="card-sub">
+        <span id="seteDiasCount">0 doações</span>
+        <span class="variation" id="variacao" style="display:none">—</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-label">Ticket médio</div>
+      <div class="card-value yellow" id="ticketMedio">R$ 0,00</div>
+      <div class="card-sub">Por doação paga</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Hoje</div>
+      <div class="card-value blue" id="hojeBruto">R$ 0,00</div>
+      <div class="card-sub" id="hojeCount">0 doações hoje</div>
+    </div>
+  </div>
+
+  <div class="meta-box">
+    <div class="meta-head">
+      <span>🎯 Meta mensal</span>
+      <span class="pct" id="metaPct">0%</span>
+    </div>
+    <div class="meta-track"><div class="meta-fill" id="metaFill" style="width:0%"></div></div>
+    <div class="card-sub" style="margin-top:8px" id="metaText">R$ 0 / R$ 60.000</div>
+  </div>
+
+  <div class="chart-box">
+    <h3>
+      📈 Doações por dia
+      <div class="chart-toggle">
+        <button class="active" onclick="mudarPeriodo(7,this)">7 dias</button>
+        <button onclick="mudarPeriodo(30,this)">30 dias</button>
+        <button onclick="mudarPeriodo(90,this)">90 dias</button>
+      </div>
+    </h3>
+    <canvas id="chart" height="80"></canvas>
+  </div>
+
+  <div class="feed" id="feedBox" style="display:none">
+    <h3>🐾 Últimas doações</h3>
+    <div id="feedContent"></div>
+  </div>
+
+  <div class="filters">
+    <select id="filtroPeriodo">
+      <option value="todos">Todo o período</option>
+      <option value="hoje">Hoje</option>
+      <option value="7dias">Últimos 7 dias</option>
+      <option value="30dias">Últimos 30 dias</option>
+    </select>
+    <select id="filtroStatus">
+      <option value="todos">Todos os status</option>
+      <option value="paid">Pago</option>
+      <option value="pending">Pendente</option>
+      <option value="expired">Expirado</option>
+      <option value="failed">Falhou</option>
+    </select>
+    <input type="text" id="filtroBusca" placeholder="Buscar por nome...">
+    <button class="btn primary" onclick="renderTudo()">Filtrar</button>
+  </div>
+
+  <div id="lista"></div>
 </div>
 
-<!-- FEED -->
-<div class="feed" id="feedBox" style="display:none">
-  <h3>🐾 Últimas doações</h3>
-  <div id="feedContent"></div>
-</div>
-
-<!-- FILTROS -->
-<div class="filters">
-  <select id="filtroPeriodo">
-    <option value="todos">Todo o período</option>
-    <option value="hoje">Hoje</option>
-    <option value="7dias">Últimos 7 dias</option>
-    <option value="30dias">Últimos 30 dias</option>
-  </select>
-  <select id="filtroStatus">
-    <option value="todos">Todos os status</option>
-    <option value="paid">Pago</option>
-    <option value="pending">Pendente</option>
-    <option value="expired">Expirado</option>
-    <option value="failed">Falhou</option>
-  </select>
-  <input type="text" id="filtroBusca" placeholder="Buscar por nome...">
-  <button class="btn primary" onclick="carregar()">Filtrar</button>
-</div>
-
-<!-- TABELA -->
-<div id="lista"></div>
-
-<!-- MODAL -->
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-card" id="modalContent"></div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-const API = '/api/admin/doacoes';
-const SITE_INFO = '/api/site-info';
+/* ============================================================
+   CONFIGURAÇÃO
+   ============================================================ */
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'voaurea2026';
 
-let chart = null;
+const ZPAY_BASES = ['https://zpayapi.app/api/v2', 'https://zpaysolution.com/api/v1'];
+const ZPAY_CLIENT_ID = 'zpk_541f4b2f71855fb26e1201a7';
+const ZPAY_CLIENT_SECRET = 'zsk_87b13fb23ba5eed5d6d9f0f9e6153d20dfeac10e24a66dd6';
+
+// Config default (pode ser editado pelo dashboard)
+const CONFIG_DEFAULT = {
+  site_ativo: true,
+  valores_sugeridos: [20, 30, 50, 100, 150, 200, 250, 500, 1000],
+  meta_mensal: 60000,
+  contador_base: 0,
+  mensagem_manutencao: 'Estamos atualizando o site. Voltamos em alguns minutos! 🐾',
+  destaque_doacao: 500,
+};
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
 let todasDoacoes = [];
 let periodoGrafico = 30;
+let chart = null;
 let ultimaDoacaoVista = null;
 
-// ===== THEME =====
-function initTheme() {
-  const salvo = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', salvo);
-  document.getElementById('themeBtn').textContent = salvo === 'dark' ? '☀️ Claro' : '🌙 Escuro';
-}
-function toggleTheme() {
-  const atual = document.documentElement.getAttribute('data-theme');
-  const novo = atual === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', novo);
-  localStorage.setItem('theme', novo);
-  document.getElementById('themeBtn').textContent = novo === 'dark' ? '☀️ Claro' : '🌙 Escuro';
-  if (chart) renderGrafico(todasDoacoes);
-}
-initTheme();
+/* ============================================================
+   LOGIN
+   ============================================================ */
+function fazerLogin() {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value;
 
-// ===== UTILS =====
+  if (user === ADMIN_USER && pass === ADMIN_PASS) {
+    localStorage.setItem('admin_logado', '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    iniciarDashboard();
+  } else {
+    document.getElementById('loginErro').textContent = 'Usuário ou senha inválidos';
+  }
+}
+
+function sair() {
+  localStorage.removeItem('admin_logado');
+  location.reload();
+}
+
+// Se já logou antes, pula a tela
+if (localStorage.getItem('admin_logado') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+}
+
+/* ============================================================
+   UTIL
+   ============================================================ */
 function fmtBRL(v) {
   return 'R$ ' + Number(v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
@@ -277,99 +327,207 @@ function toast(msg, tipo='green') {
   el.textContent = msg;
   setTimeout(() => el.classList.remove('show'), 3000);
 }
+function calcTaxa(v) {
+  return v <= 1000 ? 0.50 : 0.50 + (v - 1000) * 0.01;
+}
 
-// ===== CARREGAR =====
-async function carregar() {
-  const periodo = document.getElementById('filtroPeriodo').value;
-  const status = document.getElementById('filtroStatus').value;
-  const busca = document.getElementById('filtroBusca').value.trim();
-
-  const params = new URLSearchParams({ periodo, status });
-  if (busca) params.set('busca', busca);
-
+/* ============================================================
+   ARMAZENAMENTO LOCAL
+   ============================================================ */
+function getConfig() {
   try {
-    const res = await fetch(`${API}?${params}`);
-    if (res.status === 401) { toast('Login inválido', 'yellow'); return; }
-    const data = await res.json();
-    if (!data.success) throw new Error(data.message || 'Erro');
+    const raw = localStorage.getItem('voaurea_config');
+    if (raw) return { ...CONFIG_DEFAULT, ...JSON.parse(raw) };
+  } catch(e) {}
+  return { ...CONFIG_DEFAULT };
+}
+function setConfig(cfg) {
+  localStorage.setItem('voaurea_config', JSON.stringify(cfg));
+}
+function getDoacoes() {
+  try {
+    return JSON.parse(localStorage.getItem('voaurea_doacoes') || '[]');
+  } catch(e) { return []; }
+}
+function setDoacoes(arr) {
+  localStorage.setItem('voaurea_doacoes', JSON.stringify(arr));
+}
 
-    renderStats(data.stats);
-    renderTabela(data.doacoes || []);
-    renderGrafico(data.doacoes || []);
+/* ============================================================
+   BUSCAR DA Z.PAY
+   ============================================================ */
+async function buscarZPay() {
+  const headers = {
+    'Content-Type': 'application/json',
+    'client-id': ZPAY_CLIENT_ID,
+    'client-secret': ZPAY_CLIENT_SECRET,
+  };
 
-    // Guarda todas as doações pra usar no feed e gráfico
-    todasDoacoes = data.doacoes || [];
+  // Tenta várias rotas conhecidas
+  const rotas = ['/payments', '/payments/list', '/transactions', '/charges'];
 
-    // Alerta de doação grande
-    if (data.doacoesGrandes?.length > 0) {
-      const ultimaGrande = data.doacoesGrandes[0];
-      if (ultimaDoacaoVista && ultimaGrande.id !== ultimaDoacaoVista) {
-        toast(`⭐ Doação grande: ${fmtBRL(ultimaGrande.valor)} — ${ultimaGrande.nome}`, 'yellow');
+  for (const base of ZPAY_BASES) {
+    for (const rota of rotas) {
+      try {
+        const resp = await fetch(base + rota, { headers });
+        if (resp.ok) {
+          const data = await resp.json();
+          let lista = data.payments || data.data || data.transactions || data.charges || data.results;
+          if (Array.isArray(lista) && lista.length > 0) {
+            console.log('✅ Z.PAY respondeu em', base + rota, 'com', lista.length, 'itens');
+            return lista;
+          }
+        }
+      } catch (e) {
+        // CORS ou 404, tenta próxima
       }
-      ultimaDoacaoVista = ultimaGrande.id;
     }
+  }
+  return [];
+}
+
+/* ============================================================
+   CARREGAR TUDO
+   ============================================================ */
+async function carregarTudo() {
+  try {
+    // 1. Busca da Z.PAY (se der certo, mescla)
+    const daZPay = await buscarZPay();
+
+    // 2. Pega do localStorage
+    const doLocal = getDoacoes();
+
+    // 3. Mescla (sem duplicar por id)
+    const idsExistentes = new Set(doLocal.map(d => d.id));
+    const novos = daZPay.filter(p => {
+      const id = p.id || p.paymentId || p.transactionId;
+      return id && !idsExistentes.has(id);
+    }).map(p => ({
+      id: p.id || p.paymentId || p.transactionId,
+      nome: p.payer?.name || p.payerName || p.donorName || '—',
+      email: p.email || p.payer?.email || null,
+      whatsapp: p.whatsapp || p.payer?.phone || null,
+      valor: Number(p.amount || p.value || 0),
+      status: p.status || 'pending',
+      metodo: p.paymentMethod || p.method || 'pix',
+      created_at: p.createdAt || p.created_at || new Date().toISOString(),
+      paid_at: p.paidAt || p.paid_at || null,
+    }));
+
+    if (novos.length > 0) {
+      const merge = [...doLocal, ...novos];
+      setDoacoes(merge);
+      toast(`✅ ${novos.length} doação(ões) importadas da Z.PAY`);
+    }
+
+    todasDoacoes = getDoacoes();
+    renderTudo();
 
     document.getElementById('lastUpdate').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR');
 
   } catch (err) {
     console.error(err);
-    document.getElementById('lista').innerHTML = '<div class="empty">Erro: ' + err.message + '</div>';
+    todasDoacoes = getDoacoes();
+    renderTudo();
   }
 }
 
-// ===== STATS =====
-function renderStats(s) {
-  document.getElementById('totalBruto').textContent = fmtBRL(s.totalBruto);
-  document.getElementById('totalLiquido').textContent = fmtBRL(s.totalLiquido);
-  document.getElementById('totalCount').textContent = s.totalCount + ' doações pagas';
-  document.getElementById('seteDias').textContent = fmtBRL(s.seteDiasBruto);
-  document.getElementById('seteDiasCount').textContent = s.seteDiasCount + ' doações';
-  document.getElementById('ticketMedio').textContent = fmtBRL(s.ticketMedio);
-  document.getElementById('hojeBruto').textContent = fmtBRL(s.hojeBruto);
-  document.getElementById('hojeCount').textContent = s.hojeCount + ' doações hoje';
+/* ============================================================
+   RENDERIZAR TUDO
+   ============================================================ */
+function renderTudo() {
+  const periodo = document.getElementById('filtroPeriodo').value;
+  const status = document.getElementById('filtroStatus').value;
+  const busca = document.getElementById('filtroBusca').value.trim().toLowerCase();
 
-  // Variação semanal
+  // Aplica filtros
+  let filtradas = [...todasDoacoes];
+  if (status !== 'todos') filtradas = filtradas.filter(d => d.status === status);
+  if (busca) {
+    filtradas = filtradas.filter(d =>
+      (d.nome || '').toLowerCase().includes(busca) ||
+      (d.email || '').toLowerCase().includes(busca)
+    );
+  }
+
+  const agora = new Date();
+  const hoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+  const seteDias = new Date(Date.now() - 7*24*60*60*1000);
+  const trintaDias = new Date(Date.now() - 30*24*60*60*1000);
+
+  if (periodo === 'hoje') filtradas = filtradas.filter(d => new Date(d.created_at) >= hoje);
+  else if (periodo === '7dias') filtradas = filtradas.filter(d => new Date(d.created_at) >= seteDias);
+  else if (periodo === '30dias') filtradas = filtradas.filter(d => new Date(d.created_at) >= trintaDias);
+
+  renderStats();
+  renderTabela(filtradas);
+  renderGrafico();
+  renderFeed();
+  renderBanner();
+}
+
+function renderStats() {
+  const pagas = todasDoacoes.filter(d => d.status === 'paid');
+  const totalBruto = pagas.reduce((s, d) => s + d.valor, 0);
+  const totalLiquido = pagas.reduce((s, d) => s + (d.valor - calcTaxa(d.valor)), 0);
+
+  const agora = new Date();
+  const hoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+  const seteDias = new Date(Date.now() - 7*24*60*60*1000);
+  const quinzeDias = new Date(Date.now() - 15*24*60*60*1000);
+
+  const hojeP = pagas.filter(d => new Date(d.created_at || d.paid_at) >= hoje);
+  const seteP = pagas.filter(d => new Date(d.created_at || d.paid_at) >= seteDias);
+  const quinzeAntes = pagas.filter(d => {
+    const dt = new Date(d.created_at || d.paid_at);
+    return dt >= quinzeDias && dt < seteDias;
+  });
+
+  const totalHoje = hojeP.reduce((s, d) => s + d.valor, 0);
+  const total7 = seteP.reduce((s, d) => s + d.valor, 0);
+  const totalSemanaAnterior = quinzeAntes.reduce((s, d) => s + d.valor, 0);
+
+  document.getElementById('totalBruto').textContent = fmtBRL(totalBruto);
+  document.getElementById('totalLiquido').textContent = fmtBRL(totalLiquido);
+  document.getElementById('totalCount').textContent = pagas.length + ' doações pagas';
+  document.getElementById('seteDias').textContent = fmtBRL(total7);
+  document.getElementById('seteDiasCount').textContent = seteP.length + ' doações';
+  document.getElementById('ticketMedio').textContent = fmtBRL(pagas.length ? totalBruto / pagas.length : 0);
+  document.getElementById('hojeBruto').textContent = fmtBRL(totalHoje);
+  document.getElementById('hojeCount').textContent = hojeP.length + ' doações hoje';
+
+  // Variação
   const varEl = document.getElementById('variacao');
-  if (s.variacao > 0) {
-    varEl.className = 'variation up';
-    varEl.textContent = '+' + s.variacao.toFixed(0) + '% vs semana ant.';
-  } else if (s.variacao < 0) {
-    varEl.className = 'variation down';
-    varEl.textContent = s.variacao.toFixed(0) + '% vs semana ant.';
+  if (totalSemanaAnterior > 0) {
+    const varPct = ((total7 - totalSemanaAnterior) / totalSemanaAnterior) * 100;
+    varEl.style.display = 'inline-block';
+    varEl.className = 'variation ' + (varPct >= 0 ? 'up' : 'down');
+    varEl.textContent = (varPct >= 0 ? '+' : '') + varPct.toFixed(0) + '%';
   } else {
     varEl.style.display = 'none';
   }
 
   // Meta
-  carregarMeta(s.totalMes || 0);
+  const config = getConfig();
+  const inicioMes = new Date(agora.getFullYear(), agora.getMonth(), 1);
+  const mesPagas = pagas.filter(d => new Date(d.created_at || d.paid_at) >= inicioMes);
+  const totalMes = mesPagas.reduce((s, d) => s + d.valor, 0);
+  const meta = config.meta_mensal;
+  const pct = Math.min(100, (totalMes / meta) * 100);
+
+  document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
+  document.getElementById('metaFill').style.width = pct + '%';
+  document.getElementById('metaText').textContent = `${fmtBRL(totalMes)} / ${fmtBRL(meta)}`;
 }
 
-async function carregarMeta(totalMes) {
-  try {
-    const res = await fetch(SITE_INFO);
-    const data = await res.json();
-    if (data.config?.meta_mensal && data.stats?.total_mes) {
-      const meta = data.config.meta_mensal;
-      const atual = data.stats.total_mes;
-      const pct = Math.min(100, (atual / meta) * 100);
-
-      document.getElementById('metaBox').style.display = 'block';
-      document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
-      document.getElementById('metaFill').style.width = pct + '%';
-      document.getElementById('metaText').textContent = `${fmtBRL(atual)} / ${fmtBRL(meta)}`;
-    }
-  } catch(e) { /* silencioso */ }
-}
-
-// ===== TABELA =====
 function renderTabela(doacoes) {
   const el = document.getElementById('lista');
   if (!doacoes.length) {
-    el.innerHTML = '<div class="empty">Nenhuma doação encontrada</div>';
+    el.innerHTML = '<div class="empty">Nenhuma doação encontrada. Clique em <strong>📋 Importar</strong> pra adicionar manualmente, ou gere uma doação real no site.</div>';
     return;
   }
 
-  let html = '<table><thead><tr><th>Data</th><th>Nome</th><th>Valor</th><th>Status</th><th>Método</th></tr></thead><tbody>';
+  let html = '<table><thead><tr><th>Data</th><th>Nome</th><th>Valor</th><th>Status</th><th>Método</th><th></th></tr></thead><tbody>';
   doacoes.slice(0, 300).forEach(d => {
     const st = d.status || 'pending';
     const isGrande = d.valor >= 500 && st === 'paid';
@@ -379,21 +537,14 @@ function renderTabela(doacoes) {
       <td class="valor">${fmtBRL(d.valor)}</td>
       <td><span class="status ${st}">${st}</span></td>
       <td>${d.metodo || 'pix'}</td>
+      <td><button class="btn" style="padding:4px 10px;font-size:.75rem" onclick="verDoador('${d.id}')">Ver</button></td>
     </tr>`;
   });
   html += '</tbody></table>';
   el.innerHTML = html;
 }
 
-// ===== GRÁFICO =====
-function mudarPeriodo(dias, btn) {
-  periodoGrafico = dias;
-  document.querySelectorAll('.chart-toggle button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderGrafico(todasDoacoes);
-}
-
-function renderGrafico(doacoes) {
+function renderGrafico() {
   const porDia = {};
   const hoje = new Date();
   for (let i = periodoGrafico - 1; i >= 0; i--) {
@@ -402,7 +553,7 @@ function renderGrafico(doacoes) {
     porDia[d.toISOString().slice(0, 10)] = 0;
   }
 
-  doacoes.filter(d => d.status === 'paid').forEach(d => {
+  todasDoacoes.filter(d => d.status === 'paid').forEach(d => {
     const k = new Date(d.created_at || d.paid_at).toISOString().slice(0, 10);
     if (porDia[k] !== undefined) porDia[k] += Number(d.valor);
   });
@@ -446,14 +597,87 @@ function renderGrafico(doacoes) {
   });
 }
 
-// ===== EXPORT CSV =====
+function renderFeed() {
+  const pagas = todasDoacoes.filter(d => d.status === 'paid').slice(0, 5);
+  const feed = document.getElementById('feedBox');
+  const content = document.getElementById('feedContent');
+
+  if (!pagas.length) {
+    feed.style.display = 'none';
+    return;
+  }
+
+  feed.style.display = 'block';
+  const agora = Date.now();
+  content.innerHTML = pagas.map(d => {
+    const seg = Math.floor((agora - new Date(d.created_at || d.paid_at).getTime()) / 1000);
+    let tempo = 'agora';
+    if (seg > 86400) tempo = Math.floor(seg/86400) + 'd atrás';
+    else if (seg > 3600) tempo = Math.floor(seg/3600) + 'h atrás';
+    else if (seg > 60) tempo = Math.floor(seg/60) + 'min atrás';
+    const nome = (d.nome || 'Anônimo').split(' ')[0];
+    return `<div class="feed-item">
+      <span class="nome">🐾 ${nome}</span>
+      <span><span class="valor">${fmtBRL(d.valor)}</span> <span style="color:var(--muted);font-size:.82rem">${tempo}</span></span>
+    </div>`;
+  }).join('');
+}
+
+function renderBanner() {
+  const config = getConfig();
+  const banner = document.getElementById('siteBanner');
+  const text = document.getElementById('siteBannerText');
+  const toggle = document.getElementById('toggleSite');
+  const label = document.getElementById('siteToggleLabel');
+
+  if (config.site_ativo) {
+    banner.className = 'site-banner on';
+    text.textContent = '✅ Site ativo e recebendo doações';
+    toggle.classList.add('on');
+    label.textContent = 'Ativo';
+  } else {
+    banner.className = 'site-banner off';
+    text.textContent = '⏸️ Site PAUSADO';
+    toggle.classList.remove('on');
+    label.textContent = 'Pausado';
+  }
+}
+
+/* ============================================================
+   AÇÕES
+   ============================================================ */
+function mudarPeriodo(dias, btn) {
+  periodoGrafico = dias;
+  document.querySelectorAll('.chart-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrafico();
+}
+
+function toggleSite() {
+  const config = getConfig();
+  config.site_ativo = !config.site_ativo;
+  setConfig(config);
+  renderBanner();
+  toast(config.site_ativo ? '✅ Site ativado' : '⏸️ Site pausado', config.site_ativo ? 'green' : 'yellow');
+}
+
+function toggleTheme() {
+  const atual = document.documentElement.getAttribute('data-theme');
+  const novo = atual === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', novo);
+  localStorage.setItem('theme', novo);
+  document.getElementById('themeBtn').textContent = novo === 'dark' ? '☀️ Claro' : '🌙 Escuro';
+  renderGrafico();
+}
+
 function exportarCSV() {
   if (!todasDoacoes.length) { toast('Nada pra exportar', 'yellow'); return; }
-  const headers = ['Data', 'Nome', 'Email', 'Valor', 'Status', 'Metodo', 'Transaction ID'];
+  const headers = ['Data', 'Nome', 'Email', 'WhatsApp', 'Valor', 'Status', 'Metodo', 'ID'];
   const linhas = todasDoacoes.map(d => [
     fmtData(d.created_at || d.paid_at),
     d.nome || '',
     d.email || '',
+    d.whatsapp || '',
     d.valor,
     d.status,
     d.metodo || '',
@@ -473,53 +697,150 @@ function exportarCSV() {
   toast('CSV exportado ✅');
 }
 
-// ===== MODAL =====
-function closeModal() { document.getElementById('modal').classList.remove('show'); }
+function verDoador(id) {
+  const d = todasDoacoes.find(x => x.id === id);
+  if (!d) return;
 
-// ===== FEED + SITE INFO =====
-async function carregarSiteInfo() {
-  try {
-    const res = await fetch(SITE_INFO);
-    const data = await res.json();
+  const mesmoDoador = todasDoacoes.filter(x => x.email && x.email === d.email && x.status === 'paid');
+  const totalDoado = mesmoDoador.reduce((s, x) => s + x.valor, 0);
 
-    // Banner site
-    const banner = document.getElementById('siteBanner');
-    const text = document.getElementById('siteBannerText');
-    if (data.ativo) {
-      banner.className = 'site-banner on';
-      text.textContent = '✅ Site ativo e recebendo doações';
-    } else {
-      banner.className = 'site-banner off';
-      text.textContent = '⏸️ Site PAUSADO — visitantes veem: "' + (data.mensagem || 'Em manutenção') + '"';
-    }
-    banner.style.display = 'flex';
+  let html = `<h2>👤 ${d.nome || 'Doador'}</h2>`;
+  html += `<div class="row"><strong>Valor</strong><span>${fmtBRL(d.valor)}</span></div>`;
+  html += `<div class="row"><strong>Status</strong><span><span class="status ${d.status}">${d.status}</span></span></div>`;
+  html += `<div class="row"><strong>Método</strong><span>${d.metodo || 'pix'}</span></div>`;
+  if (d.email) html += `<div class="row"><strong>Email</strong><span>${d.email}</span></div>`;
+  if (d.whatsapp) html += `<div class="row"><strong>WhatsApp</strong><span>${d.whatsapp}</span></div>`;
+  html += `<div class="row"><strong>Data</strong><span>${fmtData(d.created_at)}</span></div>`;
+  html += `<div class="row"><strong>ID</strong><span style="font-family:monospace;font-size:.75rem">${d.id}</span></div>`;
 
-    // Feed últimas doações
-    if (data.ultimas_doacoes?.length) {
-      const feed = document.getElementById('feedBox');
-      const content = document.getElementById('feedContent');
-      feed.style.display = 'block';
+  if (mesmoDoador.length > 1) {
+    html += `<h3 style="margin-top:20px;font-size:.9rem;color:var(--muted)">HISTÓRICO (${mesmoDoador.length} doações)</h3>`;
+    html += `<div class="row"><strong>Total doado</strong><span>${fmtBRL(totalDoado)}</span></div>`;
+  }
 
-      const agora = Date.now();
-      content.innerHTML = data.ultimas_doacoes.map(d => {
-        const seg = Math.floor((agora - new Date(d.quando).getTime()) / 1000);
-        let tempo = 'agora';
-        if (seg > 3600) tempo = Math.floor(seg/3600) + 'h atrás';
-        else if (seg > 60) tempo = Math.floor(seg/60) + 'min atrás';
-        return `<div class="feed-item">
-          <span class="nome">🐾 ${d.nome}</span>
-          <span><span class="valor">${fmtBRL(d.valor)}</span> <span style="color:var(--muted);font-size:.82rem">${tempo}</span></span>
-        </div>`;
-      }).join('');
-    }
-  } catch (e) { /* silencioso */ }
+  html += `<div class="modal-actions"><button class="modal-close" onclick="closeModal()">Fechar</button></div>`;
+
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modal').classList.add('show');
 }
 
-// ===== INICIALIZAÇÃO =====
-carregar();
-carregarSiteInfo();
-setInterval(carregar, 30000);
-setInterval(carregarSiteInfo, 60000);
+function abrirImportar() {
+  let html = `<h2>📋 Importar doações</h2>`;
+  html += `<p style="color:var(--muted);font-size:.85rem;margin-bottom:12px">Cole um JSON com as doações. Cada uma precisa de: <code>id, nome, valor, status</code>.</p>`;
+  html += `<textarea id="importText" placeholder='[{"id":"abc123","nome":"Maria","valor":30,"status":"paid","created_at":"2026-10-13T18:00:00Z"}]'></textarea>`;
+  html += `<div class="modal-actions">
+    <button class="btn primary" style="flex:1" onclick="importarJSON()">Importar</button>
+    <button class="btn" style="flex:1" onclick="closeModal()">Cancelar</button>
+  </div>`;
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modal').classList.add('show');
+}
+
+function importarJSON() {
+  try {
+    const text = document.getElementById('importText').value.trim();
+    const arr = JSON.parse(text);
+    if (!Array.isArray(arr)) throw new Error('Precisa ser um array');
+
+    const atual = getDoacoes();
+    const ids = new Set(atual.map(d => d.id));
+    const novos = arr.filter(d => d.id && !ids.has(d.id));
+
+    if (novos.length === 0) {
+      toast('Nenhuma doação nova', 'yellow');
+      return;
+    }
+
+    setDoacoes([...atual, ...novos]);
+    todasDoacoes = getDoacoes();
+    renderTudo();
+    closeModal();
+    toast(`✅ ${novos.length} doação(ões) importadas`);
+  } catch (e) {
+    toast('❌ JSON inválido: ' + e.message, 'red');
+  }
+}
+
+function abrirConfig() {
+  const config = getConfig();
+  let html = `<h2>⚙️ Configurações</h2>`;
+  html += `<div class="row"><strong>Valores sugeridos (R$)</strong></div>`;
+  html += `<input type="text" id="cfgValores" value="${config.valores_sugeridos.join(', ')}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
+  html += `<div class="row"><strong>Meta mensal (R$)</strong></div>`;
+  html += `<input type="number" id="cfgMeta" value="${config.meta_mensal}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
+  html += `<div class="row"><strong>Mensagem de manutenção</strong></div>`;
+  html += `<input type="text" id="cfgMsg" value="${config.mensagem_manutencao}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
+  html += `<div class="row"><strong>Destacar doação a partir de (R$)</strong></div>`;
+  html += `<input type="number" id="cfgDestaque" value="${config.destaque_doacao}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
+  html += `<div class="modal-actions">
+    <button class="btn primary" style="flex:1" onclick="salvarConfig()">Salvar</button>
+    <button class="btn" style="flex:1" onclick="closeModal()">Cancelar</button>
+  </div>`;
+  html += `<button class="btn danger" style="width:100%;margin-top:12px" onclick="limparTudo()">🗑️ Apagar todas as doações</button>`;
+
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modal').classList.add('show');
+}
+
+function salvarConfig() {
+  const valores = document.getElementById('cfgValores').value
+    .split(',').map(v => Number(v.trim())).filter(v => !isNaN(v) && v > 0);
+  const meta = Number(document.getElementById('cfgMeta').value);
+  const msg = document.getElementById('cfgMsg').value.trim();
+  const destaque = Number(document.getElementById('cfgDestaque').value);
+
+  const config = getConfig();
+  config.valores_sugeridos = valores;
+  config.meta_mensal = meta;
+  config.mensagem_manutencao = msg;
+  config.destaque_doacao = destaque;
+  setConfig(config);
+
+  renderTudo();
+  closeModal();
+  toast('✅ Configurações salvas');
+}
+
+function limparTudo() {
+  if (!confirm('⚠️ Apagar TODAS as doações do dashboard? Essa ação não pode ser desfeita.')) return;
+  localStorage.removeItem('voaurea_doacoes');
+  todasDoacoes = [];
+  renderTudo();
+  closeModal();
+  toast('🗑️ Doações apagadas', 'yellow');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function iniciarDashboard() {
+  // Tema
+  const temaSalvo = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', temaSalvo);
+  document.getElementById('themeBtn').textContent = temaSalvo === 'dark' ? '☀️ Claro' : '🌙 Escuro';
+
+  // Carrega tudo
+  todasDoacoes = getDoacoes();
+  renderTudo();
+  carregarTudo();
+
+  // Auto-refresh 30s
+  setInterval(carregarTudo, 30000);
+}
+
+// Se já estiver logado, inicia direto
+if (localStorage.getItem('admin_logado') === '1') {
+  iniciarDashboard();
+}
+
+// Enter no login
+document.getElementById('loginPass')?.addEventListener('keypress', e => {
+  if (e.key === 'Enter') fazerLogin();
+});
 </script>
 </body>
 </html>
