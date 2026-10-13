@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard — Abrigo Vó Áurea</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#0f1117;--card:#1a1d27;--card-hover:#232732;--text:#f0f0f0;--muted:#8b93a7;--green:#16a34a;--green-soft:#052e16;--red:#ef4444;--yellow:#f59e0b;--border:#2a2e3a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+h1{font-size:1.4rem;margin-bottom:4px}
+h1 span{color:var(--muted);font-weight:400;font-size:.85rem;display:block;margin-top:4px}
+.header{margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+.card{background:var(--card);padding:20px;border-radius:12px;border:1px solid var(--border)}
+.card-label{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.card-value{font-size:1.7rem;font-weight:700}
+.card-value.green{color:var(--green)}
+.card-value.yellow{color:var(--yellow)}
+.card-sub{color:var(--muted);font-size:.85rem;margin-top:4px}
+.chart-box{background:var(--card);padding:20px;border-radius:12px;margin-bottom:24px;border:1px solid var(--border)}
+.chart-box h3{margin-bottom:16px;font-size:.95rem;color:var(--muted)}
+.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.filters select,.filters input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:8px;font-size:.9rem;outline:none}
+.filters input{flex:1;min-width:200px}
+.filters button{background:var(--green);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);font-size:.9rem}
+th{background:#232732;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+tr:hover td{background:var(--card-hover)}
+tr:last-child td{border-bottom:none}
+.status{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:600}
+.status.paid{background:var(--green-soft);color:var(--green)}
+.status.pending{background:#3a2e05;color:var(--yellow)}
+.status.expired,.status.failed{background:#3a0505;color:var(--red)}
+.empty{padding:40px;text-align:center;color:var(--muted);background:var(--card);border-radius:12px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🐾 Dashboard — Abrigo Vó Áurea <span id="lastUpdate">Carregando...</span></h1>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <div class="card-label">Total bruto</div>
+    <div class="card-value green" id="totalBruto">R$ 0,00</div>
+    <div class="card-sub" id="totalCount">0 doações pagas</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Líquido (após taxa)</div>
+    <div class="card-value" id="totalLiquido">R$ 0,00</div>
+    <div class="card-sub">O que cai na conta</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Últimos 7 dias</div>
+    <div class="card-value" id="seteDias">R$ 0,00</div>
+    <div class="card-sub" id="seteDiasCount">0 doações</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Ticket médio</div>
+    <div class="card-value yellow" id="ticketMedio">R$ 0,00</div>
+    <div class="card-sub">Por doação</div>
+  </div>
+</div>
+
+<div class="chart-box">
+  <h3>📈 Doações por dia (últimos 30 dias)</h3>
+  <canvas id="chart" height="80"></canvas>
+</div>
+
+<div class="filters">
+  <select id="filtroPeriodo">
+    <option value="todos">Todo o período</option>
+    <option value="hoje">Hoje</option>
+    <option value="7dias">Últimos 7 dias</option>
+    <option value="30dias">Últimos 30 dias</option>
+  </select>
+  <select id="filtroStatus">
+    <option value="todos">Todos</option>
+    <option value="paid">Pago</option>
+    <option value="pending">Pendente</option>
+    <option value="expired">Expirado</option>
+    <option value="failed">Falhou</option>
+  </select>
+  <input type="text" id="filtroBusca" placeholder="Buscar por nome...">
+  <button onclick="carregar()">Atualizar</button>
+</div>
+
+<div id="lista"></div>
+
+<script>
+const API = '/api/admin/doacoes';
+let chart = null;
+
+function fmtBRL(v) {
+  return 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+function fmtData(s) {
+  if (!s) return '—';
+  return new Date(s).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+
+async function carregar() {
+  const periodo = document.getElementById('filtroPeriodo').value;
+  const status = document.getElementById('filtroStatus').value;
+  const busca = document.getElementById('filtroBusca').value.trim();
+
+  const params = new URLSearchParams({ periodo, status });
+  if (busca) params.set('busca', busca);
+
+  try {
+    const res = await fetch(`${API}?${params}`);
+    if (res.status === 401) {
+      alert('Login inválido');
+      return;
+    }
+    const data = await res.json();
+
+    if (!data.success) throw new Error(data.message || 'Erro');
+
+    // Stats
+    const s = data.stats;
+    document.getElementById('totalBruto').textContent = fmtBRL(s.totalBruto);
+    document.getElementById('totalLiquido').textContent = fmtBRL(s.totalLiquido);
+    document.getElementById('totalCount').textContent = s.totalCount + ' doações pagas';
+    document.getElementById('seteDias').textContent = fmtBRL(s.seteDiasBruto);
+    document.getElementById('seteDiasCount').textContent = s.seteDiasCount + ' doações';
+    document.getElementById('ticketMedio').textContent = fmtBRL(s.ticketMedio);
+    document.getElementById('lastUpdate').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR');
+
+    // Tabela
+    const el = document.getElementById('lista');
+    const lista = data.doacoes || [];
+
+    if (lista.length === 0) {
+      el.innerHTML = '<div class="empty">Nenhuma doação encontrada</div>';
+      return;
+    }
+
+    let html = '<table><thead><tr><th>Data</th><th>Nome</th><th>Valor</th><th>Status</th><th>Método</th></tr></thead><tbody>';
+    lista.forEach(d => {
+      const st = d.status || 'pending';
+      html += `<tr>
+        <td>${fmtData(d.created_at || d.paid_at)}</td>
+        <td>${d.nome || '—'}</td>
+        <td><strong>${fmtBRL(d.valor)}</strong></td>
+        <td><span class="status ${st}">${st}</span></td>
+        <td>${d.metodo || 'pix'}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    el.innerHTML = html;
+
+    // Gráfico
+    renderGrafico(lista);
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('lista').innerHTML = '<div class="empty">Erro: ' + err.message + '</div>';
+  }
+}
+
+function renderGrafico(lista) {
+  const porDia = {};
+  const hoje = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(hoje);
+    d.setDate(d.getDate() - i);
+    porDia[d.toISOString().slice(0, 10)] = 0;
+  }
+
+  lista.filter(d => d.status === 'paid').forEach(d => {
+    const k = new Date(d.created_at || d.paid_at).toISOString().slice(0, 10);
+    if (porDia[k] !== undefined) porDia[k] += Number(d.valor);
+  });
+
+  const labels = Object.keys(porDia).map(k => {
+    const [, m, d] = k.split('-');
+    return `${d}/${m}`;
+  });
+  const valores = Object.values(porDia);
+
+  const ctx = document.getElementById('chart');
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'R$',
+        data: valores,
+        borderColor: '#16a34a',
+        backgroundColor: 'rgba(22, 163, 74, .15)',
+        tension: .35,
+        fill: true,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#8b93a7', maxTicksLimit: 10 }, grid: { color: '#2a2e3a' } },
+        y: { ticks: { color: '#8b93a7', callback: v => 'R$ ' + v }, grid: { color: '#2a2e3a' }, beginAtZero: true }
+      }
+    }
+  });
+}
+
+carregar();
+setInterval(carregar, 30000); // atualiza a cada 30s
+</script>
+</body>
+</html>
