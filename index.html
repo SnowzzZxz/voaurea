@@ -620,7 +620,6 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
         <div class="pix-code" id="pixCodeText"></div>
         <div class="pix-total" id="pixTotalText"></div>
         <button type="button" class="pix-copy-btn" id="pixCopyBtn">📋 Copiar código Pix</button>
-        <button type="button" class="pix-confirm-btn" id="pixConfirmBtn">Já paguei ✓</button>
       </div>
     </div>
 
@@ -839,53 +838,6 @@ function showPixResult(data){
 }
 $('#pixCopyBtn').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText($('#pixCodeText').textContent); $('#pixCopyBtn').textContent = '✓ Copiado!'; setTimeout(()=> $('#pixCopyBtn').textContent = '📋 Copiar código Pix', 2000); } catch(e){}
-});
-
-// ===== BOTÃO "JÁ PAGUEI" — discreto e verde =====
-$('#pixConfirmBtn').addEventListener('click', async () => {
-  const btn = $('#pixConfirmBtn');
-  if (btn.disabled) return;
-
-  btn.disabled = true;
-  btn.classList.add('is-verifying');
-  btn.classList.remove('is-error', 'is-confirmed');
-  btn.textContent = '⏳ Verificando...';
-
-  try {
-    const res = await fetch(API_APROVAR_PAGAMENTO, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ transactionId: donationState.pixData?.transactionId })
-    });
-    const data = await res.json();
-
-    if (data.success && data.isPaid === true) {
-      // ✅ PAGO — mostra tela de sucesso
-      btn.classList.remove('is-verifying');
-      btn.classList.add('is-confirmed');
-      btn.textContent = '✓ Confirmado';
-      setTimeout(() => { showStep(4); }, 400);
-    } else {
-      // ⏳ Não pago ainda — volta o botão ao normal
-      btn.classList.remove('is-verifying');
-      btn.classList.add('is-error');
-      btn.textContent = 'Ainda não identificamos — tentar de novo';
-      setTimeout(() => {
-        btn.classList.remove('is-error');
-        btn.textContent = 'Já paguei ✓';
-        btn.disabled = false;
-      }, 2500);
-    }
-  } catch (e) {
-    btn.classList.remove('is-verifying');
-    btn.classList.add('is-error');
-    btn.textContent = 'Erro — tentar de novo';
-    setTimeout(() => {
-      btn.classList.remove('is-error');
-      btn.textContent = 'Já paguei ✓';
-      btn.disabled = false;
-    }, 2500);
-  }
 });
 
 const downsellModal = $('#downsellModal');
