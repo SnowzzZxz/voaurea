@@ -12,16 +12,14 @@ module.exports = async (req, res) => {
 
   try {
     const { transactionId } = req.body || {};
-
     if (!transactionId) {
       return res.status(400).json({ success: false, message: 'transactionId obrigatório' });
     }
 
-    const CLIENT_ID     = process.env.ZPAY_CLIENT_ID;
-    const CLIENT_SECRET = process.env.ZPAY_CLIENT_SECRET;
-    const ZPAY_API_URL  = process.env.ZPAY_API_URL || 'https://zpaysolution.com/api/v1';
+    const CLIENT_ID     = 'zpk_541f4b2f71855fb26e1201a7';
+    const CLIENT_SECRET = 'zsk_87b13fb23ba5eed5d6d9f0f9e6153d20dfeac10e24a66dd6';
+    const ZPAY_API_URL  = 'https://zpaysolution.com/api/v1';
 
-    // Força reconciliação (approve) — recomendado pela doc
     const response = await axios.post(
       `${ZPAY_API_URL}/payments/${transactionId}/approve`,
       {},
@@ -53,7 +51,6 @@ module.exports = async (req, res) => {
     });
 
   } catch (error) {
-    // 409 = ainda pending (não é erro fatal)
     if (error.response?.status === 409) {
       return res.status(200).json({
         success: true,
@@ -61,8 +58,6 @@ module.exports = async (req, res) => {
         message: 'Pagamento ainda não confirmado',
       });
     }
-
-    // 404 = não encontrado
     if (error.response?.status === 404) {
       return res.status(404).json({
         success: false,
@@ -70,8 +65,7 @@ module.exports = async (req, res) => {
         message: 'Pagamento não encontrado',
       });
     }
-
-    console.error('❌ Erro consultar:', error.response?.data || error.message);
+    console.error('Erro consultar:', error.response?.data || error.message);
     return res.status(error.response?.status || 500).json({
       success: false,
       message: error.response?.data?.error || 'Erro ao consultar pagamento',
