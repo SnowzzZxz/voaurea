@@ -1,6 +1,16 @@
 {
-  "site_ativo": true,
-  "valores_sugeridos": [20, 30, 50, 100, 150, 200, 250, 500, 1000],
+  "site_ativo": false,
+  "valores_sugeridos": [
+    20,
+    30,
+    50,
+    100,
+    150,
+    200,
+    250,
+    500,
+    1000
+  ],
   "meta_mensal": 60000,
   "contador_base": 0,
   "mensagem_manutencao": "Estamos atualizando o site. Voltamos em alguns minutos! 🐾",
