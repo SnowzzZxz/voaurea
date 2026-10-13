@@ -28,57 +28,73 @@ function checkAuth(req, res) {
   return true;
 }
 
+async function fetchZPay() {
+  const headers = {
+    'Content-Type': 'application/json',
+    'client-id': CLIENT_ID,
+    'client-secret': CLIENT_SECRET,
+  };
+
+  for (const base of BASE_URLS) {
+    try {
+      const resp = await axios.get(`${base}/payments`, { headers, timeout: 10000 });
+      let pagamentos = resp.data.payments || resp.data.data || resp.data || [];
+      if (!Array.isArray(pagamentos)) pagamentos = [];
+      if (pagamentos.length > 0 || resp.status === 200) return pagamentos;
+    } catch (e) {
+      console.warn(`Falha em ${base}:`, e.message);
+    }
+  }
+  return [];
+}
+
+function calcTaxa(v) {
+  return v <= 1000 ? 0.50 : 0.50 + (v - 1000) * 0.01;
+}
+
 module.exports = async (req, res) => {
   if (!checkAuth(req, res)) return;
 
   try {
-    const headers = {
-      'Content-Type': 'application/json',
-      'client-id': CLIENT_ID,
-      'client-secret': CLIENT_SECRET,
-    };
+    const pagamentos = await fetchZPay();
 
-    // Tenta a Z.PAY v2 primeiro, cai pra v1
-    let pagamentos = [];
-    let erroFinal = null;
-
-    for (const base of BASE_URLS) {
-      try {
-        const resp = await axios.get(`${base}/payments`, { headers, timeout: 10000 });
-        pagamentos = resp.data.payments || resp.data.data || resp.data || [];
-        if (!Array.isArray(pagamentos)) pagamentos = [];
-        break;
-      } catch (e) {
-        erroFinal = e.response?.data?.error || e.message;
-      }
-    }
-
-    // Normaliza os dados
     const doacoes = pagamentos.map(p => ({
       id: p.id || p.paymentId,
       nome: p.payer?.name || p.payerName || p.donorName || '—',
-      email: p.email || null,
+      email: p.email || p.payer?.email || null,
       valor: Number(p.amount || 0),
       status: p.status || 'pending',
       metodo: p.paymentMethod || 'pix',
       created_at: p.createdAt || p.created_at,
       paid_at: p.paidAt || p.paid_at,
-    }));
+    })).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    // Calcula totais
     const pagas = doacoes.filter(d => d.status === 'paid');
     const totalBruto = pagas.reduce((s, d) => s + d.valor, 0);
-    const taxaZPay = (v) => v <= 1000 ? 0.50 : 0.50 + (v - 1000) * 0.01;
-    const totalLiquido = pagas.reduce((s, d) => s + (d.valor - taxaZPay(d.valor)), 0);
+    const totalLiquido = pagas.reduce((s, d) => s + (d.valor - calcTaxa(d.valor)), 0);
 
-    // Últimos 7 dias
-    const seteDiasAtras = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const recentes = pagas.filter(d => new Date(d.created_at || d.paid_at) >= seteDiasAtras);
+    const agora = new Date();
+    const hoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+    const seteDias = new Date(Date.now() - 7*24*60*60*1000);
+    const quinzeDias = new Date(Date.now() - 15*24*60*60*1000);
+    const trintaDias = new Date(Date.now() - 30*24*60*60*1000);
 
-    // Filtros opcionais
+    const filtrar = (arr, desde) => arr.filter(d => new Date(d.created_at || d.paid_at) >= desde);
+
+    const hojeP = filtrar(pagas, hoje);
+    const seteP = filtrar(pagas, seteDias);
+    const trintaP = filtrar(pagas, trintaDias);
+    const quinzeAntes = filtrar(pagas, quinzeDias).filter(d => new Date(d.created_at || d.paid_at) < seteDias);
+
+    const totalHoje = hojeP.reduce((s, d) => s + d.valor, 0);
+    const total7 = seteP.reduce((s, d) => s + d.valor, 0);
+    const total30 = trintaP.reduce((s, d) => s + d.valor, 0);
+    const totalSemanaAnterior = quinzeAntes.reduce((s, d) => s + d.valor, 0);
+
+    const doacoesGrandes = pagas.filter(d => d.valor >= 500).slice(0, 10);
+
     const { periodo, status, busca } = req.query;
     let filtradas = doacoes;
-
     if (status && status !== 'todos') filtradas = filtradas.filter(d => d.status === status);
     if (busca) {
       const b = busca.toLowerCase();
@@ -87,27 +103,29 @@ module.exports = async (req, res) => {
         (d.email || '').toLowerCase().includes(b)
       );
     }
-    if (periodo === 'hoje') {
-      const hoje = new Date(); hoje.setHours(0,0,0,0);
-      filtradas = filtradas.filter(d => new Date(d.created_at) >= hoje);
-    } else if (periodo === '7dias') {
-      filtradas = filtradas.filter(d => new Date(d.created_at) >= seteDiasAtras);
-    } else if (periodo === '30dias') {
-      const d30 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-      filtradas = filtradas.filter(d => new Date(d.created_at) >= d30);
-    }
+    if (periodo === 'hoje') filtradas = filtrar(filtradas, hoje);
+    else if (periodo === '7dias') filtradas = filtrar(filtradas, seteDias);
+    else if (periodo === '30dias') filtradas = filtrar(filtradas, trintaDias);
 
     return res.status(200).json({
       success: true,
-      doacoes: filtradas,
+      doacoes: filtradas.slice(0, 500),
       stats: {
         totalBruto,
         totalLiquido,
         totalCount: pagas.length,
         ticketMedio: pagas.length ? totalBruto / pagas.length : 0,
-        seteDiasBruto: recentes.reduce((s, d) => s + d.valor, 0),
-        seteDiasCount: recentes.length,
+        hojeBruto: totalHoje,
+        hojeCount: hojeP.length,
+        seteDiasBruto: total7,
+        seteDiasCount: seteP.length,
+        trintaDiasBruto: total30,
+        trintaDiasCount: trintaP.length,
+        semanaAnterior: totalSemanaAnterior,
+        variacao: totalSemanaAnterior ? ((total7 - totalSemanaAnterior) / totalSemanaAnterior) * 100 : 0,
       },
+      doacoesGrandes,
+      todasPagas: pagas.slice(0, 30),
     });
 
   } catch (err) {
