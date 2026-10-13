@@ -1,76 +1,214 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dashboard — Abrigo Vó Áurea</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-:root{--bg:#0f1117;--card:#1a1d27;--card-hover:#232732;--text:#f0f0f0;--muted:#8b93a7;--green:#16a34a;--green-soft:#052e16;--red:#ef4444;--yellow:#f59e0b;--border:#2a2e3a}
+:root[data-theme="dark"]{
+  --bg:#0f1117;--card:#1a1d27;--card-hover:#232732;--text:#f0f0f0;--muted:#8b93a7;
+  --green:#16a34a;--green-soft:#052e16;--red:#ef4444;--yellow:#f59e0b;
+  --blue:#3b82f6;--purple:#8b5cf6;--border:#2a2e3a;
+}
+:root[data-theme="light"]{
+  --bg:#f6f7f9;--card:#ffffff;--card-hover:#f3f4f6;--text:#1a1d27;--muted:#6b7280;
+  --green:#16a34a;--green-soft:#ecfdf3;--red:#dc2626;--yellow:#d97706;
+  --blue:#2563eb;--purple:#7c3aed;--border:#e5e7eb;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
-h1{font-size:1.4rem;margin-bottom:4px}
-h1 span{color:var(--muted);font-weight:400;font-size:.85rem;display:block;margin-top:4px}
-.header{margin-bottom:24px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px}
-.card{background:var(--card);padding:20px;border-radius:12px;border:1px solid var(--border)}
-.card-label{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.card-value{font-size:1.7rem;font-weight:700}
+html{transition:background .2s}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px;transition:background .2s,color .2s}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.header h1{font-size:1.4rem;display:flex;align-items:center;gap:8px}
+.header .sub{color:var(--muted);font-weight:400;font-size:.85rem;margin-top:4px}
+.header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--card-hover);transform:translateY(-1px)}
+.btn.primary{background:var(--green);border-color:var(--green);color:#fff}
+.btn.primary:hover{background:#15803d}
+
+/* SITE TOGGLE */
+.site-banner{padding:12px 18px;border-radius:10px;margin-bottom:20px;font-size:.9rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.site-banner.on{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
+.site-banner.off{background:#3a0505;color:#fca5a5;border:1px solid var(--red)}
+
+/* GRID CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
+.card{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border);transition:.2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.card-label{color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;font-weight:600}
+.card-value{font-size:1.6rem;font-weight:800;line-height:1.2}
 .card-value.green{color:var(--green)}
 .card-value.yellow{color:var(--yellow)}
-.card-sub{color:var(--muted);font-size:.85rem;margin-top:4px}
-.chart-box{background:var(--card);padding:20px;border-radius:12px;margin-bottom:24px;border:1px solid var(--border)}
-.chart-box h3{margin-bottom:16px;font-size:.95rem;color:var(--muted)}
-.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.filters select,.filters input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:8px;font-size:.9rem;outline:none}
-.filters input{flex:1;min-width:200px}
-.filters button{background:var(--green);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem}
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}
-th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);font-size:.9rem}
-th{background:#232732;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
-tr:hover td{background:var(--card-hover)}
+.card-value.blue{color:var(--blue)}
+.card-sub{color:var(--muted);font-size:.82rem;margin-top:4px;display:flex;align-items:center;gap:6px}
+.variation{font-size:.75rem;font-weight:700;padding:2px 6px;border-radius:4px}
+.variation.up{background:var(--green-soft);color:var(--green)}
+.variation.down{background:#3a0505;color:var(--red)}
+
+/* CHART */
+.chart-box{background:var(--card);padding:20px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border)}
+.chart-box h3{margin-bottom:14px;font-size:.95rem;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.chart-toggle{display:flex;gap:4px}
+.chart-toggle button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:.75rem;cursor:pointer}
+.chart-toggle button.active{background:var(--green);border-color:var(--green);color:#fff}
+
+/* META */
+.meta-box{background:var(--card);padding:18px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border)}
+.meta-head{display:flex;justify-content:space-between;margin-bottom:10px;font-size:.9rem;font-weight:600}
+.meta-head .pct{color:var(--green)}
+.meta-track{height:12px;background:var(--card-hover);border-radius:999px;overflow:hidden}
+.meta-fill{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:inherit;transition:width .8s ease}
+
+/* FILTROS */
+.filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filters select,.filters input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:.88rem;outline:none}
+.filters select:focus,.filters input:focus{border-color:var(--green)}
+.filters input{flex:1;min-width:180px}
+
+/* TABELA */
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);font-size:.88rem}
+th{background:var(--card-hover);color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
 tr:last-child td{border-bottom:none}
-.status{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:600}
+tr:hover td{background:var(--card-hover)}
+
+.status{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:700}
 .status.paid{background:var(--green-soft);color:var(--green)}
 .status.pending{background:#3a2e05;color:var(--yellow)}
 .status.expired,.status.failed{background:#3a0505;color:var(--red)}
-.empty{padding:40px;text-align:center;color:var(--muted);background:var(--card);border-radius:12px}
+tr.big-donation td{background:linear-gradient(90deg,transparent,rgba(240,180,41,.08))}
+tr.big-donation td:first-child::before{content:"⭐ ";font-size:.9rem}
+tr.big-donation .valor{color:var(--yellow);font-weight:800}
+
+.empty{padding:40px;text-align:center;color:var(--muted);background:var(--card);border-radius:12px;border:1px solid var(--border)}
+
+/* FEED DE ÚLTIMAS */
+.feed{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border);margin-bottom:20px}
+.feed h3{font-size:.95rem;color:var(--muted);margin-bottom:12px;font-weight:600}
+.feed-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.feed-item:last-child{border-bottom:none}
+.feed-item .nome{font-weight:600}
+.feed-item .valor{color:var(--green);font-weight:700}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:100;backdrop-filter:blur(4px)}
+.modal.show{display:flex}
+.modal-card{background:var(--card);padding:24px;border-radius:14px;max-width:500px;width:100%;max-height:85vh;overflow:auto;border:1px solid var(--border)}
+.modal-card h2{margin-bottom:16px;font-size:1.15rem}
+.modal-card .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:.9rem;gap:12px}
+.modal-card .row:last-child{border-bottom:none}
+.modal-card .row strong{color:var(--muted);font-weight:500}
+.modal-close{margin-top:16px;background:var(--card-hover);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:8px;cursor:pointer;width:100%;font-weight:600}
+
+/* LOADING */
+.skeleton{background:linear-gradient(90deg,var(--card),var(--card-hover),var(--card));background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;height:1.5rem;margin:6px 0}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--card);border:1px solid var(--border);padding:14px 18px;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.25);font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:10px;transform:translateX(120%);transition:transform .3s ease;z-index:200;max-width:320px}
+.toast.show{transform:translateX(0)}
+.toast.green{border-color:var(--green)}
+.toast.yellow{border-color:var(--yellow)}
+
+/* RESPONSIVO */
+@media(max-width:640px){
+  body{padding:12px}
+  .header h1{font-size:1.15rem}
+  .card-value{font-size:1.35rem}
+  th,td{padding:8px 10px;font-size:.82rem}
+  th:nth-child(4),td:nth-child(4){display:none}
+}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <h1>🐾 Dashboard — Abrigo Vó Áurea <span id="lastUpdate">Carregando...</span></h1>
+  <div>
+    <h1>🐾 Dashboard — Abrigo Vó Áurea</h1>
+    <div class="sub" id="lastUpdate">Carregando...</div>
+  </div>
+  <div class="header-actions">
+    <a href="/" target="_blank" class="btn">🌐 Ver site</a>
+    <button class="btn" onclick="exportarCSV()">📥 CSV</button>
+    <button class="btn" onclick="toggleTheme()" id="themeBtn">🌙 Escuro</button>
+    <button class="btn primary" onclick="carregar()">🔄 Atualizar</button>
+  </div>
 </div>
 
+<!-- BANNER SITE -->
+<div class="site-banner on" id="siteBanner" style="display:none">
+  <span id="siteBannerText">Site ativo</span>
+  <span style="font-size:.78rem;font-weight:500;opacity:.8">Edite o <code>config.json</code> no GitHub pra alterar</span>
+</div>
+
+<!-- STATS -->
 <div class="grid">
   <div class="card">
     <div class="card-label">Total bruto</div>
-    <div class="card-value green" id="totalBruto">R$ 0,00</div>
-    <div class="card-sub" id="totalCount">0 doações pagas</div>
+    <div class="card-value green" id="totalBruto">—</div>
+    <div class="card-sub"><span id="totalCount">—</span></div>
   </div>
   <div class="card">
     <div class="card-label">Líquido (após taxa)</div>
-    <div class="card-value" id="totalLiquido">R$ 0,00</div>
+    <div class="card-value" id="totalLiquido">—</div>
     <div class="card-sub">O que cai na conta</div>
   </div>
   <div class="card">
     <div class="card-label">Últimos 7 dias</div>
-    <div class="card-value" id="seteDias">R$ 0,00</div>
-    <div class="card-sub" id="seteDiasCount">0 doações</div>
+    <div class="card-value" id="seteDias">—</div>
+    <div class="card-sub">
+      <span id="seteDiasCount">—</span>
+      <span class="variation" id="variacao">—</span>
+    </div>
   </div>
   <div class="card">
     <div class="card-label">Ticket médio</div>
-    <div class="card-value yellow" id="ticketMedio">R$ 0,00</div>
-    <div class="card-sub">Por doação</div>
+    <div class="card-value yellow" id="ticketMedio">—</div>
+    <div class="card-sub">Por doação paga</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Hoje</div>
+    <div class="card-value blue" id="hojeBruto">—</div>
+    <div class="card-sub" id="hojeCount">—</div>
   </div>
 </div>
 
+<!-- META -->
+<div class="meta-box" id="metaBox" style="display:none">
+  <div class="meta-head">
+    <span>🎯 Meta mensal</span>
+    <span class="pct" id="metaPct">0%</span>
+  </div>
+  <div class="meta-track"><div class="meta-fill" id="metaFill" style="width:0%"></div></div>
+  <div class="card-sub" style="margin-top:8px" id="metaText">R$ 0 / R$ 60.000</div>
+</div>
+
+<!-- GRÁFICO -->
 <div class="chart-box">
-  <h3>📈 Doações por dia (últimos 30 dias)</h3>
+  <h3>
+    📈 Doações por dia
+    <div class="chart-toggle">
+      <button class="active" onclick="mudarPeriodo(7,this)">7 dias</button>
+      <button onclick="mudarPeriodo(30,this)">30 dias</button>
+      <button onclick="mudarPeriodo(90,this)">90 dias</button>
+    </div>
+  </h3>
   <canvas id="chart" height="80"></canvas>
 </div>
 
+<!-- FEED -->
+<div class="feed" id="feedBox" style="display:none">
+  <h3>🐾 Últimas doações</h3>
+  <div id="feedContent"></div>
+</div>
+
+<!-- FILTROS -->
 <div class="filters">
   <select id="filtroPeriodo">
     <option value="todos">Todo o período</option>
@@ -79,30 +217,68 @@ tr:last-child td{border-bottom:none}
     <option value="30dias">Últimos 30 dias</option>
   </select>
   <select id="filtroStatus">
-    <option value="todos">Todos</option>
+    <option value="todos">Todos os status</option>
     <option value="paid">Pago</option>
     <option value="pending">Pendente</option>
     <option value="expired">Expirado</option>
     <option value="failed">Falhou</option>
   </select>
   <input type="text" id="filtroBusca" placeholder="Buscar por nome...">
-  <button onclick="carregar()">Atualizar</button>
+  <button class="btn primary" onclick="carregar()">Filtrar</button>
 </div>
 
+<!-- TABELA -->
 <div id="lista"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-card" id="modalContent"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
 const API = '/api/admin/doacoes';
-let chart = null;
+const SITE_INFO = '/api/site-info';
 
+let chart = null;
+let todasDoacoes = [];
+let periodoGrafico = 30;
+let ultimaDoacaoVista = null;
+
+// ===== THEME =====
+function initTheme() {
+  const salvo = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', salvo);
+  document.getElementById('themeBtn').textContent = salvo === 'dark' ? '☀️ Claro' : '🌙 Escuro';
+}
+function toggleTheme() {
+  const atual = document.documentElement.getAttribute('data-theme');
+  const novo = atual === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', novo);
+  localStorage.setItem('theme', novo);
+  document.getElementById('themeBtn').textContent = novo === 'dark' ? '☀️ Claro' : '🌙 Escuro';
+  if (chart) renderGrafico(todasDoacoes);
+}
+initTheme();
+
+// ===== UTILS =====
 function fmtBRL(v) {
-  return 'R$ ' + Number(v).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return 'R$ ' + Number(v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 function fmtData(s) {
   if (!s) return '—';
-  return new Date(s).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
+  return new Date(s).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', year:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+function toast(msg, tipo='green') {
+  const el = document.getElementById('toast');
+  el.className = 'toast show ' + tipo;
+  el.textContent = msg;
+  setTimeout(() => el.classList.remove('show'), 3000);
 }
 
+// ===== CARREGAR =====
 async function carregar() {
   const periodo = document.getElementById('filtroPeriodo').value;
   const status = document.getElementById('filtroStatus').value;
@@ -113,49 +289,27 @@ async function carregar() {
 
   try {
     const res = await fetch(`${API}?${params}`);
-    if (res.status === 401) {
-      alert('Login inválido');
-      return;
-    }
+    if (res.status === 401) { toast('Login inválido', 'yellow'); return; }
     const data = await res.json();
-
     if (!data.success) throw new Error(data.message || 'Erro');
 
-    // Stats
-    const s = data.stats;
-    document.getElementById('totalBruto').textContent = fmtBRL(s.totalBruto);
-    document.getElementById('totalLiquido').textContent = fmtBRL(s.totalLiquido);
-    document.getElementById('totalCount').textContent = s.totalCount + ' doações pagas';
-    document.getElementById('seteDias').textContent = fmtBRL(s.seteDiasBruto);
-    document.getElementById('seteDiasCount').textContent = s.seteDiasCount + ' doações';
-    document.getElementById('ticketMedio').textContent = fmtBRL(s.ticketMedio);
-    document.getElementById('lastUpdate').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR');
+    renderStats(data.stats);
+    renderTabela(data.doacoes || []);
+    renderGrafico(data.doacoes || []);
 
-    // Tabela
-    const el = document.getElementById('lista');
-    const lista = data.doacoes || [];
+    // Guarda todas as doações pra usar no feed e gráfico
+    todasDoacoes = data.doacoes || [];
 
-    if (lista.length === 0) {
-      el.innerHTML = '<div class="empty">Nenhuma doação encontrada</div>';
-      return;
+    // Alerta de doação grande
+    if (data.doacoesGrandes?.length > 0) {
+      const ultimaGrande = data.doacoesGrandes[0];
+      if (ultimaDoacaoVista && ultimaGrande.id !== ultimaDoacaoVista) {
+        toast(`⭐ Doação grande: ${fmtBRL(ultimaGrande.valor)} — ${ultimaGrande.nome}`, 'yellow');
+      }
+      ultimaDoacaoVista = ultimaGrande.id;
     }
 
-    let html = '<table><thead><tr><th>Data</th><th>Nome</th><th>Valor</th><th>Status</th><th>Método</th></tr></thead><tbody>';
-    lista.forEach(d => {
-      const st = d.status || 'pending';
-      html += `<tr>
-        <td>${fmtData(d.created_at || d.paid_at)}</td>
-        <td>${d.nome || '—'}</td>
-        <td><strong>${fmtBRL(d.valor)}</strong></td>
-        <td><span class="status ${st}">${st}</span></td>
-        <td>${d.metodo || 'pix'}</td>
-      </tr>`;
-    });
-    html += '</tbody></table>';
-    el.innerHTML = html;
-
-    // Gráfico
-    renderGrafico(lista);
+    document.getElementById('lastUpdate').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR');
 
   } catch (err) {
     console.error(err);
@@ -163,16 +317,92 @@ async function carregar() {
   }
 }
 
-function renderGrafico(lista) {
+// ===== STATS =====
+function renderStats(s) {
+  document.getElementById('totalBruto').textContent = fmtBRL(s.totalBruto);
+  document.getElementById('totalLiquido').textContent = fmtBRL(s.totalLiquido);
+  document.getElementById('totalCount').textContent = s.totalCount + ' doações pagas';
+  document.getElementById('seteDias').textContent = fmtBRL(s.seteDiasBruto);
+  document.getElementById('seteDiasCount').textContent = s.seteDiasCount + ' doações';
+  document.getElementById('ticketMedio').textContent = fmtBRL(s.ticketMedio);
+  document.getElementById('hojeBruto').textContent = fmtBRL(s.hojeBruto);
+  document.getElementById('hojeCount').textContent = s.hojeCount + ' doações hoje';
+
+  // Variação semanal
+  const varEl = document.getElementById('variacao');
+  if (s.variacao > 0) {
+    varEl.className = 'variation up';
+    varEl.textContent = '+' + s.variacao.toFixed(0) + '% vs semana ant.';
+  } else if (s.variacao < 0) {
+    varEl.className = 'variation down';
+    varEl.textContent = s.variacao.toFixed(0) + '% vs semana ant.';
+  } else {
+    varEl.style.display = 'none';
+  }
+
+  // Meta
+  carregarMeta(s.totalMes || 0);
+}
+
+async function carregarMeta(totalMes) {
+  try {
+    const res = await fetch(SITE_INFO);
+    const data = await res.json();
+    if (data.config?.meta_mensal && data.stats?.total_mes) {
+      const meta = data.config.meta_mensal;
+      const atual = data.stats.total_mes;
+      const pct = Math.min(100, (atual / meta) * 100);
+
+      document.getElementById('metaBox').style.display = 'block';
+      document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
+      document.getElementById('metaFill').style.width = pct + '%';
+      document.getElementById('metaText').textContent = `${fmtBRL(atual)} / ${fmtBRL(meta)}`;
+    }
+  } catch(e) { /* silencioso */ }
+}
+
+// ===== TABELA =====
+function renderTabela(doacoes) {
+  const el = document.getElementById('lista');
+  if (!doacoes.length) {
+    el.innerHTML = '<div class="empty">Nenhuma doação encontrada</div>';
+    return;
+  }
+
+  let html = '<table><thead><tr><th>Data</th><th>Nome</th><th>Valor</th><th>Status</th><th>Método</th></tr></thead><tbody>';
+  doacoes.slice(0, 300).forEach(d => {
+    const st = d.status || 'pending';
+    const isGrande = d.valor >= 500 && st === 'paid';
+    html += `<tr class="${isGrande ? 'big-donation' : ''}">
+      <td>${fmtData(d.created_at || d.paid_at)}</td>
+      <td>${d.nome || '—'}</td>
+      <td class="valor">${fmtBRL(d.valor)}</td>
+      <td><span class="status ${st}">${st}</span></td>
+      <td>${d.metodo || 'pix'}</td>
+    </tr>`;
+  });
+  html += '</tbody></table>';
+  el.innerHTML = html;
+}
+
+// ===== GRÁFICO =====
+function mudarPeriodo(dias, btn) {
+  periodoGrafico = dias;
+  document.querySelectorAll('.chart-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrafico(todasDoacoes);
+}
+
+function renderGrafico(doacoes) {
   const porDia = {};
   const hoje = new Date();
-  for (let i = 29; i >= 0; i--) {
+  for (let i = periodoGrafico - 1; i >= 0; i--) {
     const d = new Date(hoje);
     d.setDate(d.getDate() - i);
     porDia[d.toISOString().slice(0, 10)] = 0;
   }
 
-  lista.filter(d => d.status === 'paid').forEach(d => {
+  doacoes.filter(d => d.status === 'paid').forEach(d => {
     const k = new Date(d.created_at || d.paid_at).toISOString().slice(0, 10);
     if (porDia[k] !== undefined) porDia[k] += Number(d.valor);
   });
@@ -182,6 +412,9 @@ function renderGrafico(lista) {
     return `${d}/${m}`;
   });
   const valores = Object.values(porDia);
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const gridColor = isDark ? '#2a2e3a' : '#e5e7eb';
+  const tickColor = isDark ? '#8b93a7' : '#6b7280';
 
   const ctx = document.getElementById('chart');
   if (chart) chart.destroy();
@@ -197,7 +430,8 @@ function renderGrafico(lista) {
         tension: .35,
         fill: true,
         pointRadius: 0,
-        pointHoverRadius: 5,
+        pointHoverRadius: 6,
+        pointHoverBackgroundColor: '#16a34a',
       }]
     },
     options: {
@@ -205,15 +439,87 @@ function renderGrafico(lista) {
       maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
-        x: { ticks: { color: '#8b93a7', maxTicksLimit: 10 }, grid: { color: '#2a2e3a' } },
-        y: { ticks: { color: '#8b93a7', callback: v => 'R$ ' + v }, grid: { color: '#2a2e3a' }, beginAtZero: true }
+        x: { ticks: { color: tickColor, maxTicksLimit: 10 }, grid: { color: gridColor } },
+        y: { ticks: { color: tickColor, callback: v => 'R$ ' + v }, grid: { color: gridColor }, beginAtZero: true }
       }
     }
   });
 }
 
+// ===== EXPORT CSV =====
+function exportarCSV() {
+  if (!todasDoacoes.length) { toast('Nada pra exportar', 'yellow'); return; }
+  const headers = ['Data', 'Nome', 'Email', 'Valor', 'Status', 'Metodo', 'Transaction ID'];
+  const linhas = todasDoacoes.map(d => [
+    fmtData(d.created_at || d.paid_at),
+    d.nome || '',
+    d.email || '',
+    d.valor,
+    d.status,
+    d.metodo || '',
+    d.id || '',
+  ]);
+  const csv = [headers, ...linhas]
+    .map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(','))
+    .join('\n');
+
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `doacoes_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV exportado ✅');
+}
+
+// ===== MODAL =====
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+// ===== FEED + SITE INFO =====
+async function carregarSiteInfo() {
+  try {
+    const res = await fetch(SITE_INFO);
+    const data = await res.json();
+
+    // Banner site
+    const banner = document.getElementById('siteBanner');
+    const text = document.getElementById('siteBannerText');
+    if (data.ativo) {
+      banner.className = 'site-banner on';
+      text.textContent = '✅ Site ativo e recebendo doações';
+    } else {
+      banner.className = 'site-banner off';
+      text.textContent = '⏸️ Site PAUSADO — visitantes veem: "' + (data.mensagem || 'Em manutenção') + '"';
+    }
+    banner.style.display = 'flex';
+
+    // Feed últimas doações
+    if (data.ultimas_doacoes?.length) {
+      const feed = document.getElementById('feedBox');
+      const content = document.getElementById('feedContent');
+      feed.style.display = 'block';
+
+      const agora = Date.now();
+      content.innerHTML = data.ultimas_doacoes.map(d => {
+        const seg = Math.floor((agora - new Date(d.quando).getTime()) / 1000);
+        let tempo = 'agora';
+        if (seg > 3600) tempo = Math.floor(seg/3600) + 'h atrás';
+        else if (seg > 60) tempo = Math.floor(seg/60) + 'min atrás';
+        return `<div class="feed-item">
+          <span class="nome">🐾 ${d.nome}</span>
+          <span><span class="valor">${fmtBRL(d.valor)}</span> <span style="color:var(--muted);font-size:.82rem">${tempo}</span></span>
+        </div>`;
+      }).join('');
+    }
+  } catch (e) { /* silencioso */ }
+}
+
+// ===== INICIALIZAÇÃO =====
 carregar();
-setInterval(carregar, 30000); // atualiza a cada 30s
+carregarSiteInfo();
+setInterval(carregar, 30000);
+setInterval(carregarSiteInfo, 60000);
 </script>
 </body>
 </html>
