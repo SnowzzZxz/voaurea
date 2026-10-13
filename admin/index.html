@@ -29,7 +29,7 @@ a{color:inherit;text-decoration:none}
 .header h1{font-size:1.4rem;display:flex;align-items:center;gap:8px}
 .header .sub{color:var(--muted);font-weight:400;font-size:.85rem;margin-top:4px}
 .header-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
 .btn:hover{background:var(--card-hover);transform:translateY(-1px)}
 .btn.primary{background:var(--green);border-color:var(--green);color:#fff}
 .btn.primary:hover{background:#15803d}
@@ -62,7 +62,7 @@ a{color:inherit;text-decoration:none}
 .chart-box{background:var(--card);padding:20px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border)}
 .chart-box h3{margin-bottom:14px;font-size:.95rem;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .chart-toggle{display:flex;gap:4px}
-.chart-toggle button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:.75rem;cursor:pointer}
+.chart-toggle button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:.75rem;cursor:pointer;font-family:inherit}
 .chart-toggle button.active{background:var(--green);border-color:var(--green);color:#fff}
 
 /* META */
@@ -82,7 +82,7 @@ a{color:inherit;text-decoration:none}
 
 /* FILTROS */
 .filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.filters select,.filters input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:.88rem;outline:none}
+.filters select,.filters input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:.88rem;outline:none;font-family:inherit}
 .filters select:focus,.filters input:focus{border-color:var(--green)}
 .filters input{flex:1;min-width:180px}
 
@@ -106,11 +106,15 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 .modal.show{display:flex}
 .modal-card{background:var(--card);padding:24px;border-radius:14px;max-width:500px;width:100%;max-height:85vh;overflow:auto;border:1px solid var(--border)}
 .modal-card h2{margin-bottom:16px;font-size:1.15rem}
+.modal-card h3{margin:16px 0 10px;font-size:.9rem;color:var(--muted);font-weight:600}
 .modal-card .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:.9rem;gap:12px}
 .modal-card .row:last-child{border-bottom:none}
 .modal-card .row strong{color:var(--muted);font-weight:500}
-.modal-card textarea{width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:monospace;font-size:.82rem;min-height:200px;margin-top:12px;outline:none}
-.modal-close{margin-top:16px;background:var(--card-hover);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:8px;cursor:pointer;width:100%;font-weight:600}
+.modal-card label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:6px;font-weight:600}
+.modal-card input,.modal-card textarea{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.9rem;outline:none;margin-bottom:12px}
+.modal-card input:focus,.modal-card textarea:focus{border-color:var(--green)}
+.modal-card textarea{font-family:monospace;font-size:.82rem;min-height:160px;resize:vertical}
+.modal-close{margin-top:16px;background:var(--card-hover);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:8px;cursor:pointer;width:100%;font-weight:600;font-family:inherit}
 .modal-actions{display:flex;gap:8px;margin-top:12px}
 
 /* TOAST */
@@ -125,25 +129,27 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
   .header h1{font-size:1.15rem}
   .card-value{font-size:1.35rem}
   th,td{padding:8px 10px;font-size:.82rem}
-  th:nth-child(5),td:nth-child(5){display:none}
+  th:nth-child(5),td:nth-child(5),th:nth-child(6),td:nth-child(6){display:none}
+  .filters{gap:6px}
+  .filters select,.filters input{font-size:.82rem;padding:8px 10px}
 }
 </style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN -->
+<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <h1>🐾 Dashboard Admin</h1>
     <p>Abrigo Vó Áurea</p>
     <input type="text" id="loginUser" placeholder="Usuário" autocomplete="username">
-    <input type="password" id="loginPass" placeholder="Senha" autocomplete="current-password" onkeypress="if(event.key==='Enter')fazerLogin()">
+    <input type="password" id="loginPass" placeholder="Senha" autocomplete="current-password">
     <button onclick="fazerLogin()">Entrar</button>
     <div class="login-erro" id="loginErro"></div>
   </div>
 </div>
 
-<!-- DASHBOARD (escondido até logar) -->
+<!-- DASHBOARD -->
 <div id="dashboard" style="display:none">
 
   <div class="header">
@@ -256,7 +262,7 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 
 <script>
 /* ============================================================
-   CONFIGURAÇÃO
+   CONFIG
    ============================================================ */
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'voaurea2026';
@@ -265,7 +271,6 @@ const ZPAY_BASES = ['https://zpayapi.app/api/v2', 'https://zpaysolution.com/api/
 const ZPAY_CLIENT_ID = 'zpk_541f4b2f71855fb26e1201a7';
 const ZPAY_CLIENT_SECRET = 'zsk_87b13fb23ba5eed5d6d9f0f9e6153d20dfeac10e24a66dd6';
 
-// Config default (pode ser editado pelo dashboard)
 const CONFIG_DEFAULT = {
   site_ativo: true,
   valores_sugeridos: [20, 30, 50, 100, 150, 200, 250, 500, 1000],
@@ -281,7 +286,6 @@ const CONFIG_DEFAULT = {
 let todasDoacoes = [];
 let periodoGrafico = 30;
 let chart = null;
-let ultimaDoacaoVista = null;
 
 /* ============================================================
    LOGIN
@@ -289,7 +293,6 @@ let ultimaDoacaoVista = null;
 function fazerLogin() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value;
-
   if (user === ADMIN_USER && pass === ADMIN_PASS) {
     localStorage.setItem('admin_logado', '1');
     document.getElementById('loginScreen').style.display = 'none';
@@ -299,16 +302,9 @@ function fazerLogin() {
     document.getElementById('loginErro').textContent = 'Usuário ou senha inválidos';
   }
 }
-
 function sair() {
   localStorage.removeItem('admin_logado');
   location.reload();
-}
-
-// Se já logou antes, pula a tela
-if (localStorage.getItem('admin_logado') === '1') {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'block';
 }
 
 /* ============================================================
@@ -332,7 +328,7 @@ function calcTaxa(v) {
 }
 
 /* ============================================================
-   ARMAZENAMENTO LOCAL
+   STORAGE
    ============================================================ */
 function getConfig() {
   try {
@@ -345,16 +341,15 @@ function setConfig(cfg) {
   localStorage.setItem('voaurea_config', JSON.stringify(cfg));
 }
 function getDoacoes() {
-  try {
-    return JSON.parse(localStorage.getItem('voaurea_doacoes') || '[]');
-  } catch(e) { return []; }
+  try { return JSON.parse(localStorage.getItem('voaurea_doacoes') || '[]'); }
+  catch(e) { return []; }
 }
 function setDoacoes(arr) {
   localStorage.setItem('voaurea_doacoes', JSON.stringify(arr));
 }
 
 /* ============================================================
-   BUSCAR DA Z.PAY
+   Z.PAY
    ============================================================ */
 async function buscarZPay() {
   const headers = {
@@ -362,10 +357,7 @@ async function buscarZPay() {
     'client-id': ZPAY_CLIENT_ID,
     'client-secret': ZPAY_CLIENT_SECRET,
   };
-
-  // Tenta várias rotas conhecidas
   const rotas = ['/payments', '/payments/list', '/transactions', '/charges'];
-
   for (const base of ZPAY_BASES) {
     for (const rota of rotas) {
       try {
@@ -378,30 +370,23 @@ async function buscarZPay() {
             return lista;
           }
         }
-      } catch (e) {
-        // CORS ou 404, tenta próxima
-      }
+      } catch (e) {}
     }
   }
   return [];
 }
 
 /* ============================================================
-   CARREGAR TUDO
+   CARREGAR
    ============================================================ */
 async function carregarTudo() {
   try {
-    // 1. Busca da Z.PAY (se der certo, mescla)
     const daZPay = await buscarZPay();
-
-    // 2. Pega do localStorage
     const doLocal = getDoacoes();
-
-    // 3. Mescla (sem duplicar por id)
-    const idsExistentes = new Set(doLocal.map(d => d.id));
+    const ids = new Set(doLocal.map(d => d.id));
     const novos = daZPay.filter(p => {
       const id = p.id || p.paymentId || p.transactionId;
-      return id && !idsExistentes.has(id);
+      return id && !ids.has(id);
     }).map(p => ({
       id: p.id || p.paymentId || p.transactionId,
       nome: p.payer?.name || p.payerName || p.donorName || '—',
@@ -413,18 +398,13 @@ async function carregarTudo() {
       created_at: p.createdAt || p.created_at || new Date().toISOString(),
       paid_at: p.paidAt || p.paid_at || null,
     }));
-
     if (novos.length > 0) {
-      const merge = [...doLocal, ...novos];
-      setDoacoes(merge);
-      toast(`✅ ${novos.length} doação(ões) importadas da Z.PAY`);
+      setDoacoes([...doLocal, ...novos]);
+      toast(`✅ ${novos.length} doação(ões) importadas`);
     }
-
     todasDoacoes = getDoacoes();
     renderTudo();
-
     document.getElementById('lastUpdate').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR');
-
   } catch (err) {
     console.error(err);
     todasDoacoes = getDoacoes();
@@ -433,14 +413,13 @@ async function carregarTudo() {
 }
 
 /* ============================================================
-   RENDERIZAR TUDO
+   RENDER
    ============================================================ */
 function renderTudo() {
   const periodo = document.getElementById('filtroPeriodo').value;
   const status = document.getElementById('filtroStatus').value;
   const busca = document.getElementById('filtroBusca').value.trim().toLowerCase();
 
-  // Aplica filtros
   let filtradas = [...todasDoacoes];
   if (status !== 'todos') filtradas = filtradas.filter(d => d.status === status);
   if (busca) {
@@ -485,7 +464,7 @@ function renderStats() {
 
   const totalHoje = hojeP.reduce((s, d) => s + d.valor, 0);
   const total7 = seteP.reduce((s, d) => s + d.valor, 0);
-  const totalSemanaAnterior = quinzeAntes.reduce((s, d) => s + d.valor, 0);
+  const totalSemAnt = quinzeAntes.reduce((s, d) => s + d.valor, 0);
 
   document.getElementById('totalBruto').textContent = fmtBRL(totalBruto);
   document.getElementById('totalLiquido').textContent = fmtBRL(totalLiquido);
@@ -496,22 +475,20 @@ function renderStats() {
   document.getElementById('hojeBruto').textContent = fmtBRL(totalHoje);
   document.getElementById('hojeCount').textContent = hojeP.length + ' doações hoje';
 
-  // Variação
   const varEl = document.getElementById('variacao');
-  if (totalSemanaAnterior > 0) {
-    const varPct = ((total7 - totalSemanaAnterior) / totalSemanaAnterior) * 100;
+  if (totalSemAnt > 0) {
+    const v = ((total7 - totalSemAnt) / totalSemAnt) * 100;
     varEl.style.display = 'inline-block';
-    varEl.className = 'variation ' + (varPct >= 0 ? 'up' : 'down');
-    varEl.textContent = (varPct >= 0 ? '+' : '') + varPct.toFixed(0) + '%';
+    varEl.className = 'variation ' + (v >= 0 ? 'up' : 'down');
+    varEl.textContent = (v >= 0 ? '+' : '') + v.toFixed(0) + '%';
   } else {
     varEl.style.display = 'none';
   }
 
-  // Meta
   const config = getConfig();
   const inicioMes = new Date(agora.getFullYear(), agora.getMonth(), 1);
-  const mesPagas = pagas.filter(d => new Date(d.created_at || d.paid_at) >= inicioMes);
-  const totalMes = mesPagas.reduce((s, d) => s + d.valor, 0);
+  const mesP = pagas.filter(d => new Date(d.created_at || d.paid_at) >= inicioMes);
+  const totalMes = mesP.reduce((s, d) => s + d.valor, 0);
   const meta = config.meta_mensal;
   const pct = Math.min(100, (totalMes / meta) * 100);
 
@@ -523,15 +500,14 @@ function renderStats() {
 function renderTabela(doacoes) {
   const el = document.getElementById('lista');
   if (!doacoes.length) {
-    el.innerHTML = '<div class="empty">Nenhuma doação encontrada. Clique em <strong>📋 Importar</strong> pra adicionar manualmente, ou gere uma doação real no site.</div>';
+    el.innerHTML = '<div class="empty">Nenhuma doação. Clique em <strong>📋 Importar</strong> pra adicionar manualmente.</div>';
     return;
   }
-
   let html = '<table><thead><tr><th>Data</th><th>Nome</th><th>Valor</th><th>Status</th><th>Método</th><th></th></tr></thead><tbody>';
   doacoes.slice(0, 300).forEach(d => {
     const st = d.status || 'pending';
-    const isGrande = d.valor >= 500 && st === 'paid';
-    html += `<tr class="${isGrande ? 'big-donation' : ''}">
+    const grande = d.valor >= 500 && st === 'paid';
+    html += `<tr class="${grande ? 'big-donation' : ''}">
       <td>${fmtData(d.created_at || d.paid_at)}</td>
       <td>${d.nome || '—'}</td>
       <td class="valor">${fmtBRL(d.valor)}</td>
@@ -552,20 +528,18 @@ function renderGrafico() {
     d.setDate(d.getDate() - i);
     porDia[d.toISOString().slice(0, 10)] = 0;
   }
-
   todasDoacoes.filter(d => d.status === 'paid').forEach(d => {
     const k = new Date(d.created_at || d.paid_at).toISOString().slice(0, 10);
     if (porDia[k] !== undefined) porDia[k] += Number(d.valor);
   });
-
   const labels = Object.keys(porDia).map(k => {
     const [, m, d] = k.split('-');
     return `${d}/${m}`;
   });
   const valores = Object.values(porDia);
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  const gridColor = isDark ? '#2a2e3a' : '#e5e7eb';
-  const tickColor = isDark ? '#8b93a7' : '#6b7280';
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const gc = dark ? '#2a2e3a' : '#e5e7eb';
+  const tc = dark ? '#8b93a7' : '#6b7280';
 
   const ctx = document.getElementById('chart');
   if (chart) chart.destroy();
@@ -574,7 +548,6 @@ function renderGrafico() {
     data: {
       labels,
       datasets: [{
-        label: 'R$',
         data: valores,
         borderColor: '#16a34a',
         backgroundColor: 'rgba(22, 163, 74, .15)',
@@ -582,7 +555,6 @@ function renderGrafico() {
         fill: true,
         pointRadius: 0,
         pointHoverRadius: 6,
-        pointHoverBackgroundColor: '#16a34a',
       }]
     },
     options: {
@@ -590,8 +562,8 @@ function renderGrafico() {
       maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
-        x: { ticks: { color: tickColor, maxTicksLimit: 10 }, grid: { color: gridColor } },
-        y: { ticks: { color: tickColor, callback: v => 'R$ ' + v }, grid: { color: gridColor }, beginAtZero: true }
+        x: { ticks: { color: tc, maxTicksLimit: 10 }, grid: { color: gc } },
+        y: { ticks: { color: tc, callback: v => 'R$ ' + v }, grid: { color: gc }, beginAtZero: true }
       }
     }
   });
@@ -601,45 +573,39 @@ function renderFeed() {
   const pagas = todasDoacoes.filter(d => d.status === 'paid').slice(0, 5);
   const feed = document.getElementById('feedBox');
   const content = document.getElementById('feedContent');
-
-  if (!pagas.length) {
-    feed.style.display = 'none';
-    return;
-  }
-
+  if (!pagas.length) { feed.style.display = 'none'; return; }
   feed.style.display = 'block';
   const agora = Date.now();
   content.innerHTML = pagas.map(d => {
     const seg = Math.floor((agora - new Date(d.created_at || d.paid_at).getTime()) / 1000);
-    let tempo = 'agora';
-    if (seg > 86400) tempo = Math.floor(seg/86400) + 'd atrás';
-    else if (seg > 3600) tempo = Math.floor(seg/3600) + 'h atrás';
-    else if (seg > 60) tempo = Math.floor(seg/60) + 'min atrás';
+    let t = 'agora';
+    if (seg > 86400) t = Math.floor(seg/86400) + 'd atrás';
+    else if (seg > 3600) t = Math.floor(seg/3600) + 'h atrás';
+    else if (seg > 60) t = Math.floor(seg/60) + 'min atrás';
     const nome = (d.nome || 'Anônimo').split(' ')[0];
     return `<div class="feed-item">
       <span class="nome">🐾 ${nome}</span>
-      <span><span class="valor">${fmtBRL(d.valor)}</span> <span style="color:var(--muted);font-size:.82rem">${tempo}</span></span>
+      <span><span class="valor">${fmtBRL(d.valor)}</span> <span style="color:var(--muted);font-size:.82rem">${t}</span></span>
     </div>`;
   }).join('');
 }
 
 function renderBanner() {
-  const config = getConfig();
-  const banner = document.getElementById('siteBanner');
-  const text = document.getElementById('siteBannerText');
-  const toggle = document.getElementById('toggleSite');
-  const label = document.getElementById('siteToggleLabel');
-
-  if (config.site_ativo) {
-    banner.className = 'site-banner on';
-    text.textContent = '✅ Site ativo e recebendo doações';
-    toggle.classList.add('on');
-    label.textContent = 'Ativo';
+  const c = getConfig();
+  const b = document.getElementById('siteBanner');
+  const t = document.getElementById('siteBannerText');
+  const tg = document.getElementById('toggleSite');
+  const l = document.getElementById('siteToggleLabel');
+  if (c.site_ativo) {
+    b.className = 'site-banner on';
+    t.textContent = '✅ Site ativo e recebendo doações';
+    tg.classList.add('on');
+    l.textContent = 'Ativo';
   } else {
-    banner.className = 'site-banner off';
-    text.textContent = '⏸️ Site PAUSADO';
-    toggle.classList.remove('on');
-    label.textContent = 'Pausado';
+    b.className = 'site-banner off';
+    t.textContent = '⏸️ Site PAUSADO';
+    tg.classList.remove('on');
+    l.textContent = 'Pausado';
   }
 }
 
@@ -654,11 +620,11 @@ function mudarPeriodo(dias, btn) {
 }
 
 function toggleSite() {
-  const config = getConfig();
-  config.site_ativo = !config.site_ativo;
-  setConfig(config);
+  const c = getConfig();
+  c.site_ativo = !c.site_ativo;
+  setConfig(c);
   renderBanner();
-  toast(config.site_ativo ? '✅ Site ativado' : '⏸️ Site pausado', config.site_ativo ? 'green' : 'yellow');
+  toast(c.site_ativo ? '✅ Site ativado' : '⏸️ Site pausado', c.site_ativo ? 'green' : 'yellow');
 }
 
 function toggleTheme() {
@@ -672,21 +638,13 @@ function toggleTheme() {
 
 function exportarCSV() {
   if (!todasDoacoes.length) { toast('Nada pra exportar', 'yellow'); return; }
-  const headers = ['Data', 'Nome', 'Email', 'WhatsApp', 'Valor', 'Status', 'Metodo', 'ID'];
-  const linhas = todasDoacoes.map(d => [
+  const h = ['Data', 'Nome', 'Email', 'WhatsApp', 'Valor', 'Status', 'Metodo', 'ID'];
+  const l = todasDoacoes.map(d => [
     fmtData(d.created_at || d.paid_at),
-    d.nome || '',
-    d.email || '',
-    d.whatsapp || '',
-    d.valor,
-    d.status,
-    d.metodo || '',
-    d.id || '',
+    d.nome || '', d.email || '', d.whatsapp || '',
+    d.valor, d.status, d.metodo || '', d.id || '',
   ]);
-  const csv = [headers, ...linhas]
-    .map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(','))
-    .join('\n');
-
+  const csv = [h, ...l].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -700,9 +658,8 @@ function exportarCSV() {
 function verDoador(id) {
   const d = todasDoacoes.find(x => x.id === id);
   if (!d) return;
-
-  const mesmoDoador = todasDoacoes.filter(x => x.email && x.email === d.email && x.status === 'paid');
-  const totalDoado = mesmoDoador.reduce((s, x) => s + x.valor, 0);
+  const mesmo = todasDoacoes.filter(x => x.email && x.email === d.email && x.status === 'paid');
+  const total = mesmo.reduce((s, x) => s + x.valor, 0);
 
   let html = `<h2>👤 ${d.nome || 'Doador'}</h2>`;
   html += `<div class="row"><strong>Valor</strong><span>${fmtBRL(d.valor)}</span></div>`;
@@ -712,21 +669,18 @@ function verDoador(id) {
   if (d.whatsapp) html += `<div class="row"><strong>WhatsApp</strong><span>${d.whatsapp}</span></div>`;
   html += `<div class="row"><strong>Data</strong><span>${fmtData(d.created_at)}</span></div>`;
   html += `<div class="row"><strong>ID</strong><span style="font-family:monospace;font-size:.75rem">${d.id}</span></div>`;
-
-  if (mesmoDoador.length > 1) {
-    html += `<h3 style="margin-top:20px;font-size:.9rem;color:var(--muted)">HISTÓRICO (${mesmoDoador.length} doações)</h3>`;
-    html += `<div class="row"><strong>Total doado</strong><span>${fmtBRL(totalDoado)}</span></div>`;
+  if (mesmo.length > 1) {
+    html += `<h3>HISTÓRICO (${mesmo.length} doações)</h3>`;
+    html += `<div class="row"><strong>Total doado</strong><span>${fmtBRL(total)}</span></div>`;
   }
-
-  html += `<div class="modal-actions"><button class="modal-close" onclick="closeModal()">Fechar</button></div>`;
-
+  html += `<button class="modal-close" onclick="closeModal()">Fechar</button>`;
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modal').classList.add('show');
 }
 
 function abrirImportar() {
   let html = `<h2>📋 Importar doações</h2>`;
-  html += `<p style="color:var(--muted);font-size:.85rem;margin-bottom:12px">Cole um JSON com as doações. Cada uma precisa de: <code>id, nome, valor, status</code>.</p>`;
+  html += `<p style="color:var(--muted);font-size:.85rem;margin-bottom:12px">Cole um JSON com as doações. Cada uma precisa de <code>id, nome, valor, status</code>.</p>`;
   html += `<textarea id="importText" placeholder='[{"id":"abc123","nome":"Maria","valor":30,"status":"paid","created_at":"2026-10-13T18:00:00Z"}]'></textarea>`;
   html += `<div class="modal-actions">
     <button class="btn primary" style="flex:1" onclick="importarJSON()">Importar</button>
@@ -741,16 +695,10 @@ function importarJSON() {
     const text = document.getElementById('importText').value.trim();
     const arr = JSON.parse(text);
     if (!Array.isArray(arr)) throw new Error('Precisa ser um array');
-
     const atual = getDoacoes();
     const ids = new Set(atual.map(d => d.id));
     const novos = arr.filter(d => d.id && !ids.has(d.id));
-
-    if (novos.length === 0) {
-      toast('Nenhuma doação nova', 'yellow');
-      return;
-    }
-
+    if (novos.length === 0) { toast('Nenhuma doação nova', 'yellow'); return; }
     setDoacoes([...atual, ...novos]);
     todasDoacoes = getDoacoes();
     renderTudo();
@@ -762,22 +710,21 @@ function importarJSON() {
 }
 
 function abrirConfig() {
-  const config = getConfig();
+  const c = getConfig();
   let html = `<h2>⚙️ Configurações</h2>`;
-  html += `<div class="row"><strong>Valores sugeridos (R$)</strong></div>`;
-  html += `<input type="text" id="cfgValores" value="${config.valores_sugeridos.join(', ')}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
-  html += `<div class="row"><strong>Meta mensal (R$)</strong></div>`;
-  html += `<input type="number" id="cfgMeta" value="${config.meta_mensal}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
-  html += `<div class="row"><strong>Mensagem de manutenção</strong></div>`;
-  html += `<input type="text" id="cfgMsg" value="${config.mensagem_manutencao}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
-  html += `<div class="row"><strong>Destacar doação a partir de (R$)</strong></div>`;
-  html += `<input type="number" id="cfgDestaque" value="${config.destaque_doacao}" style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);margin-bottom:12px;outline:none">`;
+  html += `<label>Valores sugeridos (R$, separados por vírgula)</label>`;
+  html += `<input type="text" id="cfgValores" value="${c.valores_sugeridos.join(', ')}">`;
+  html += `<label>Meta mensal (R$)</label>`;
+  html += `<input type="number" id="cfgMeta" value="${c.meta_mensal}">`;
+  html += `<label>Mensagem de manutenção</label>`;
+  html += `<input type="text" id="cfgMsg" value="${c.mensagem_manutencao}">`;
+  html += `<label>Destacar doação a partir de (R$)</label>`;
+  html += `<input type="number" id="cfgDestaque" value="${c.destaque_doacao}">`;
   html += `<div class="modal-actions">
     <button class="btn primary" style="flex:1" onclick="salvarConfig()">Salvar</button>
     <button class="btn" style="flex:1" onclick="closeModal()">Cancelar</button>
   </div>`;
   html += `<button class="btn danger" style="width:100%;margin-top:12px" onclick="limparTudo()">🗑️ Apagar todas as doações</button>`;
-
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modal').classList.add('show');
 }
@@ -785,24 +732,19 @@ function abrirConfig() {
 function salvarConfig() {
   const valores = document.getElementById('cfgValores').value
     .split(',').map(v => Number(v.trim())).filter(v => !isNaN(v) && v > 0);
-  const meta = Number(document.getElementById('cfgMeta').value);
-  const msg = document.getElementById('cfgMsg').value.trim();
-  const destaque = Number(document.getElementById('cfgDestaque').value);
-
-  const config = getConfig();
-  config.valores_sugeridos = valores;
-  config.meta_mensal = meta;
-  config.mensagem_manutencao = msg;
-  config.destaque_doacao = destaque;
-  setConfig(config);
-
+  const c = getConfig();
+  c.valores_sugeridos = valores;
+  c.meta_mensal = Number(document.getElementById('cfgMeta').value);
+  c.mensagem_manutencao = document.getElementById('cfgMsg').value.trim();
+  c.destaque_doacao = Number(document.getElementById('cfgDestaque').value);
+  setConfig(c);
   renderTudo();
   closeModal();
   toast('✅ Configurações salvas');
 }
 
 function limparTudo() {
-  if (!confirm('⚠️ Apagar TODAS as doações do dashboard? Essa ação não pode ser desfeita.')) return;
+  if (!confirm('⚠️ Apagar TODAS as doações? Não pode ser desfeito.')) return;
   localStorage.removeItem('voaurea_doacoes');
   todasDoacoes = [];
   renderTudo();
@@ -818,22 +760,19 @@ function closeModal() {
    INIT
    ============================================================ */
 function iniciarDashboard() {
-  // Tema
-  const temaSalvo = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', temaSalvo);
-  document.getElementById('themeBtn').textContent = temaSalvo === 'dark' ? '☀️ Claro' : '🌙 Escuro';
-
-  // Carrega tudo
+  const tema = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', tema);
+  document.getElementById('themeBtn').textContent = tema === 'dark' ? '☀️ Claro' : '🌙 Escuro';
   todasDoacoes = getDoacoes();
   renderTudo();
   carregarTudo();
-
-  // Auto-refresh 30s
   setInterval(carregarTudo, 30000);
 }
 
-// Se já estiver logado, inicia direto
+// Auto-login
 if (localStorage.getItem('admin_logado') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
   iniciarDashboard();
 }
 
