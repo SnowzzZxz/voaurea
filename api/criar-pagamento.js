@@ -1,86 +1,97 @@
-// api/criar-pagamento.js
-// Cria cobrança Pix na Z.PAY Solution
+const axios = require('axios');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Método não permitido' });
   }
 
   try {
-    const { type, amount, coverFee, total, donor } = req.body || {};
+    // Aceita tanto o formato novo (do index.html) quanto o antigo
+    const { amount, total, type, donor, valor, descricao, nome_cliente } = req.body || {};
+
+    // Normaliza os campos (compatível com os dois formatos)
+    const valorFinal = Number(total || amount || valor);
+    const nomeCliente = donor?.name || nome_cliente || 'Doador';
+    const descricaoFinal = descricao || (type === 'mensal'
+      ? 'Doação mensal - Abrigo Vó Áurea'
+      : 'Doação - Abrigo Vó Áurea');
 
     // Validação
-    if (!amount || amount < 2) {
+    if (!valorFinal || valorFinal < 2) {
       return res.status(400).json({ success: false, message: 'Valor mínimo é R$ 2,00' });
     }
-    if (amount > 2000) {
+    if (valorFinal > 2000) {
       return res.status(400).json({ success: false, message: 'Valor máximo é R$ 2.000,00' });
     }
 
-    // Monta valor final (com taxa se o doador aceitou cobrir)
-    const valorFinal = Number(total || amount);
-    if (valorFinal < 2 || valorFinal > 2000) {
-      return res.status(400).json({ success: false, message: 'Valor total fora do limite (R$ 2 a R$ 2.000)' });
-    }
+    // Credenciais vêm das variáveis de ambiente
+    const CLIENT_ID     = process.env.ZPAY_CLIENT_ID;
+    const CLIENT_SECRET = process.env.ZPAY_CLIENT_SECRET;
+    const ZPAY_API_URL  = process.env.ZPAY_API_URL || 'https://zpaysolution.com/api/v1';
 
-    // Nome do pagador (obrigatório)
-    const payerName = donor?.name && donor.name !== 'Anônimo' ? donor.name : 'Doador';
-
-    // Description
-    const description = type === 'mensal'
-      ? `Doação mensal - Abrigo Vó Áurea`
-      : `Doação - Abrigo Vó Áurea`;
-
-    // Chama a Z.PAY
-    const resp = await fetch('https://zpaysolution.com/api/v1/payments', {
-      method: 'POST',
-      headers: {
-        'client-id': process.env.ZPAY_CLIENT_ID,
-        'client-secret': process.env.ZPAY_CLIENT_SECRET,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        amount: valorFinal,
-        payerName: payerName,
-        description: description,
-      }),
-    });
-
-    const data = await resp.json();
-
-    if (!resp.ok) {
-      console.error('ZPAY erro:', data);
-      return res.status(resp.status).json({
+    if (!CLIENT_ID || !CLIENT_SECRET) {
+      console.error('❌ Credenciais ZPay não configuradas');
+      return res.status(500).json({
         success: false,
-        message: data?.error || 'Erro ao gerar Pix',
+        message: 'Erro de configuração do servidor',
       });
     }
 
-    // Resposta da Z.PAY deve trazer: id, status, pix.copyPaste, pix.qrCodeBase64
-    const pix = data.pix || data.data?.pix || {};
-    const paymentId = data.id || data.paymentId || data.data?.id;
+    // Chama a Z.PAY
+    const response = await axios.post(
+      `${ZPAY_API_URL}/payments`,
+      {
+        amount: valorFinal,
+        payerName: nomeCliente,
+        description: descricaoFinal,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'client-id': CLIENT_ID,
+          'client-secret': CLIENT_SECRET,
+        },
+        timeout: 10000,
+      }
+    );
 
+    const data = response.data;
+
+    // ✅ CORRIGIDO: a Z.PAY retorna o Pix em data.pix.copyPaste e data.pix.qrCodeBase64
+    const paymentId = data.id || data.paymentId || data.transactionId;
+    const pixObj    = data.pix || data.data?.pix || {};
+    const codigoPix = pixObj.copyPaste || '';
+    const qrCode    = pixObj.qrCodeBase64
+                   || pixObj.qrcodeUrl
+                   || `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(codigoPix)}`;
+
+    // ✅ CORRIGIDO: resposta no formato que o index.html espera
     return res.status(200).json({
       success: true,
       transactionId: paymentId,
-      pixCode: pix.copyPaste || '',
-      qrCodeImage: pix.qrCodeBase64 || pix.qrcodeUrl || '',
+      pixCode: codigoPix,
+      qrCodeImage: qrCode,
       total: valorFinal,
       type: type || 'unica',
       status: data.status || 'pending',
     });
 
-  } catch (err) {
-    console.error('Erro criar-pagamento:', err);
-    return res.status(500).json({
+  } catch (error) {
+    console.error('❌ Erro ao criar Pix:', error.response?.data || error.message);
+    return res.status(error.response?.status || 500).json({
       success: false,
-      message: err.message || 'Erro interno',
+      message: error.response?.data?.error
+            || error.response?.data?.message
+            || 'Erro ao gerar Pix',
     });
   }
-}
+};
