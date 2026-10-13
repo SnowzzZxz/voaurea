@@ -682,8 +682,8 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
 </div>
 
 <script>
-const API_CRIAR_PAGAMENTO = "api/criar-pagamento.js";
-const API_APROVAR_PAGAMENTO = "api/aprovar-pagamento.js";
+const API_CRIAR_PAGAMENTO = "/api/criar-pagamento";
+const API_APROVAR_PAGAMENTO = "/api/consultar-pagamento";
 
 let donationState = { type:'unica', amount:0, donor:{}, pixData:null, downsellShown:false };
 
