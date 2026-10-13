@@ -1,58 +1,69 @@
-// api/consultar-pagamento.js
-// Consulta o status de um pagamento na Z.PAY
+const axios = require('axios');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, message: 'Método não permitido' });
+  }
 
   try {
-    const paymentId = req.method === 'GET'
-      ? req.query.id
-      : req.body?.paymentId;
+    const { transactionId } = req.body || {};
 
-    if (!paymentId) {
-      return res.status(400).json({ success: false, message: 'paymentId obrigatório' });
+    if (!transactionId) {
+      return res.status(400).json({ success: false, message: 'transactionId obrigatório' });
     }
 
-    // Tenta forçar reconciliação (approve) — a doc recomenda pra confirmar pagamentos
-    const approveResp = await fetch(
-      `https://zpaysolution.com/api/v1/payments/${paymentId}/approve`,
+    const CLIENT_ID     = process.env.ZPAY_CLIENT_ID;
+    const CLIENT_SECRET = process.env.ZPAY_CLIENT_SECRET;
+    const ZPAY_API_URL  = process.env.ZPAY_API_URL || 'https://zpaysolution.com/api/v1';
+
+    // Força reconciliação (approve) — recomendado pela doc
+    const response = await axios.post(
+      `${ZPAY_API_URL}/payments/${transactionId}/approve`,
+      {},
       {
-        method: 'POST',
         headers: {
-          'client-id': process.env.ZPAY_CLIENT_ID,
-          'client-secret': process.env.ZPAY_CLIENT_SECRET,
+          'Content-Type': 'application/json',
+          'client-id': CLIENT_ID,
+          'client-secret': CLIENT_SECRET,
         },
+        timeout: 10000,
       }
     );
 
-    const approveData = await approveResp.json();
+    const data = response.data;
 
-    // Se aprovado (200), retorna sucesso
-    if (approveResp.ok && approveData.status === 'paid') {
+    if (data.status === 'paid') {
       return res.status(200).json({
         success: true,
         status: 'paid',
-        transactionId: paymentId,
-        amount: approveData.amount,
+        transactionId,
+        amount: data.amount,
       });
     }
 
-    // 409 = ainda pending
-    if (approveResp.status === 409) {
+    return res.status(200).json({
+      success: true,
+      status: data.status || 'pending',
+      transactionId,
+    });
+
+  } catch (error) {
+    // 409 = ainda pending (não é erro fatal)
+    if (error.response?.status === 409) {
       return res.status(200).json({
         success: true,
         status: 'pending',
-        transactionId: paymentId,
         message: 'Pagamento ainda não confirmado',
       });
     }
 
     // 404 = não encontrado
-    if (approveResp.status === 404) {
+    if (error.response?.status === 404) {
       return res.status(404).json({
         success: false,
         status: 'not_found',
@@ -60,18 +71,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // Outros erros
-    return res.status(200).json({
-      success: true,
-      status: approveData.status || 'unknown',
-      transactionId: paymentId,
-    });
-
-  } catch (err) {
-    console.error('Erro consultar-pagamento:', err);
-    return res.status(500).json({
+    console.error('❌ Erro consultar:', error.response?.data || error.message);
+    return res.status(error.response?.status || 500).json({
       success: false,
-      message: err.message || 'Erro ao consultar pagamento',
+      message: error.response?.data?.error || 'Erro ao consultar pagamento',
     });
   }
-}
+};
