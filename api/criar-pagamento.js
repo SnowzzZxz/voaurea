@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
       ? 'Doação mensal - Abrigo Vó Áurea'
       : 'Doação - Abrigo Vó Áurea');
 
+    // Validação conforme doc Z.PAY (R$ 2 a R$ 2.000)
     if (!valorFinal || valorFinal < 2) {
       return res.status(400).json({ success: false, message: 'Valor mínimo é R$ 2,00' });
     }
@@ -26,10 +27,12 @@ module.exports = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Valor máximo é R$ 2.000,00' });
     }
 
+    // 🔑 Credenciais Z.PAY
     const CLIENT_ID     = 'zpk_541f4b2f71855fb26e1201a7';
     const CLIENT_SECRET = 'zsk_87b13fb23ba5eed5d6d9f0f9e6153d20dfeac10e24a66dd6';
     const ZPAY_API_URL  = 'https://zpaysolution.com/api/v1';
 
+    // POST /payments
     const response = await axios.post(
       `${ZPAY_API_URL}/payments`,
       {
@@ -49,11 +52,12 @@ module.exports = async (req, res) => {
 
     const data = response.data;
     const paymentId = data.id || data.paymentId || data.transactionId;
-    const pixObj = data.pix || data.data?.pix || {};
-    const codigoPix = pixObj.copyPaste || data.copyPaste || '';
+
+    // A doc diz que o Pix vem em data.pix.copyPaste e data.pix.qrCodeBase64
+    const pixObj = data.pix || {};
+    const codigoPix = pixObj.copyPaste || '';
     const qrCode = pixObj.qrCodeBase64
                 || pixObj.qrcodeUrl
-                || data.qrCodeBase64
                 || `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(codigoPix)}`;
 
     return res.status(200).json({
