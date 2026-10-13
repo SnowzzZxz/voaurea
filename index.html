@@ -871,14 +871,39 @@ $('#pixCopyBtn').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText($('#pixCodeText').textContent); $('#pixCopyBtn').textContent = '✓ Copiado!'; setTimeout(()=> $('#pixCopyBtn').textContent = '📋 Copiar código Pix', 2000); } catch(e){}
 });
 $('#pixConfirmBtn').addEventListener('click', async () => {
-  const btn = $('#pixConfirmBtn'); btn.disabled = true; btn.textContent = 'Verificando...';
+  const btn = $('#pixConfirmBtn');
+  btn.disabled = true;
+  btn.textContent = 'Verificando...';
+
   try {
-    const res = await fetch(API_APROVAR_PAGAMENTO, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ transactionId: donationState.pixData?.transactionId, ...donationState })});
+    const res = await fetch(API_APROVAR_PAGAMENTO, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ transactionId: donationState.pixData?.transactionId })
+    });
     const data = await res.json();
-    if (data.success) { alert('Doação confirmada! Muito obrigado ❤️'); closeDonationModal(); }
-    else alert('Ainda não identificamos o pagamento. Aguarde alguns instantes.');
-  } catch(e){ alert('Doação registrada! Obrigado ❤️'); closeDonationModal(); }
-  finally { btn.disabled = false; btn.textContent = 'Já paguei ✓'; }
+
+    // ✅ Só confirma se o status REAL for "paid"
+    if (data.success && data.isPaid === true) {
+      alert('Doação confirmada! Muito obrigado ❤️');
+      closeDonationModal();
+    } else if (data.status === 'pending') {
+      alert('Ainda não identificamos o pagamento. Aguarde alguns segundos e tente de novo.');
+    } else if (data.status === 'expired') {
+      alert('Este Pix expirou. Feche e gere um novo para doar.');
+    } else if (data.status === 'failed') {
+      alert('O pagamento falhou. Tente novamente.');
+    } else if (data.status === 'not_found') {
+      alert('Pagamento não encontrado. Gere um novo Pix.');
+    } else {
+      alert('Não conseguimos verificar agora. Tente novamente em alguns segundos.');
+    }
+  } catch (e) {
+    alert('Erro ao verificar. Verifique sua conexão e tente novamente.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Já paguei ✓';
+  }
 });
 
 const downsellModal = $('#downsellModal');
