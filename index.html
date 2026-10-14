@@ -46,17 +46,14 @@ button{cursor:pointer}
 .nav-ico{width:22px;text-align:center;color:var(--maroon);font-size:.95rem}
 .side-nav-foot{margin-top:auto;padding:16px 18px 24px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
 .side-nav-foot strong{color:var(--maroon)}
-
 .hero{padding:18px 18px 16px;max-width:720px;margin:0 auto}
 .hero h1{font-family:var(--display);font-size:clamp(1.25rem,4.4vw,1.75rem);font-weight:900;line-height:1.25;color:var(--brown);margin-bottom:18px;text-align:center}
-
 .vsl-wrap{position:relative;width:100%;border-radius:14px;overflow:hidden;background:#000;margin-bottom:16px;aspect-ratio:16/9;line-height:0}
 .vsl-wrap video{display:block;width:100%;height:100%;object-fit:cover;background:#000;cursor:pointer}
 .vsl-overlay{position:absolute;top:50%;left:50%;width:min(62%,360px);min-height:130px;transform:translate(-50%,-50%);border:2px solid rgba(255,255,255,.35);border-radius:10px;background:rgba(173,101,0,.72);color:#fff;z-index:10;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px 12px;cursor:pointer;font-family:var(--font)}
 .vsl-overlay.hidden{display:none !important}
 .vsl-overlay-box{width:100%;font-size:clamp(11px,2.3vw,18px);font-weight:800;line-height:1.15}
 .vsl-sound-icon{font-size:clamp(34px,8vw,72px);line-height:1;margin:8px 0}
-
 .btn-gold{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border:none;border-radius:999px;background:linear-gradient(180deg,#f7c44a,var(--gold-deep));color:#1a1a1a;font-family:var(--display);font-weight:800;font-size:.95rem;letter-spacing:.02em;box-shadow:0 10px 24px rgba(224,155,27,.35);transition:transform .15s ease,box-shadow .15s ease}
 .btn-gold:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(224,155,27,.42)}
 .btn-gold .heart{color:var(--maroon)}
@@ -70,7 +67,22 @@ button{cursor:pointer}
 @keyframes gentlePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
 .trust-line{margin-top:12px;text-align:center;color:var(--muted);font-size:.82rem;display:flex;align-items:center;justify-content:center;gap:6px}
 .dot-ok{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block}
-
+.meta-block{max-width:420px;margin:20px auto 0;background:#fff;padding:14px;border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 12px rgba(74,44,34,.06)}
+.contador-block{text-align:center;margin:16px auto 0;font-size:.9rem;color:var(--muted)}
+.contador-block strong{color:var(--green);font-size:1.1rem}
+.feed-live{max-width:720px;margin:0 auto;padding:0 18px}
+.feed-live h3{font-family:var(--display);font-size:1rem;color:var(--brown);margin-bottom:10px}
+.feed-live-list{display:grid;gap:6px}
+.feed-live-item{background:#fff;padding:10px 14px;border-radius:10px;font-size:.85rem;display:flex;justify-content:space-between;border:1px solid var(--line);animation:fadeInFeed .3s ease}
+.feed-live-item .nome{font-weight:600;color:var(--brown)}
+.feed-live-item .valor{color:var(--green);font-weight:700}
+.feed-live-item .tempo{color:var(--muted);font-size:.75rem;margin-left:8px}
+@keyframes fadeInFeed{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.manutencao-screen{position:fixed;inset:0;background:#f7f3ec;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;text-align:center}
+.manutencao-screen.show{display:flex}
+.manutencao-screen .emoji{font-size:4rem;margin-bottom:20px}
+.manutencao-screen h1{font-family:var(--display);font-size:1.5rem;color:var(--brown);margin-bottom:12px}
+.manutencao-screen p{color:var(--muted);font-size:1rem;line-height:1.6;max-width:420px;margin:0 auto}
 .section{max-width:720px;margin:0 auto;padding:18px 18px}
 .section-alt{background:var(--bg-alt);max-width:none}
 .section-alt > *{max-width:720px;margin-left:auto;margin-right:auto}
@@ -82,7 +94,6 @@ button{cursor:pointer}
 .prose p{margin-bottom:14px;color:#374151}
 .prose .accent{color:var(--maroon);font-weight:700}
 .callout{background:#fff8ec;border-left:4px solid var(--gold);border-radius:0 14px 14px 0;padding:14px 16px;color:var(--maroon);margin:18px 0 8px}
-
 .carousel{margin-bottom:18px}
 .carousel-viewport{position:relative;border-radius:16px;overflow:hidden;background:#111;aspect-ratio:4/3;touch-action:pan-y;user-select:none}
 .carousel-track{display:flex;height:100%;width:100%;transition:transform .35s ease;will-change:transform}
@@ -100,7 +111,6 @@ button{cursor:pointer}
 .banner-block img{width:100%;height:auto}
 .banner-final{max-width:720px;margin:6px auto 12px;padding:0 18px}
 .banner-final img{border-radius:16px}
-
 .impact-list{display:grid;gap:10px;margin-bottom:16px}
 .impact-card{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:center;padding:14px;border-radius:14px}
 .impact-card.bad{background:#f3f4f6}
@@ -109,7 +119,6 @@ button{cursor:pointer}
 .impact-card.bad .impact-badge{background:var(--maroon)}
 .impact-card.good .impact-badge{background:var(--green)}
 .impact-close{margin-bottom:16px}
-
 .rescue-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .rescue-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
 .rescue-card > div:last-child{padding:8px 8px 10px;text-align:center}
@@ -119,7 +128,6 @@ button{cursor:pointer}
 .rescue-carousel .carousel-dots{margin:8px 0 0}
 .rescue-carousel .carousel-arrow{width:28px;height:28px;font-size:1.1rem}
 .rescue-carousel .carousel-counter{font-size:.68rem;padding:3px 7px}
-
 .faq-list{display:grid;gap:10px}
 .faq-item{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .faq-question{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border:none;background:transparent;color:var(--maroon);font-weight:700;text-align:left}
@@ -127,7 +135,6 @@ button{cursor:pointer}
 .faq-answer{display:none;padding:0 16px 14px;color:#4b5563;font-size:.95rem}
 .faq-item.open .faq-answer{display:block}
 .faq-item.open .faq-toggle{transform:rotate(45deg)}
-
 .sticky-bar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:linear-gradient(180deg,rgba(255,255,255,.96),#fff);border-top:1px solid var(--line);padding:12px 14px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(74,44,34,.08);transform:translateY(110%);opacity:0;pointer-events:none;transition:transform .28s ease,opacity .28s ease}
 .sticky-bar.is-visible{transform:translateY(0);opacity:1;pointer-events:auto}
 .sticky-inner{width:100%;max-width:420px;margin:0 auto;display:grid;gap:8px}
@@ -138,7 +145,6 @@ button{cursor:pointer}
 .sticky-unica .heart{color:var(--maroon)}
 body:has(#donationModal:not([hidden])) .sticky-bar.is-visible,
 body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);opacity:0;pointer-events:none}
-
 .modal{position:fixed;inset:0;background:rgba(74,44,34,.45);display:flex;align-items:flex-end;justify-content:center;z-index:80;padding:16px}
 .modal[hidden]{display:none !important}
 .modal-card{width:min(100%,440px);background:#fff;border-radius:22px 22px 18px 18px;padding:18px 16px 16px;max-height:92vh;overflow:auto;position:relative;animation:slideUp .25s ease}
@@ -173,7 +179,25 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
 .selected-amount-chip{text-align:center;margin-bottom:12px;color:var(--muted);font-size:.9rem}
 .selected-amount-chip strong{color:var(--brown)}
 .modal-trust{margin-top:12px}
-
+.pix-result{text-align:center;padding:10px 0}
+.pix-result h3{font-family:var(--display);color:var(--brown);margin-bottom:10px}
+.pix-result .pix-qr{display:inline-block;background:#fff;padding:12px;border-radius:16px;box-shadow:var(--shadow);margin-bottom:12px;cursor:pointer;transition:transform .2s}
+.pix-result .pix-qr:hover{transform:scale(1.02)}
+.pix-result .pix-qr img{display:block;width:220px;height:220px}
+.pix-result .pix-code{word-break:break-all;background:var(--brown-soft);padding:10px;border-radius:10px;font-size:.78rem;font-family:monospace;margin-bottom:12px;color:var(--brown);text-align:left}
+.pix-result .pix-total{font-size:1.1rem;font-weight:800;color:var(--maroon);margin-bottom:14px}
+.pix-copy-btn{background:var(--green);color:#fff;border:none;padding:12px 18px;border-radius:999px;font-weight:800;width:100%;margin-bottom:10px;font-family:var(--display)}
+.pix-status{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:10px 14px;background:#fff7ed;color:#9a3412;border-radius:12px;font-size:.85rem;font-weight:600}
+.pix-status-dot{width:8px;height:8px;border-radius:50%;background:#f97316;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.zoom-hint{font-size:.75rem;color:var(--muted);margin-top:-8px;margin-bottom:10px}
+.qr-zoom{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;z-index:999;padding:20px;cursor:pointer}
+.qr-zoom.show{display:flex}
+.qr-zoom img{max-width:90vw;max-height:90vh;background:#fff;padding:20px;border-radius:16px}
+.success-simple{text-align:center;padding:40px 20px}
+.success-simple-icon{width:70px;height:70px;margin:0 auto 18px;border-radius:50%;background:var(--green);color:#fff;font-size:2.2rem;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1;animation:simpleIn .3s ease}
+.success-simple-text{font-family:var(--display);font-size:1.15rem;color:var(--brown);font-weight:700}
+@keyframes simpleIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
 .downsell-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100000;backdrop-filter:blur(6px);padding:16px}
 .downsell-modal.show{display:flex}
 .downsell-modal-content{width:100%;max-width:420px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.28);animation:fadeIn .25s ease-out}
@@ -193,52 +217,6 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
 .downsell-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;font-size:10px;font-weight:700;letter-spacing:.04em;padding:3px 8px;border-radius:999px;white-space:nowrap;z-index:1}
 .downsell-btn-highlight{background:linear-gradient(180deg,#f7c44a,#e09b1b);border-color:#e09b1b;color:#4a2c22}
 .downsell-other-value{background:none;border:none;color:#6b7280;text-decoration:underline;font-size:.95rem;padding:6px}
-
-.pix-result{text-align:center;padding:10px 0}
-.pix-result h3{font-family:var(--display);color:var(--brown);margin-bottom:10px}
-.pix-result .pix-qr{display:inline-block;background:#fff;padding:12px;border-radius:16px;box-shadow:var(--shadow);margin-bottom:12px}
-.pix-result .pix-qr img{display:block;width:220px;height:220px}
-.pix-result .pix-code{word-break:break-all;background:var(--brown-soft);padding:10px;border-radius:10px;font-size:.78rem;font-family:monospace;margin-bottom:12px;color:var(--brown);text-align:left}
-.pix-result .pix-total{font-size:1.1rem;font-weight:800;color:var(--maroon);margin-bottom:14px}
-.pix-copy-btn{background:var(--green);color:#fff;border:none;padding:12px 18px;border-radius:999px;font-weight:800;width:100%;margin-bottom:10px;font-family:var(--display)}
-
-/* ===== STATUS "Aguardando pagamento" ===== */
-.pix-status{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  margin-top:14px;
-  padding:10px 14px;
-  background:#fff7ed;
-  color:#9a3412;
-  border-radius:12px;
-  font-size:.85rem;
-  font-weight:600;
-}
-.pix-status-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#f97316;
-  animation:pulse 1.5s ease-in-out infinite;
-}
-@keyframes pulse{
-  0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.5;transform:scale(1.3)}
-}
-
-/* ===== SUCESSO SIMPLES ===== */
-.success-simple{text-align:center;padding:40px 20px}
-.success-simple-icon{
-  width:70px;height:70px;margin:0 auto 18px;border-radius:50%;
-  background:var(--green);color:#fff;font-size:2.2rem;font-weight:800;
-  display:flex;align-items:center;justify-content:center;line-height:1;
-  animation:simpleIn .3s ease;
-}
-.success-simple-text{font-family:var(--display);font-size:1.15rem;color:var(--brown);font-weight:700}
-@keyframes simpleIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
-
 @media (min-width:768px){
   .topbar{padding:0 24px;max-width:980px;margin:0 auto;width:100%}
   .hero,.section,.banner-final{max-width:860px}
@@ -256,8 +234,17 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
 </style>
 </head>
 <body>
-<span id="topo"></span>
 
+<!-- TELA DE MANUTENÇÃO -->
+<div class="manutencao-screen" id="manutencaoScreen">
+  <div>
+    <div class="emoji">🐾</div>
+    <h1>Estamos em manutenção</h1>
+    <p id="manutencaoMsg">Voltamos em alguns minutos!</p>
+  </div>
+</div>
+
+<span id="topo"></span>
 <div class="nav-overlay" id="navOverlay" hidden></div>
 <aside class="side-nav" id="sideNav" aria-hidden="true">
   <div class="side-nav-head">
@@ -278,7 +265,7 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
   <div class="side-nav-foot"><p><strong>Abrigo Vó Áurea</strong></p></div>
 </aside>
 
-<header class="topbar">
+<header class="topbar" id="headerSite">
   <button type="button" class="icon-btn" id="openNav" aria-label="Abrir menu">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
   </button>
@@ -290,7 +277,7 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
   </button>
 </header>
 
-<main>
+<main id="mainSite">
   <section class="hero" id="inicio">
     <h1>Eles já foram abandonados uma vez. Hoje, sua ajuda pode ser a esperança que os mantém lutando.</h1>
 
@@ -315,6 +302,26 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
         <span class="heart">❤</span> QUERO AJUDAR AGORA
       </button>
     </div>
+
+    <div class="contador-block" id="contadorBlock" style="display:none">
+      <span id="contadorTexto"></span>
+    </div>
+
+    <div class="meta-block" id="metaBlock" style="display:none">
+      <div style="display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:6px">
+        <strong style="color:#4a2c22">🎯 Meta do mês</strong>
+        <span id="metaPct" style="color:#16a34a;font-weight:700">0%</span>
+      </div>
+      <div style="height:10px;background:#e8e0d6;border-radius:999px;overflow:hidden">
+        <div id="metaFill" style="height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);width:0%;transition:width .8s ease"></div>
+      </div>
+      <div id="metaText" style="text-align:center;font-size:.8rem;color:#4b5563;margin-top:6px">R$ 0 / R$ 60.000</div>
+    </div>
+  </section>
+
+  <section class="section feed-live" id="feedLive" style="display:none">
+    <h3>🐾 Últimas doações</h3>
+    <div class="feed-live-list" id="feedLiveList"></div>
   </section>
 
   <section class="section" id="historia">
@@ -573,7 +580,7 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
         <button type="button" class="icon-btn" onclick="attemptCloseDonationModal()" aria-label="Fechar">✕</button>
       </div>
       <div class="donation-type" id="donationTypeLabel">Doação Única</div>
-      <div class="donation-options">
+      <div class="donation-options" id="donationOptions">
         <button type="button" class="donation-option" data-value="20" onclick="selectDonationOption(this)">R$ 20</button>
         <button type="button" class="donation-option popular" data-value="30" onclick="selectDonationOption(this)"><span class="badge">popular</span>R$ 30</button>
         <button type="button" class="donation-option" data-value="50" onclick="selectDonationOption(this)">R$ 50</button>
@@ -639,7 +646,8 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
       </div>
       <div class="pix-result">
         <h3>Escaneie o QR Code</h3>
-        <div class="pix-qr"><img id="pixQrImg" src="" alt="QR Code Pix" width="220" height="220"></div>
+        <div class="pix-qr" onclick="abrirZoomQR()"><img id="pixQrImg" src="" alt="QR Code Pix" width="220" height="220"></div>
+        <div class="zoom-hint">🔍 Toque na imagem pra ampliar</div>
         <div class="pix-code" id="pixCodeText"></div>
         <div class="pix-total" id="pixTotalText"></div>
         <button type="button" class="pix-copy-btn" id="pixCopyBtn">📋 Copiar código Pix</button>
@@ -658,6 +666,10 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
     </div>
 
   </div>
+</div>
+
+<div class="qr-zoom" id="qrZoom" onclick="fecharZoomQR()">
+  <img id="qrZoomImg" src="" alt="QR Code Pix ampliado">
 </div>
 
 <div id="downsellModal" class="downsell-modal" aria-hidden="true">
@@ -686,7 +698,6 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
     </div>
   </div>
 </div>
-
 <script>
 const API_CRIAR_PAGAMENTO = "/api/criar-pagamento";
 const API_APROVAR_PAGAMENTO = "/api/consultar-pagamento";
@@ -713,11 +724,9 @@ $('#shareBtn').addEventListener('click', async () => {
   const video = document.getElementById('vslVideo');
   const overlay = document.getElementById('vslOverlay');
   if (!video || !overlay) return;
-
   video.muted = true;
   video.playsInline = true;
   video.play().catch(() => {});
-
   overlay.addEventListener('click', function(e){
     e.stopPropagation();
     overlay.classList.add('hidden');
@@ -725,7 +734,6 @@ $('#shareBtn').addEventListener('click', async () => {
     video.volume = 1;
     video.play().catch(()=>{});
   });
-
   video.addEventListener('click', function(){
     if (!overlay.classList.contains('hidden')) {
       overlay.classList.add('hidden');
@@ -857,26 +865,29 @@ async function generatePixMensal(){
 function showPixResult(data){
   donationState.pixData = data;
   $('#pixQrImg').src = data.qrCodeImage || '';
+  $('#qrZoomImg').src = data.qrCodeImage || '';
   $('#pixCodeText').textContent = data.pixCode || '';
   $('#pixTotalText').textContent = 'Total: ' + formatBRL(data.total || donationState.amount);
   showStep(3);
-
-  // Inicia verificação automática
   startPaymentPolling(data.transactionId);
 }
 
-// ===== Polling automático =====
+function abrirZoomQR(){
+  const img = $('#pixQrImg').src;
+  if (!img) return;
+  $('#qrZoomImg').src = img;
+  $('#qrZoom').classList.add('show');
+}
+function fecharZoomQR(){ $('#qrZoom').classList.remove('show'); }
+
 function startPaymentPolling(transactionId){
   stopPaymentPolling();
-
   let tentativas = 0;
-  const maxTentativas = 120; // 120 * 5s = 10 minutos
-
+  const maxTentativas = 120;
   donationState.pollTimer = setInterval(async () => {
     tentativas++;
     if (tentativas > maxTentativas) { stopPaymentPolling(); return; }
     if (donationModal.hidden) { stopPaymentPolling(); return; }
-
     try {
       const res = await fetch(API_APROVAR_PAGAMENTO, {
         method: 'POST',
@@ -884,22 +895,19 @@ function startPaymentPolling(transactionId){
         body: JSON.stringify({ transactionId })
       });
       const data = await res.json();
-
       if (data.success && data.isPaid === true) {
         stopPaymentPolling();
         onPaymentConfirmed();
       }
-    } catch (e) { /* ignora, continua tentando */ }
+    } catch (e) {}
   }, 5000);
 }
-
 function stopPaymentPolling(){
   if (donationState.pollTimer) {
     clearInterval(donationState.pollTimer);
     donationState.pollTimer = null;
   }
 }
-
 function onPaymentConfirmed(){
   showStep(4);
   setTimeout(() => { closeDonationModal(); }, 2000);
@@ -936,6 +944,97 @@ document.addEventListener('keydown', e => {
     else if (!donationModal.hidden) attemptCloseDonationModal();
   }
 });
+
+/* ===== CONFIG DINÂMICA E MANUTENÇÃO ===== */
+async function carregarConfigSite() {
+  try {
+    const res = await fetch('/api/site-info', { cache: 'no-store' });
+    const data = await res.json();
+
+    if (data.ativo === false) {
+      const screen = document.getElementById('manutencaoScreen');
+      const msgEl = document.getElementById('manutencaoMsg');
+      if (screen) {
+        if (msgEl && data.mensagem) msgEl.textContent = data.mensagem;
+        screen.classList.add('show');
+        screen.style.display = 'flex';
+      }
+      document.getElementById('headerSite').style.display = 'none';
+      document.getElementById('mainSite').style.display = 'none';
+      document.getElementById('stickyBar').style.display = 'none';
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+
+    const screen = document.getElementById('manutencaoScreen');
+    if (screen) { screen.classList.remove('show'); screen.style.display = 'none'; }
+    document.getElementById('headerSite').style.display = '';
+    document.getElementById('mainSite').style.display = '';
+    document.getElementById('stickyBar').style.display = '';
+    document.body.style.overflow = '';
+
+    if (Array.isArray(data.config?.valores_sugeridos)) {
+      const opts = document.getElementById('donationOptions');
+      if (opts) {
+        const popular = 30;
+        opts.innerHTML = data.config.valores_sugeridos.map(v => {
+          const isPop = v === popular ? 'popular' : '';
+          const badge = v === popular ? '<span class="badge">popular</span>' : '';
+          return `<button type="button" class="donation-option ${isPop}" data-value="${v}" onclick="selectDonationOption(this)">${badge}R$ ${v.toLocaleString('pt-BR')}</button>`;
+        }).join('');
+      }
+    }
+
+    if (data.config?.meta_mensal) {
+      const meta = data.config.meta_mensal;
+      const total = data.stats?.total_mes || 0;
+      const pct = Math.min(100, (total / meta) * 100);
+      const fmt = v => 'R$ ' + Number(v).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      const block = document.getElementById('metaBlock');
+      if (block) {
+        block.style.display = 'block';
+        document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
+        document.getElementById('metaFill').style.width = pct + '%';
+        document.getElementById('metaText').textContent = `${fmt(total)} / ${fmt(meta)}`;
+      }
+    }
+
+    if (data.stats?.total_geral !== undefined && data.stats.total_geral > 0) {
+      const block = document.getElementById('contadorBlock');
+      const texto = document.getElementById('contadorTexto');
+      if (block && texto) {
+        block.style.display = 'block';
+        texto.innerHTML = `<strong>${data.stats.total_geral}</strong> pessoas já ajudaram 💚`;
+      }
+    }
+
+    if (Array.isArray(data.ultimas_doacoes) && data.ultimas_doacoes.length > 0) {
+      const feedBox = document.getElementById('feedLive');
+      const feedList = document.getElementById('feedLiveList');
+      if (feedBox && feedList) {
+        feedBox.style.display = 'block';
+        const agora = Date.now();
+        feedList.innerHTML = data.ultimas_doacoes.map(d => {
+          const seg = Math.floor((agora - new Date(d.quando).getTime()) / 1000);
+          let t = 'agora';
+          if (seg > 86400) t = Math.floor(seg/86400) + 'd atrás';
+          else if (seg > 3600) t = Math.floor(seg/3600) + 'h atrás';
+          else if (seg > 60) t = Math.floor(seg/60) + 'min atrás';
+          return `<div class="feed-live-item">
+            <span class="nome">🐾 ${d.nome}</span>
+            <span><span class="valor">R$ ${Number(d.valor).toFixed(2).replace('.', ',')}</span> <span class="tempo">${t}</span></span>
+          </div>`;
+        }).join('');
+      }
+    }
+
+  } catch (e) {
+    console.warn('Erro config site:', e.message);
+  }
+}
+
+window.addEventListener('load', carregarConfigSite);
+setInterval(carregarConfigSite, 120000);
 </script>
 </body>
 </html>
