@@ -1030,18 +1030,18 @@ async function carregarConfigSite() {
     }
 
     if (data.config?.meta_mensal) {
-      const meta = data.config.meta_mensal;
-      const total = data.stats?.total_mes || 0;
-      const pct = Math.min(100, (total / meta) * 100);
-      const fmt = v => 'R$ ' + Number(v).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-      const block = document.getElementById('metaBlock');
-      if (block) {
-        block.style.display = 'block';
-        document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
-        document.getElementById('metaFill').style.width = pct + '%';
-        document.getElementById('metaText').textContent = `${fmt(total)} / ${fmt(meta)}`;
-      }
-    }
+  const meta = data.config.meta_mensal;
+  const total = data.stats?.total_mes || 0;
+  const pct = Math.min(100, (total / meta) * 100);
+  const fmt = v => 'R$ ' + Number(v).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const block = document.getElementById('metaBlock');
+  if (block) {
+    block.style.display = 'block';
+    document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
+    document.getElementById('metaFill').style.width = pct + '%';
+    document.getElementById('metaText').textContent = `${fmt(total)} / ${fmt(meta)}`;
+  }
+}
 
     if (data.stats?.total_geral !== undefined && data.stats.total_geral > 0) {
       const block = document.getElementById('contadorBlock');
