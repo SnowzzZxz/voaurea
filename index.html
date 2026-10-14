@@ -1053,24 +1053,25 @@ async function carregarConfigSite() {
     }
 
     if (Array.isArray(data.ultimas_doacoes) && data.ultimas_doacoes.length > 0) {
-      const feedBox = document.getElementById('feedLive');
-      const feedList = document.getElementById('feedLiveList');
-      if (feedBox && feedList) {
-        feedBox.style.display = 'block';
-        const agora = Date.now();
-        feedList.innerHTML = data.ultimas_doacoes.map(d => {
-          const seg = Math.floor((agora - new Date(d.quando).getTime()) / 1000);
-          let t = 'agora';
-          if (seg > 86400) t = Math.floor(seg/86400) + 'd atrás';
-          else if (seg > 3600) t = Math.floor(seg/3600) + 'h atrás';
-          else if (seg > 60) t = Math.floor(seg/60) + 'min atrás';
-          return `<div class="feed-live-item">
-            <span class="nome">🐾 ${d.nome}</span>
-            <span><span class="valor">R$ ${Number(d.valor).toFixed(2).replace('.', ',')}</span> <span class="tempo">${t}</span></span>
-          </div>`;
-        }).join('');
-      }
-    }
+  const feedBox = document.getElementById('feedLive');
+  const feedList = document.getElementById('feedLiveList');
+  if (feedBox && feedList) {
+    feedBox.style.display = 'block';
+    const agora = Date.now();
+    feedList.innerHTML = data.ultimas_doacoes.map(d => {
+      const seg = Math.floor((agora - new Date(d.quando).getTime()) / 1000);
+      let t = 'agora';
+      if (seg > 86400) t = Math.floor(seg/86400) + 'd atrás';
+      else if (seg > 3600) t = Math.floor(seg/3600) + 'h atrás';
+      else if (seg > 60) t = Math.floor(seg/60) + 'min atrás';
+      const valorFmt = 'R$ ' + Number(d.valor).toFixed(2).replace('.', ',');
+      return `<div class="feed-live-item">
+        <span class="nome">🐾 ${d.nome}</span>
+        <span><span class="valor">${valorFmt}</span> <span class="tempo">${t}</span></span>
+      </div>`;
+    }).join('');
+  }
+}
 
   } catch (e) {
     console.warn('Erro config site:', e.message);
