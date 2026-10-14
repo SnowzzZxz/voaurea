@@ -9,7 +9,7 @@
     200,
     250,
     500,
-    1000
+    1e+25
   ],
   "meta_mensal": 60000,
   "contador_base": 0,
