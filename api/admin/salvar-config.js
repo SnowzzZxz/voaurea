@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'voaurea2026';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'voaurea2026';
 
 function checkAuth(req, res) {
   const auth = req.headers.authorization;
