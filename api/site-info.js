@@ -23,10 +23,20 @@ function lerConfig() {
 
 async function lerDoacoes() {
   try {
-    const url = `https://raw.githubusercontent.com/${GITHUB_REPO}/main/doacoes-log.json?t=${Date.now()}`;
-    const resp = await axios.get(url, { timeout: 8000 });
-    return resp.data.doacoes || [];
+    const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/doacoes-log.json?t=${Date.now()}`;
+    const resp = await axios.get(url, {
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Cache-Control': 'no-cache',
+      },
+      timeout: 8000,
+    });
+    const conteudo = JSON.parse(Buffer.from(resp.data.content, 'base64').toString('utf8'));
+    return conteudo.doacoes || [];
   } catch (e) {
+    console.warn('Erro ao ler doacoes-log:', e.message);
     return [];
   }
 }
