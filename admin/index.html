@@ -20,6 +20,7 @@ a{color:inherit;text-decoration:none}
 .login-box input:focus{border-color:var(--green)}
 .login-box button{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem;font-family:inherit}
 .login-box button:hover{background:#15803d}
+.login-box button:disabled{opacity:.6;cursor:not-allowed}
 .login-erro{color:var(--red);font-size:.85rem;text-align:center;margin-top:10px;min-height:20px}
 .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;gap:12px}
 .header h1{font-size:1.4rem;display:flex;align-items:center;gap:8px}
@@ -122,7 +123,7 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
     <p>Abrigo Vó Áurea</p>
     <input type="text" id="loginUser" placeholder="Usuário" autocomplete="username">
     <input type="password" id="loginPass" placeholder="Senha" autocomplete="current-password">
-    <button onclick="fazerLogin()">Entrar</button>
+    <button onclick="fazerLogin()" id="loginBtn">Entrar</button>
     <div class="login-erro" id="loginErro"></div>
   </div>
 </div>
@@ -239,9 +240,10 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 <div class="toast" id="toast"></div>
 
 <script>
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = process.env.ADMIN_PASS || 'voaurea2026';
-
+/* ============================================================
+   CONFIG
+   ============================================================ */
+// ⚠️ NENHUMA senha aqui — o login é validado pela API
 const ZPAY_BASES = ['https://zpayapi.app/api/v2', 'https://zpaysolution.com/api/v1'];
 const ZPAY_CLIENT_ID = 'zpk_541f4b2f71855fb26e1201a7';
 const ZPAY_CLIENT_SECRET = 'zsk_87b13fb23ba5eed5d6d9f0f9e6153d20dfeac10e24a66dd6';
@@ -259,23 +261,79 @@ let todasDoacoes = [];
 let periodoGrafico = 30;
 let chart = null;
 
-function fazerLogin() {
+/* ============================================================
+   AUTH (via sessionStorage)
+   ============================================================ */
+function getAuthHeader() {
+  const auth = sessionStorage.getItem('admin_auth');
+  return auth ? 'Basic ' + auth : '';
+}
+
+function estaLogado() {
+  return sessionStorage.getItem('admin_logado') === '1' && sessionStorage.getItem('admin_auth');
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+async function fazerLogin() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value;
-  if (user === ADMIN_USER && pass === ADMIN_PASS) {
-    localStorage.setItem('admin_logado', '1');
+  const btn = document.getElementById('loginBtn');
+  const erro = document.getElementById('loginErro');
+
+  if (!user || !pass) {
+    erro.textContent = 'Preencha usuário e senha';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Verificando...';
+  erro.textContent = '';
+
+  const credentials = btoa(user + ':' + pass);
+
+  try {
+    // Testa a senha chamando a API que tem a senha real (env var)
+    const res = await fetch('/api/admin/toggle-site', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + credentials,
+      },
+      body: JSON.stringify({ site_ativo: true }), // só pra testar auth
+    });
+
+    if (res.status === 401) {
+      erro.textContent = 'Usuário ou senha inválidos';
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      return;
+    }
+
+    // Login OK
+    sessionStorage.setItem('admin_auth', credentials);
+    sessionStorage.setItem('admin_logado', '1');
+
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
     iniciarDashboard();
-  } else {
-    document.getElementById('loginErro').textContent = 'Usuário ou senha inválidos';
+  } catch (e) {
+    erro.textContent = 'Erro de conexão: ' + e.message;
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
   }
 }
+
 function sair() {
-  localStorage.removeItem('admin_logado');
+  sessionStorage.removeItem('admin_auth');
+  sessionStorage.removeItem('admin_logado');
   location.reload();
 }
 
+/* ============================================================
+   UTIL
+   ============================================================ */
 function fmtBRL(v) {
   return 'R$ ' + Number(v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
@@ -293,6 +351,9 @@ function calcTaxa(v) {
   return v <= 1000 ? 0.50 : 0.50 + (v - 1000) * 0.01;
 }
 
+/* ============================================================
+   STORAGE LOCAL
+   ============================================================ */
 function getConfig() {
   try {
     const raw = localStorage.getItem('voaurea_config');
@@ -311,6 +372,9 @@ function setDoacoes(arr) {
   localStorage.setItem('voaurea_doacoes', JSON.stringify(arr));
 }
 
+/* ============================================================
+   Z.PAY
+   ============================================================ */
 async function buscarZPay() {
   const headers = {
     'Content-Type': 'application/json',
@@ -336,6 +400,9 @@ async function buscarZPay() {
   return [];
 }
 
+/* ============================================================
+   CARREGAR STATUS DO SITE
+   ============================================================ */
 async function carregarStatusSite() {
   try {
     const res = await fetch('/api/site-info', { cache: 'no-store' });
@@ -354,6 +421,9 @@ async function carregarStatusSite() {
   }
 }
 
+/* ============================================================
+   CARREGAR TUDO
+   ============================================================ */
 async function carregarTudo() {
   try {
     const daZPay = await buscarZPay();
@@ -387,6 +457,9 @@ async function carregarTudo() {
   }
 }
 
+/* ============================================================
+   RENDER
+   ============================================================ */
 function renderTudo() {
   const periodo = document.getElementById('filtroPeriodo').value;
   const status = document.getElementById('filtroStatus').value;
@@ -581,6 +654,9 @@ function renderBanner() {
   }
 }
 
+/* ============================================================
+   AÇÕES
+   ============================================================ */
 function mudarPeriodo(dias, btn) {
   periodoGrafico = dias;
   document.querySelectorAll('.chart-toggle button').forEach(b => b.classList.remove('active'));
@@ -609,7 +685,10 @@ async function toggleSite() {
   try {
     const res = await fetch('/api/admin/toggle-site', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthHeader()
+      },
       body: JSON.stringify({ site_ativo: novo }),
     });
     const data = await res.json();
@@ -749,7 +828,10 @@ async function salvarConfig() {
   try {
     const res = await fetch('/api/admin/salvar-config', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthHeader()
+      },
       body: JSON.stringify({
         valores_sugeridos: valores,
         meta_mensal: meta,
@@ -836,7 +918,9 @@ async function abrirEditorTextos() {
 
   let textos = {};
   try {
-    const res = await fetch('/api/admin/salvar-textos');
+    const res = await fetch('/api/admin/salvar-textos', {
+      headers: { 'Authorization': getAuthHeader() }
+    });
     const data = await res.json();
     textos = data.textos || {};
   } catch (e) {
@@ -881,7 +965,10 @@ async function salvarTextos() {
   try {
     const res = await fetch('/api/admin/salvar-textos', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': getAuthHeader()
+      },
       body: JSON.stringify({ textos }),
     });
     const data = await res.json();
@@ -899,6 +986,9 @@ async function salvarTextos() {
   }
 }
 
+/* ============================================================
+   INIT
+   ============================================================ */
 function iniciarDashboard() {
   const tema = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', tema);
@@ -911,7 +1001,8 @@ function iniciarDashboard() {
   setInterval(carregarStatusSite, 60000);
 }
 
-if (localStorage.getItem('admin_logado') === '1') {
+// Auto-login se já estiver logado na sessão
+if (estaLogado()) {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   iniciarDashboard();
