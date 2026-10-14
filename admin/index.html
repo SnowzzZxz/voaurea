@@ -340,11 +340,13 @@ async function carregarStatusSite() {
   try {
     const res = await fetch('/api/site-info', { cache: 'no-store' });
     const data = await res.json();
-    if (typeof data.ativo === 'boolean') {
-      const c = getConfig();
-      c.site_ativo = data.ativo;
-      setConfig(c);
-    }
+    const c = getConfig();
+    if (typeof data.ativo === 'boolean') c.site_ativo = data.ativo;
+    if (data.config?.valores_sugeridos) c.valores_sugeridos = data.config.valores_sugeridos;
+    if (data.config?.meta_mensal) c.meta_mensal = data.config.meta_mensal;
+    if (data.config?.destaque_doacao) c.destaque_doacao = data.config.destaque_doacao;
+    if (data.mensagem) c.mensagem_manutencao = data.mensagem;
+    setConfig(c);
     renderBanner();
   } catch (e) {
     console.warn('Erro ao carregar status do site:', e.message);
@@ -734,18 +736,47 @@ function abrirConfig() {
   document.getElementById('modal').classList.add('show');
 }
 
-function salvarConfig() {
+async function salvarConfig() {
   const valores = document.getElementById('cfgValores').value
     .split(',').map(v => Number(v.trim())).filter(v => !isNaN(v) && v > 0);
-  const c = getConfig();
-  c.valores_sugeridos = valores;
-  c.meta_mensal = Number(document.getElementById('cfgMeta').value);
-  c.mensagem_manutencao = document.getElementById('cfgMsg').value.trim();
-  c.destaque_doacao = Number(document.getElementById('cfgDestaque').value);
-  setConfig(c);
-  renderTudo();
-  closeModal();
-  toast('✅ Configurações salvas');
+  const meta = Number(document.getElementById('cfgMeta').value);
+  const msg = document.getElementById('cfgMsg').value.trim();
+  const destaque = Number(document.getElementById('cfgDestaque').value);
+
+  const btn = document.querySelector('#modalContent .btn.primary');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Salvando...'; }
+
+  try {
+    const res = await fetch('/api/admin/salvar-config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        valores_sugeridos: valores,
+        meta_mensal: meta,
+        mensagem_manutencao: msg,
+        destaque_doacao: destaque,
+      }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      const c = getConfig();
+      c.valores_sugeridos = valores;
+      c.meta_mensal = meta;
+      c.mensagem_manutencao = msg;
+      c.destaque_doacao = destaque;
+      setConfig(c);
+      renderTudo();
+      closeModal();
+      toast('✅ Configurações salvas! Aguarde ~30s.', 'green');
+    } else {
+      toast('❌ ' + (data.message || 'Erro ao salvar'), 'red');
+      if (btn) { btn.disabled = false; btn.textContent = 'Salvar'; }
+    }
+  } catch (e) {
+    toast('❌ Erro de rede: ' + e.message, 'red');
+    if (btn) { btn.disabled = false; btn.textContent = 'Salvar'; }
+  }
 }
 
 function limparTudo() {
