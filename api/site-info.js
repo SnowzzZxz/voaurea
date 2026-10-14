@@ -11,6 +11,7 @@ function lerConfig() {
       valores_sugeridos: [20, 30, 50, 100, 150, 200, 250, 500, 1000],
       meta_mensal: 60000,
       mensagem_manutencao: 'Voltamos em alguns minutos! 🐾',
+      destaque_doacao: 500,
       textos: {},
     };
   }
@@ -18,7 +19,7 @@ function lerConfig() {
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
 
   const config = lerConfig();
 
