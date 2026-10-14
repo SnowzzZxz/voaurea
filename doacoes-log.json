@@ -380,6 +380,17 @@
       "metodo": "pix",
       "created_at": "2026-10-14T22:04:13.536Z",
       "paid_at": null
+    },
+    {
+      "id": "6acffca2e2b72066fe4dbc84",
+      "nome": "Rayllane Guedes da costa",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-14T22:05:22.166Z",
+      "paid_at": null
     }
   ]
 }
