@@ -259,6 +259,17 @@
       "metodo": "pix",
       "created_at": "2026-10-13T03:55:27.071Z",
       "paid_at": null
+    },
+    {
+      "id": "6acdab84838308e58af4e614",
+      "nome": "Anônimo",
+      "email": null,
+      "whatsapp": null,
+      "valor": 34.99,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-13T03:54:44.391Z",
+      "paid_at": null
     }
   ]
 }
