@@ -4,23 +4,21 @@ const path = require('path');
 function lerConfig() {
   try {
     const file = path.join(process.cwd(), 'config.json');
-    const raw = fs.readFileSync(file, 'utf8');
-    return JSON.parse(raw);
+    return JSON.parse(fs.readFileSync(file, 'utf8'));
   } catch (e) {
     return {
       site_ativo: true,
       valores_sugeridos: [20, 30, 50, 100, 150, 200, 250, 500, 1000],
       meta_mensal: 60000,
-      contador_base: 0,
       mensagem_manutencao: 'Voltamos em alguns minutos! 🐾',
-      destaque_doacao: 500,
+      textos: {},
     };
   }
 }
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  res.setHeader('Cache-Control', 'no-store');
 
   const config = lerConfig();
 
@@ -33,5 +31,6 @@ module.exports = async (req, res) => {
       meta_mensal: config.meta_mensal,
       destaque_doacao: config.destaque_doacao,
     },
+    textos: config.textos || {},
   });
 };
