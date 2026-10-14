@@ -317,11 +317,7 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
       <div id="metaText" style="text-align:center;font-size:.8rem;color:#4b5563;margin-top:6px">R$ 0 / R$ 60.000</div>
     </div>
   </section>
-
-  <section class="section feed-live" id="feedLive" style="display:none">
-    <h3>🐾 Últimas doações</h3>
-    <div class="feed-live-list" id="feedLiveList"></div>
-  </section>
+  
   <section class="section" id="historia">
     <div class="section-title">
       <span class="section-ico">👤</span>
@@ -988,7 +984,7 @@ function aplicarTextos(t) {
 }
 
 /* ===== CONFIG DINÂMICA E MANUTENÇÃO ===== */
-async function carregarConfigSite() {
+async function  {
   try {
     const res = await fetch('/api/site-info', { cache: 'no-store' });
     const data = await res.json();
