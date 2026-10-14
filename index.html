@@ -70,14 +70,6 @@ button{cursor:pointer}
 .meta-block{max-width:420px;margin:20px auto 0;background:#fff;padding:14px;border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 12px rgba(74,44,34,.06)}
 .contador-block{text-align:center;margin:16px auto 0;font-size:.9rem;color:var(--muted)}
 .contador-block strong{color:var(--green);font-size:1.1rem}
-.feed-live{max-width:720px;margin:0 auto;padding:0 18px}
-.feed-live h3{font-family:var(--display);font-size:1rem;color:var(--brown);margin-bottom:10px}
-.feed-live-list{display:grid;gap:6px}
-.feed-live-item{background:#fff;padding:10px 14px;border-radius:10px;font-size:.85rem;display:flex;justify-content:space-between;border:1px solid var(--line);animation:fadeInFeed .3s ease}
-.feed-live-item .nome{font-weight:600;color:var(--brown)}
-.feed-live-item .valor{color:var(--green);font-weight:700}
-.feed-live-item .tempo{color:var(--muted);font-size:.75rem;margin-left:8px}
-@keyframes fadeInFeed{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .manutencao-screen{position:fixed;inset:0;background:#f7f3ec;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;text-align:center}
 .manutencao-screen.show{display:flex}
 .manutencao-screen .emoji{font-size:4rem;margin-bottom:20px}
@@ -317,7 +309,7 @@ body:has(#downsellModal.show) .sticky-bar.is-visible{transform:translateY(110%);
       <div id="metaText" style="text-align:center;font-size:.8rem;color:#4b5563;margin-top:6px">R$ 0 / R$ 60.000</div>
     </div>
   </section>
-  
+
   <section class="section" id="historia">
     <div class="section-title">
       <span class="section-ico">👤</span>
@@ -939,7 +931,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ===== APLICAR TEXTOS DINÂMICOS ===== */
 function aplicarTextos(t) {
   if (!t) return;
   const set = (sel, val) => { const el = document.querySelector(sel); if (el && val) el.textContent = val; };
@@ -983,8 +974,7 @@ function aplicarTextos(t) {
   if (t.faq_a4) set('.txt-faq-a4', t.faq_a4);
 }
 
-/* ===== CONFIG DINÂMICA E MANUTENÇÃO ===== */
-async function  {
+async function carregarConfigSite() {
   try {
     const res = await fetch('/api/site-info', { cache: 'no-store' });
     const data = await res.json();
@@ -1026,48 +1016,27 @@ async function  {
     }
 
     if (data.config?.meta_mensal) {
-  const meta = data.config.meta_mensal;
-  const total = data.stats?.total_mes || 0;
-  const pct = Math.min(100, (total / meta) * 100);
-  const fmt = v => 'R$ ' + Number(v).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  const block = document.getElementById('metaBlock');
-  if (block) {
-    block.style.display = 'block';
-    document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
-    document.getElementById('metaFill').style.width = pct + '%';
-    document.getElementById('metaText').textContent = `${fmt(total)} / ${fmt(meta)}`;
-  }
-}
+      const meta = data.config.meta_mensal;
+      const total = data.stats?.total_mes || 0;
+      const pct = Math.min(100, (total / meta) * 100);
+      const fmt = v => 'R$ ' + Number(v).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      const block = document.getElementById('metaBlock');
+      if (block) {
+        block.style.display = 'block';
+        document.getElementById('metaPct').textContent = pct.toFixed(1) + '%';
+        document.getElementById('metaFill').style.width = pct + '%';
+        document.getElementById('metaText').textContent = `${fmt(total)} / ${fmt(meta)}`;
+      }
+    }
 
-   if (data.stats?.total_geral !== undefined && data.stats.total_geral > 0) {
-  const block = document.getElementById('contadorBlock');
-  const texto = document.getElementById('contadorTexto');
-  if (block && texto) {
-    block.style.display = 'block';
-    texto.innerHTML = `<strong>${data.stats.total_geral}</strong> pessoas já ajudaram 💚`;
-  }
-}
-
-    if (Array.isArray(data.ultimas_doacoes) && data.ultimas_doacoes.length > 0) {
-  const feedBox = document.getElementById('feedLive');
-  const feedList = document.getElementById('feedLiveList');
-  if (feedBox && feedList) {
-    feedBox.style.display = 'block';
-    const agora = Date.now();
-    feedList.innerHTML = data.ultimas_doacoes.map(d => {
-      const seg = Math.floor((agora - new Date(d.quando).getTime()) / 1000);
-      let t = 'agora';
-      if (seg > 86400) t = Math.floor(seg/86400) + 'd atrás';
-      else if (seg > 3600) t = Math.floor(seg/3600) + 'h atrás';
-      else if (seg > 60) t = Math.floor(seg/60) + 'min atrás';
-      const valorFmt = 'R$ ' + Number(d.valor).toFixed(2).replace('.', ',');
-      return `<div class="feed-live-item">
-        <span class="nome">🐾 ${d.nome}</span>
-        <span><span class="valor">${valorFmt}</span> <span class="tempo">${t}</span></span>
-      </div>`;
-    }).join('');
-  }
-}
+    if (data.stats?.total_geral !== undefined && data.stats.total_geral > 0) {
+      const block = document.getElementById('contadorBlock');
+      const texto = document.getElementById('contadorTexto');
+      if (block && texto) {
+        block.style.display = 'block';
+        texto.innerHTML = `<strong>${data.stats.total_geral}</strong> pessoas já ajudaram 💚`;
+      }
+    }
 
   } catch (e) {
     console.warn('Erro config site:', e.message);
