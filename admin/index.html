@@ -240,7 +240,7 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 
 <script>
 const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'voaurea2026';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'voaurea2026';
 
 const ZPAY_BASES = ['https://zpayapi.app/api/v2', 'https://zpaysolution.com/api/v1'];
 const ZPAY_CLIENT_ID = 'zpk_541f4b2f71855fb26e1201a7';
