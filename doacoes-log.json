@@ -6,6 +6,17 @@
       "valor": 2,
       "status": "paid",
       "created_at": "2026-10-14T01:40:49.228Z"
+    },
+    {
+      "id": "6acedd09838308e58af4e61b",
+      "nome": "Anônimo",
+      "email": null,
+      "whatsapp": null,
+      "valor": 2,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-14T01:38:17.521Z",
+      "paid_at": null
     }
   ]
 }
