@@ -1,0 +1,11 @@
+{
+  "doacoes": [
+    {
+      "id": "teste-manual-001",
+      "nome": "Teste Manual",
+      "valor": 2,
+      "status": "paid",
+      "created_at": "2026-10-14T01:40:49.228Z"
+    }
+  ]
+}
