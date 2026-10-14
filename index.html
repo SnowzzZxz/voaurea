@@ -1043,14 +1043,14 @@ async function carregarConfigSite() {
   }
 }
 
-    if (data.stats?.total_geral !== undefined && data.stats.total_geral > 0) {
-      const block = document.getElementById('contadorBlock');
-      const texto = document.getElementById('contadorTexto');
-      if (block && texto) {
-        block.style.display = 'block';
-        texto.innerHTML = `<strong>${data.stats.total_geral}</strong> pessoas já ajudaram 💚`;
-      }
-    }
+   if (data.stats?.total_geral !== undefined && data.stats.total_geral > 0) {
+  const block = document.getElementById('contadorBlock');
+  const texto = document.getElementById('contadorTexto');
+  if (block && texto) {
+    block.style.display = 'block';
+    texto.innerHTML = `<strong>${data.stats.total_geral}</strong> pessoas já ajudaram 💚`;
+  }
+}
 
     if (Array.isArray(data.ultimas_doacoes) && data.ultimas_doacoes.length > 0) {
   const feedBox = document.getElementById('feedLive');
