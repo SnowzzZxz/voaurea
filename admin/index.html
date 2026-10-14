@@ -426,27 +426,33 @@ async function carregarStatusSite() {
    ============================================================ */
 async function carregarTudo() {
   try {
-    const daZPay = await buscarZPay();
+    // Busca do doacoes-log.json no GitHub
+    const res = await fetch('https://raw.githubusercontent.com/SnowzzZxz/voaurea/main/doacoes-log.json?t=' + Date.now());
+    if (!res.ok) {
+      // Arquivo ainda não existe, tudo bem
+      todasDoacoes = getDoacoes();
+      renderTudo();
+      return;
+    }
+    const data = await res.json();
+    const doGitHub = data.doacoes || [];
+
     const doLocal = getDoacoes();
     const ids = new Set(doLocal.map(d => d.id));
-    const novos = daZPay.filter(p => {
-      const id = p.id || p.paymentId || p.transactionId;
-      return id && !ids.has(id);
-    }).map(p => ({
-      id: p.id || p.paymentId || p.transactionId,
-      nome: p.payer?.name || p.payerName || p.donorName || '—',
-      email: p.email || p.payer?.email || null,
-      whatsapp: p.whatsapp || p.payer?.phone || null,
-      valor: Number(p.amount || p.value || 0),
-      status: p.status || 'pending',
-      metodo: p.paymentMethod || p.method || 'pix',
-      created_at: p.createdAt || p.created_at || new Date().toISOString(),
-      paid_at: p.paidAt || p.paid_at || null,
-    }));
+    const novos = doGitHub.filter(d => d.id && !ids.has(d.id));
+
     if (novos.length > 0) {
       setDoacoes([...doLocal, ...novos]);
       toast(`✅ ${novos.length} doação(ões) importadas`);
     }
+
+    // Atualiza status das que já existem
+    const atualizadas = getDoacoes().map(d => {
+      const nova = doGitHub.find(g => g.id === d.id);
+      return nova ? { ...d, ...nova } : d;
+    });
+    setDoacoes(atualizadas);
+
     todasDoacoes = getDoacoes();
     renderTudo();
     document.getElementById('lastUpdate').textContent = 'Atualizado ' + new Date().toLocaleTimeString('pt-BR');
@@ -456,7 +462,6 @@ async function carregarTudo() {
     renderTudo();
   }
 }
-
 /* ============================================================
    RENDER
    ============================================================ */
