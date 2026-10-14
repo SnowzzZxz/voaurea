@@ -12,8 +12,6 @@
 html{transition:background .2s}
 body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px;transition:background .2s,color .2s}
 a{color:inherit;text-decoration:none}
-
-/* LOGIN */
 .login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
 .login-box{background:var(--card);padding:32px;border-radius:16px;border:1px solid var(--border);width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .login-box h1{font-size:1.3rem;margin-bottom:8px;text-align:center}
@@ -23,8 +21,6 @@ a{color:inherit;text-decoration:none}
 .login-box button{width:100%;padding:12px;background:var(--green);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.95rem;font-family:inherit}
 .login-box button:hover{background:#15803d}
 .login-erro{color:var(--red);font-size:.85rem;text-align:center;margin-top:10px;min-height:20px}
-
-/* HEADER */
 .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;flex-wrap:wrap;gap:12px}
 .header h1{font-size:1.4rem;display:flex;align-items:center;gap:8px}
 .header .sub{color:var(--muted);font-weight:400;font-size:.85rem;margin-top:4px}
@@ -34,8 +30,6 @@ a{color:inherit;text-decoration:none}
 .btn.primary{background:var(--green);border-color:var(--green);color:#fff}
 .btn.primary:hover{background:#15803d}
 .btn.danger{background:var(--red);border-color:var(--red);color:#fff}
-
-/* BANNER */
 .site-banner{padding:12px 18px;border-radius:10px;margin-bottom:20px;font-size:.9rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .site-banner.on{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
 .site-banner.off{background:#3a0505;color:#fca5a5;border:1px solid var(--red)}
@@ -45,8 +39,6 @@ a{color:inherit;text-decoration:none}
 .toggle::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
 .toggle.on::after{left:27px}
 .toggle.disabled{opacity:.5;pointer-events:none}
-
-/* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px}
 .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border);transition:.2s}
 .card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
@@ -59,36 +51,26 @@ a{color:inherit;text-decoration:none}
 .variation{font-size:.75rem;font-weight:700;padding:2px 6px;border-radius:4px}
 .variation.up{background:var(--green-soft);color:var(--green)}
 .variation.down{background:#3a0505;color:var(--red)}
-
-/* CHART */
 .chart-box{background:var(--card);padding:20px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border)}
 .chart-box h3{margin-bottom:14px;font-size:.95rem;color:var(--muted);font-weight:600;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .chart-toggle{display:flex;gap:4px}
 .chart-toggle button{background:transparent;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:6px;font-size:.75rem;cursor:pointer;font-family:inherit}
 .chart-toggle button.active{background:var(--green);border-color:var(--green);color:#fff}
-
-/* META */
 .meta-box{background:var(--card);padding:18px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border)}
 .meta-head{display:flex;justify-content:space-between;margin-bottom:10px;font-size:.9rem;font-weight:600}
 .meta-head .pct{color:var(--green)}
 .meta-track{height:12px;background:var(--card-hover);border-radius:999px;overflow:hidden}
 .meta-fill{height:100%;background:linear-gradient(90deg,#22c55e,#16a34a);border-radius:inherit;transition:width .8s ease}
-
-/* FEED */
 .feed{background:var(--card);padding:18px;border-radius:12px;border:1px solid var(--border);margin-bottom:20px}
 .feed h3{font-size:.95rem;color:var(--muted);margin-bottom:12px;font-weight:600}
 .feed-item{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.9rem}
 .feed-item:last-child{border-bottom:none}
 .feed-item .nome{font-weight:600}
 .feed-item .valor{color:var(--green);font-weight:700}
-
-/* FILTROS */
 .filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .filters select,.filters input{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 12px;border-radius:8px;font-size:.88rem;outline:none;font-family:inherit}
 .filters select:focus,.filters input:focus{border-color:var(--green)}
 .filters input{flex:1;min-width:180px}
-
-/* TABELA */
 table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border)}
 th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);font-size:.88rem}
 th{background:var(--card-hover);color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
@@ -102,11 +84,9 @@ tr.big-donation td{background:linear-gradient(90deg,transparent,rgba(240,180,41,
 tr.big-donation td:first-child::before{content:"⭐ ";font-size:.9rem}
 tr.big-donation .valor{color:var(--yellow);font-weight:800}
 .empty{padding:40px;text-align:center;color:var(--muted);background:var(--card);border-radius:12px;border:1px solid var(--border)}
-
-/* MODAL */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:20px;z-index:100;backdrop-filter:blur(4px)}
 .modal.show{display:flex}
-.modal-card{background:var(--card);padding:24px;border-radius:14px;max-width:500px;width:100%;max-height:85vh;overflow:auto;border:1px solid var(--border)}
+.modal-card{background:var(--card);padding:24px;border-radius:14px;max-width:600px;width:100%;max-height:85vh;overflow:auto;border:1px solid var(--border)}
 .modal-card h2{margin-bottom:16px;font-size:1.15rem}
 .modal-card h3{margin:16px 0 10px;font-size:.9rem;color:var(--muted);font-weight:600}
 .modal-card .row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:.9rem;gap:12px}
@@ -115,17 +95,14 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 .modal-card label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:6px;font-weight:600}
 .modal-card input,.modal-card textarea{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.9rem;outline:none;margin-bottom:12px}
 .modal-card input:focus,.modal-card textarea:focus{border-color:var(--green)}
-.modal-card textarea{font-family:monospace;font-size:.82rem;min-height:160px;resize:vertical}
+.modal-card textarea{font-family:inherit;font-size:.88rem;min-height:70px;resize:vertical}
 .modal-close{margin-top:16px;background:var(--card-hover);color:var(--text);border:1px solid var(--border);padding:10px 18px;border-radius:8px;cursor:pointer;width:100%;font-weight:600;font-family:inherit}
 .modal-actions{display:flex;gap:8px;margin-top:12px}
-
-/* TOAST */
 .toast{position:fixed;bottom:20px;right:20px;background:var(--card);border:1px solid var(--border);padding:14px 18px;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.25);font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:10px;transform:translateX(120%);transition:transform .3s ease;z-index:200;max-width:320px}
 .toast.show{transform:translateX(0)}
 .toast.green{border-color:var(--green)}
 .toast.yellow{border-color:var(--yellow)}
 .toast.red{border-color:var(--red)}
-
 @media(max-width:640px){
   body{padding:12px}
   .header h1{font-size:1.15rem}
@@ -139,7 +116,6 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <h1>🐾 Dashboard Admin</h1>
@@ -151,7 +127,6 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
   </div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard" style="display:none">
 
   <div class="header">
@@ -163,6 +138,7 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
       <a href="/" target="_blank" class="btn">🌐 Ver site</a>
       <button class="btn" onclick="exportarCSV()">📥 CSV</button>
       <button class="btn" onclick="abrirImportar()">📋 Importar</button>
+      <button class="btn" onclick="abrirEditorTextos()">✏️ Textos</button>
       <button class="btn" onclick="abrirConfig()">⚙️ Config</button>
       <button class="btn" onclick="toggleTheme()" id="themeBtn">☀️ Claro</button>
       <button class="btn primary" onclick="carregarTudo()">🔄 Atualizar</button>
@@ -263,9 +239,6 @@ tr.big-donation .valor{color:var(--yellow);font-weight:800}
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   CONFIG
-   ============================================================ */
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'voaurea2026';
 
@@ -282,16 +255,10 @@ const CONFIG_DEFAULT = {
   destaque_doacao: 500,
 };
 
-/* ============================================================
-   ESTADO
-   ============================================================ */
 let todasDoacoes = [];
 let periodoGrafico = 30;
 let chart = null;
 
-/* ============================================================
-   LOGIN
-   ============================================================ */
 function fazerLogin() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value;
@@ -309,9 +276,6 @@ function sair() {
   location.reload();
 }
 
-/* ============================================================
-   UTIL
-   ============================================================ */
 function fmtBRL(v) {
   return 'R$ ' + Number(v || 0).toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
@@ -329,9 +293,6 @@ function calcTaxa(v) {
   return v <= 1000 ? 0.50 : 0.50 + (v - 1000) * 0.01;
 }
 
-/* ============================================================
-   STORAGE LOCAL
-   ============================================================ */
 function getConfig() {
   try {
     const raw = localStorage.getItem('voaurea_config');
@@ -350,9 +311,6 @@ function setDoacoes(arr) {
   localStorage.setItem('voaurea_doacoes', JSON.stringify(arr));
 }
 
-/* ============================================================
-   Z.PAY
-   ============================================================ */
 async function buscarZPay() {
   const headers = {
     'Content-Type': 'application/json',
@@ -378,14 +336,10 @@ async function buscarZPay() {
   return [];
 }
 
-/* ============================================================
-   CARREGAR STATUS DO SITE (via API)
-   ============================================================ */
 async function carregarStatusSite() {
   try {
     const res = await fetch('/api/site-info', { cache: 'no-store' });
     const data = await res.json();
-    // Atualiza o config local com o que vem do servidor
     if (typeof data.ativo === 'boolean') {
       const c = getConfig();
       c.site_ativo = data.ativo;
@@ -398,9 +352,6 @@ async function carregarStatusSite() {
   }
 }
 
-/* ============================================================
-   CARREGAR TUDO
-   ============================================================ */
 async function carregarTudo() {
   try {
     const daZPay = await buscarZPay();
@@ -434,9 +385,6 @@ async function carregarTudo() {
   }
 }
 
-/* ============================================================
-   RENDER
-   ============================================================ */
 function renderTudo() {
   const periodo = document.getElementById('filtroPeriodo').value;
   const status = document.getElementById('filtroStatus').value;
@@ -631,9 +579,6 @@ function renderBanner() {
   }
 }
 
-/* ============================================================
-   AÇÕES
-   ============================================================ */
 function mudarPeriodo(dias, btn) {
   periodoGrafico = dias;
   document.querySelectorAll('.chart-toggle button').forEach(b => b.classList.remove('active'));
@@ -641,11 +586,9 @@ function mudarPeriodo(dias, btn) {
   renderGrafico();
 }
 
-// ===== PAUSAR/ATIVAR SITE (via API + GitHub) =====
 async function toggleSite() {
   const c = getConfig();
   const novo = !c.site_ativo;
-
   const msg = novo
     ? '✅ Ativar o site público?\n\nVisitantes voltarão a ver o site normal.'
     : '⏸️ PAUSAR o site público?\n\nVisitantes verão a tela de manutenção.\n\nLeva ~30s pra aplicar.';
@@ -819,8 +762,112 @@ function closeModal() {
 }
 
 /* ============================================================
-   INIT
+   EDITOR DE TEXTOS
    ============================================================ */
+const CAMPOS_TEXTOS = [
+  { grupo: '🏠 Hero (topo do site)', itens: [
+    { key: 'hero_titulo', label: 'Título principal', tipo: 'textarea' },
+    { key: 'hero_botao_mensal', label: 'Botão "Ajudar todo mês"', tipo: 'input' },
+    { key: 'hero_botao_unica', label: 'Botão "Ajudar agora"', tipo: 'input' },
+  ]},
+  { grupo: '👤 Quem é a Vó Áurea', itens: [
+    { key: 'sobre_titulo', label: 'Título da seção', tipo: 'input' },
+    { key: 'sobre_p1', label: 'Parágrafo 1', tipo: 'textarea' },
+    { key: 'sobre_p2', label: 'Parágrafo 2', tipo: 'textarea' },
+    { key: 'sobre_p3', label: 'Parágrafo 3', tipo: 'textarea' },
+    { key: 'sobre_callout', label: 'Destaque (caixa amarela)', tipo: 'textarea' },
+  ]},
+  { grupo: '⚠️ A realidade do abrigo', itens: [
+    { key: 'realidade_titulo', label: 'Título da seção', tipo: 'input' },
+    { key: 'realidade_p1', label: 'Parágrafo 1', tipo: 'textarea' },
+    { key: 'realidade_p2', label: 'Parágrafo 2', tipo: 'textarea' },
+    { key: 'realidade_p3', label: 'Parágrafo 3', tipo: 'textarea' },
+    { key: 'realidade_p4', label: 'Parágrafo 4', tipo: 'textarea' },
+  ]},
+  { grupo: '♥️ Impacto', itens: [
+    { key: 'impacto_titulo', label: 'Título da seção', tipo: 'input' },
+  ]},
+  { grupo: '❓ FAQ', itens: [
+    { key: 'faq_q1', label: 'Pergunta 1', tipo: 'input' },
+    { key: 'faq_a1', label: 'Resposta 1', tipo: 'textarea' },
+    { key: 'faq_q2', label: 'Pergunta 2', tipo: 'input' },
+    { key: 'faq_a2', label: 'Resposta 2', tipo: 'textarea' },
+    { key: 'faq_q3', label: 'Pergunta 3', tipo: 'input' },
+    { key: 'faq_a3', label: 'Resposta 3', tipo: 'textarea' },
+    { key: 'faq_q4', label: 'Pergunta 4', tipo: 'input' },
+    { key: 'faq_a4', label: 'Resposta 4', tipo: 'textarea' },
+  ]},
+];
+
+async function abrirEditorTextos() {
+  let html = `<h2>✏️ Editar textos do site</h2>`;
+  html += `<p style="color:var(--muted);font-size:.85rem;margin-bottom:16px">Edite os textos abaixo. Ao salvar, o site atualiza em ~30s.</p>`;
+
+  let textos = {};
+  try {
+    const res = await fetch('/api/admin/salvar-textos');
+    const data = await res.json();
+    textos = data.textos || {};
+  } catch (e) {
+    console.error(e);
+  }
+
+  CAMPOS_TEXTOS.forEach(grupo => {
+    html += `<h3 style="margin:16px 0 10px;font-size:.9rem;color:var(--muted);font-weight:600">${grupo.grupo}</h3>`;
+    grupo.itens.forEach(item => {
+      const valor = textos[item.key] || '';
+      const escaped = valor.replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      html += `<label>${item.label}</label>`;
+      if (item.tipo === 'textarea') {
+        html += `<textarea id="txt_${item.key}" style="min-height:80px">${escaped}</textarea>`;
+      } else {
+        html += `<input type="text" id="txt_${item.key}" value="${escaped}">`;
+      }
+    });
+  });
+
+  html += `<div class="modal-actions">
+    <button class="btn primary" style="flex:1" onclick="salvarTextos()">💾 Salvar textos</button>
+    <button class="btn" style="flex:1" onclick="closeModal()">Cancelar</button>
+  </div>`;
+
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modal').classList.add('show');
+}
+
+async function salvarTextos() {
+  const textos = {};
+  CAMPOS_TEXTOS.forEach(grupo => {
+    grupo.itens.forEach(item => {
+      const el = document.getElementById('txt_' + item.key);
+      if (el) textos[item.key] = el.value;
+    });
+  });
+
+  const btn = document.querySelector('#modalContent .btn.primary');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Salvando...'; }
+
+  try {
+    const res = await fetch('/api/admin/salvar-textos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ textos }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      toast('✅ Textos salvos! Aguarde ~30s.', 'green');
+      closeModal();
+    } else {
+      toast('❌ ' + (data.message || 'Erro ao salvar'), 'red');
+      if (btn) { btn.disabled = false; btn.textContent = '💾 Salvar textos'; }
+    }
+  } catch (e) {
+    toast('❌ Erro de rede: ' + e.message, 'red');
+    if (btn) { btn.disabled = false; btn.textContent = '💾 Salvar textos'; }
+  }
+}
+
 function iniciarDashboard() {
   const tema = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', tema);
@@ -833,7 +880,6 @@ function iniciarDashboard() {
   setInterval(carregarStatusSite, 60000);
 }
 
-// Auto-login
 if (localStorage.getItem('admin_logado') === '1') {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
