@@ -375,29 +375,16 @@ function setDoacoes(arr) {
 /* ============================================================
    Z.PAY
    ============================================================ */
-async function buscarZPay() {
-  const headers = {
-    'Content-Type': 'application/json',
-    'client-id': ZPAY_CLIENT_ID,
-    'client-secret': ZPAY_CLIENT_SECRET,
-  };
-  const rotas = ['/payments', '/payments/list', '/transactions', '/charges'];
-  for (const base of ZPAY_BASES) {
-    for (const rota of rotas) {
-      try {
-        const resp = await fetch(base + rota, { headers });
-        if (resp.ok) {
-          const data = await resp.json();
-          let lista = data.payments || data.data || data.transactions || data.charges || data.results;
-          if (Array.isArray(lista) && lista.length > 0) {
-            console.log('✅ Z.PAY respondeu:', base + rota, lista.length, 'itens');
-            return lista;
-          }
-        }
-      } catch (e) {}
-    }
+async function buscarDoacoesSalvas() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/SnowzzZxz/voaurea/main/doacoes-log.json?t=' + Date.now());
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.doacoes || [];
+  } catch (e) {
+    console.warn('Erro ao buscar doações:', e.message);
+    return [];
   }
-  return [];
 }
 
 /* ============================================================
@@ -426,21 +413,14 @@ async function carregarStatusSite() {
    ============================================================ */
 async function carregarTudo() {
   try {
-    // Busca do doacoes-log.json no GitHub
-    const res = await fetch('https://raw.githubusercontent.com/SnowzzZxz/voaurea/main/doacoes-log.json?t=' + Date.now());
-    if (!res.ok) {
-      // Arquivo ainda não existe, tudo bem
-      todasDoacoes = getDoacoes();
-      renderTudo();
-      return;
-    }
-    const data = await res.json();
-    const doGitHub = data.doacoes || [];
+    const doGitHub = await buscarDoacoesSalvas();
 
+    // Junta com o que já tá no localStorage (sem duplicar)
     const doLocal = getDoacoes();
     const ids = new Set(doLocal.map(d => d.id));
     const novos = doGitHub.filter(d => d.id && !ids.has(d.id));
 
+    // Se tem novos, adiciona
     if (novos.length > 0) {
       setDoacoes([...doLocal, ...novos]);
       toast(`✅ ${novos.length} doação(ões) importadas`);
