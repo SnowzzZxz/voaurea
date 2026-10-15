@@ -508,10 +508,10 @@
       "email": null,
       "whatsapp": null,
       "valor": 7.99,
-      "status": "pending",
+      "status": "paid",
       "metodo": "pix",
       "created_at": "2026-10-15T10:31:53.770Z",
-      "paid_at": null
+      "paid_at": "2026-10-15T10:37:52.595Z"
     },
     {
       "id": "6ad0ac0fe2b72066fe4dbe2e",
