@@ -332,7 +332,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 19.9,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-10-14T19:47:55.377Z",
       "paid_at": null
