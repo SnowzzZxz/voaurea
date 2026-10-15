@@ -622,6 +622,17 @@
       "metodo": "pix",
       "created_at": "2026-10-15T18:15:33.592Z",
       "paid_at": "2026-10-15T18:17:51.816Z"
+    },
+    {
+      "id": "6ad15928a94f73e964c75987",
+      "nome": "Cliente",
+      "email": null,
+      "whatsapp": null,
+      "valor": 7.99,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-15T22:52:24.193Z",
+      "paid_at": null
     }
   ]
 }
