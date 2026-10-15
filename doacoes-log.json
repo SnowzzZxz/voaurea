@@ -600,6 +600,17 @@
       "metodo": "pix",
       "created_at": "2026-10-15T13:43:19.267Z",
       "paid_at": null
+    },
+    {
+      "id": "6ad10b30e2b72066fe4dbf04",
+      "nome": "Gabriel",
+      "email": null,
+      "whatsapp": null,
+      "valor": 5,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-15T17:19:44.220Z",
+      "paid_at": null
     }
   ]
 }
