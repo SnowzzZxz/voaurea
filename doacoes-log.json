@@ -721,6 +721,17 @@
       "metodo": "pix",
       "created_at": "2026-10-16T13:05:51.957Z",
       "paid_at": null
+    },
+    {
+      "id": "6ad22150a94f73e964c75aa2",
+      "nome": "Carlos Eduardo",
+      "email": null,
+      "whatsapp": null,
+      "valor": 9.99,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-16T13:06:24.916Z",
+      "paid_at": null
     }
   ]
 }
