@@ -743,6 +743,17 @@
       "metodo": "pix",
       "created_at": "2026-10-16T13:07:15.992Z",
       "paid_at": "2026-10-16T13:09:18.381Z"
+    },
+    {
+      "id": "6ad2b56e13c7cb7c3dc0673f",
+      "nome": "Arthur",
+      "email": null,
+      "whatsapp": null,
+      "valor": 1000,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-16T23:38:22.844Z",
+      "paid_at": null
     }
   ]
 }
