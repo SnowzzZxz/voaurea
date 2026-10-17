@@ -787,6 +787,17 @@
       "metodo": "pix",
       "created_at": "2026-10-17T02:12:21.247Z",
       "paid_at": null
+    },
+    {
+      "id": "6ad30b9952a334aca977c76b",
+      "nome": "Júlia Fernandes",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-17T05:46:01.193Z",
+      "paid_at": null
     }
   ]
 }
