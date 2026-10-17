@@ -1,33 +1,28 @@
-# Abrigo Vo Aurea - Site e Dashboard
+LEIA-ME
+Abrigo Vó Áurea - Site e Dashboard
+Sistema completo de captação de doações via Pix para o Abrigo Vó Áurea (Cubatão/SP).
 
-Sistema completo de captacao de doacoes via Pix para o Abrigo Vo Aurea (Cubatao/SP).
+Índice
+1. Estrutura de arquivos
+2. Como acessar o painel de controle
+3. Como pausar ou ativar o site
+4. Como editar textos
+5. Como editar configurações
+6. Como trocar a senha do admin
+7. Textos padrão
+8. Configurações padrão
+9. Como funciona o fluxo de doação
+10. Variáveis de ambiente
+11. Como hospedar
+12. Solução de problemas
 
----
 
-## Indice
+1. ESTRUTURA DE ARQUIVOS
 
-- [Estrutura de arquivos](#estrutura-de-arquivos)
-- [Como acessar o dashboard](#como-acessar-o-dashboard)
-- [Como pausar ou ativar o site](#como-pausar-ou-ativar-o-site)
-- [Como editar textos](#como-editar-textos)
-- [Como editar configuracoes](#como-editar-configuracoes)
-- [Como trocar a senha do admin](#como-trocar-a-senha-do-admin)
-- [Textos padrao](#textos-padrao)
-- [Configuracoes padrao](#configuracoes-padrao)
-- [Como funciona o fluxo de doacao](#como-funciona-o-fluxo-de-doacao)
-- [Variaveis de ambiente](#variaveis-de-ambiente)
-- [Como hospedar](#como-hospedar)
-- [Solucao de problemas](#solucao-de-problemas)
-
----
-
-## Estrutura de arquivos
-
-```
 voaurea/
-├── index.html                     -> Site publico
-├── config.json                    -> Configuracoes e textos
-├── package.json                   -> Dependencias (axios)
+├── index.html                     -> Site público
+├── config.json                    -> Configurações e textos
+├── package.json                   -> Dependências (axios)
 ├── vercel.json                    -> Config da Vercel
 │
 ├── admin/
@@ -36,8 +31,8 @@ voaurea/
 ├── api/
 │   ├── criar-pagamento.js         -> Gera Pix
 │   ├── consultar-pagamento.js     -> Consulta status
-│   ├── site-info.js               -> Site le config e textos
-│   ├── webhook.js                 -> Recebe notificacao Z.PAY
+│   ├── site-info.js               -> Site lê config e textos
+│   ├── webhook.js                 -> Recebe notificação Z.PAY
 │   │
 │   └── admin/
 │       ├── toggle-site.js         -> Pausar ou ativar site
@@ -53,122 +48,107 @@ voaurea/
 │
 └── video/
     └── voaurea.mp4                -> VSL
-```
 
----
 
-## Como acessar o dashboard
+2. COMO ACESSAR O PAINEL DE CONTROLE
 
-**URL:** `https://voaureabrasil.vercel.app/admin/`
+URL: https://voaureabrasil.vercel.app/admin/
 
-**Login:**
-- Usuario: `admin` (definido na env var `ADMIN_USER`)
-- Senha: a que voce definiu na env var `ADMIN_PASS`
+Conecte-se:
+- Usuário: admin (definido na env var ADMIN_USER)
+- Senha: a que você define na env var ADMIN_PASS
 
----
 
-## Como pausar ou ativar o site
+3. COMO PAUSAR OU ATIVAR O SITE
 
-1. Acessa o dashboard
-2. Clica no toggle no banner do topo (canto direito)
-3. Confirma
-4. Aguarda ~30 segundos
-5. Visitantes verao a tela de manutencao
+1. Acesse o painel
+2. Clique no toggle no banner do topo (canto direito)
+3. Confirme
+4. Aguarde ~30 segundos
+5. Visitantes verão a tela de manutenção
 
----
 
-## Como editar textos
+4. COMO EDITAR TEXTOS
 
-1. Acessa o dashboard
-2. Clica em **Textos**
-3. Edita os campos que quiser
-4. Clica em **Salvar textos**
-5. Aguarda ~30 segundos
+1. Acesse o painel
+2. Clique em "Textos"
+3. Edite os campos que quiser
+4. Clique em "Salvar textos"
+5. Aguarde ~30 segundos
 
-**Campos editaveis:**
-
-- Hero (titulo e botoes)
-- Quem e a Vo Aurea (titulo, 3 paragrafos e destaque)
-- A realidade do abrigo (titulo e 4 paragrafos)
-- Impacto (titulo)
+Campos editáveis:
+- Hero (título e botões)
+- Quem é a Vó Áurea (título, 3 parágrafos e destaque)
+- A realidade do abrigo (título e 4 parágrafos)
+- Impacto (título)
 - FAQ (4 perguntas e 4 respostas)
 
----
 
-## Como editar configuracoes
+5. COMO EDITAR CONFIGURAÇÕES
 
-1. Acessa o dashboard
-2. Clica em **Config**
-3. Edita os campos:
-   - Valores sugeridos (botoes do modal de doacao)
+1. Acesse o painel
+2. Clique em "Config"
+3. Edite os campos:
+   - Valores sugeridos (botões do modal de doação)
    - Meta mensal (barra de progresso)
-   - Mensagem de manutencao (tela de pausa)
-   - Destacar doacao a partir de (valor minimo pra marcar com estrela)
-4. Clica em **Salvar**
-5. Aguarda ~30 segundos
+   - Mensagem de manutenção (tela de pausa)
+   - Destacar doação a partir de (valor mínimo pra marcar com estrela)
+4. Clique em "Salvar"
+5. Aguarde ~30 segundos
 
----
 
-## Como trocar a senha do admin
+6. COMO TROCAR A SENHA DO ADMIN
 
-### 1. Na Vercel
+1. Na Vercel:
+   - Settings -> Environment Variables -> ADMIN_PASS -> Edit
+   - Troque o valor
+   - Save
 
-- Settings -> Environment Variables -> `ADMIN_PASS` -> Edit
-- Troca o valor
-- Save
+2. Redeploy:
+   - Deployments -> último deploy -> menu de três pontos -> Redeploy
 
-### 2. Redeploy
-
-- Deployments -> ultimo deploy -> menu de tres pontos -> Redeploy
-
-### 3. Aguarda ~30 segundos
+3. Aguarde ~30 segundos
 
 Pronto. A senha antiga para de funcionar depois do deploy.
+Se esquecer a senha: mesma coisa. Vai na Vercel, edite a env var, faça redeploy.
 
-**Se esquecer a senha:** mesma coisa. Vai na Vercel, edita a env var, faz redeploy.
 
----
+7. TEXTOS PADRÃO
 
-## Textos padrao
+Se algo der errado, cole isso no config.json e faça commit:
 
-Se algo der errado, cola isso no `config.json` e faz commit:
-
-```json
 {
   "textos": {
-    "hero_titulo": "Eles ja foram abandonados uma vez. Hoje, sua ajuda pode ser a esperanca que os mantem lutando.",
-    "hero_botao_mensal": "QUERO AJUDAR TODO MES",
+    "hero_titulo": "Eles já foram abandonados uma vez. Hoje, sua ajuda pode ser a esperança que os mantém lutando.",
+    "hero_botao_mensal": "QUERO AJUDAR TODO MÊS",
     "hero_botao_unica": "QUERO AJUDAR AGORA",
-    "sobre_titulo": "Quem e a Vo Aurea?",
-    "sobre_p1": "Me chamo Aurea, tenho 64 anos e dedico os meus dias a cuidar de mais de 50 animais que um dia nao tinham para onde ir.",
-    "sobre_p2": "Sao caes que resgatei do abandono, da fome e de situacoes muito dificeis. Hoje, eles dependem de mim para praticamente tudo: comida, abrigo, medicamentos, cuidados veterinarios e, principalmente, protecao.",
-    "sobre_p3": "Mesmo com a minha idade e todas as dificuldades que enfrento, eu nao consigo desistir deles. Porque sei que, se eu parar, muitos desses animais simplesmente nao terao para onde ir.",
-    "sobre_callout": "As doacoes diminuíram e eu preciso da sua ajuda para continuar alimentando, cuidando e protegendo.",
+    "sobre_titulo": "Quem é a Vó Áurea?",
+    "sobre_p1": "Me chamo Áurea, tenho 64 anos e dedico os meus dias a cuidar de mais de 50 animais que um dia não tinham para onde ir.",
+    "sobre_p2": "São cães que resgatei do abandono, da fome e de situações muito difíceis. Hoje, eles dependem de mim para praticamente tudo: comida, abrigo, medicamentos, cuidados veterinários e, principalmente, proteção.",
+    "sobre_p3": "Mesmo com a minha idade e todas as dificuldades que enfrento, eu não consigo desistir deles. Porque sei que, se eu parar, muitos desses animais simplesmente não terão para onde ir.",
+    "sobre_callout": "As doações diminuíram e eu preciso da sua ajuda para continuar alimentando, cuidando e protegendo.",
     "realidade_titulo": "A realidade do abrigo",
-    "realidade_p1": "Manter mais de 50 animais protegidos tem um custo muito alto. Hoje, sao necessarios aproximadamente R$ 60 mil todos os meses para manter o abrigo funcionando...",
-    "realidade_p2": "Sao gastos com racao, aluguel, medicamentos, tratamentos veterinarios, contas basicas, manutencao e necessidades que surgem a cada novo resgate.",
-    "realidade_p3": "E essa e a maior preocupacao da Vo Aurea: como conseguir manter tudo isso no proximo mes?",
-    "realidade_p4": "Ela consegue oferecer amor e dedicacao todos os dias, mas nao consegue carregar sozinha uma despesa de R$ 60 mil. E por isso que cada doacao importa.",
-    "impacto_titulo": "O impacto da sua doacao",
-    "faq_q1": "A doacao e segura?",
-    "faq_a1": "Sim. Toda contribuicao vai para racao, medicamentos e manutencao do abrigo.",
-    "faq_q2": "Existe valor minimo?",
-    "faq_a2": "Nao. Qualquer valor ajuda. Voce escolhe o quanto pode contribuir.",
-    "faq_q3": "Para onde vai a minha doacao?",
-    "faq_a3": "Racao, medicamentos, tratamentos veterinarios, contas basicas, aluguel e necessidades urgentes de cada novo resgate.",
+    "realidade_p1": "Manter mais de 50 animais protegidos tem um custo muito alto. Hoje, são necessários aproximadamente R$ 60 mil todos os meses para manter o abrigo funcionando...",
+    "realidade_p2": "São gastos com ração, aluguel, medicamentos, tratamentos veterinários, contas básicas, manutenção e necessidades que surgem a cada novo resgate.",
+    "realidade_p3": "E essa é a maior preocupação da Vó Áurea: como conseguir manter tudo isso no próximo mês?",
+    "realidade_p4": "Ela consegue oferecer amor e dedicação todos os dias, mas não consegue carregar sozinha uma despesa de R$ 60 mil. É por isso que cada doação importa.",
+    "impacto_titulo": "O impacto da sua doação",
+    "faq_q1": "A doação é segura?",
+    "faq_a1": "Sim. Toda contribuição vai para ração, medicamentos e manutenção do abrigo.",
+    "faq_q2": "Existe valor mínimo?",
+    "faq_a2": "Não. Qualquer valor ajuda. Você escolhe o quanto pode contribuir.",
+    "faq_q3": "Para onde vai a minha doação?",
+    "faq_a3": "Ração, medicamentos, tratamentos veterinários, contas básicas, aluguel e necessidades urgentes de cada novo resgate.",
     "faq_q4": "Posso visitar o abrigo?",
-    "faq_a4": "Sim. Estamos em Cubatao/SP. Entre em contato para agendar uma visita."
+    "faq_a4": "Sim. Estamos em Cubatão/SP. Entre em contato para agendar uma visita."
   }
 }
-```
 
-**Para restaurar:** cola esse bloco no `config.json` e faz commit.
+Para restaurar: cole esse bloco no config.json e faça commit.
 
----
 
-## Configuracoes padrao
+8. CONFIGURAÇÕES PADRÃO
 
-```json
 {
   "site_ativo": true,
   "valores_sugeridos": [20, 30, 50, 100, 150, 200, 250, 500, 1000],
@@ -177,143 +157,115 @@ Se algo der errado, cola isso no `config.json` e faz commit:
   "mensagem_manutencao": "Estamos atualizando o site. Voltamos em alguns minutos!",
   "destaque_doacao": 500
 }
-```
 
-| Campo | O que faz |
-|---|---|
-| site_ativo | true = site no ar / false = manutencao |
-| valores_sugeridos | Botoes de valor no modal |
-| meta_mensal | Meta da barra de progresso |
-| contador_base | Numero inicial do contador de pessoas |
-| mensagem_manutencao | Texto da tela de pausa |
-| destaque_doacao | Valor minimo pra marcar com estrela no dashboard |
+Tabela de campos:
+- site_ativo: true = site no ar / false = manutenção
+- valores_sugeridos: Botões de valor no modal
+- meta_mensal: Meta da barra de progresso
+- contador_base: Número inicial do contador de pessoas
+- mensagem_manutencao: Texto da tela de pausa
+- destaque_doacao: Valor mínimo para marcar com estrela no dashboard
 
-**Para restaurar:** cola esse bloco no `config.json` e faz commit.
+Para restaurar: cole esse bloco no config.json e faça commit.
 
----
 
-## Como funciona o fluxo de doacao
+9. COMO FUNCIONA O FLUXO DE DOAÇÃO
 
-```
 1. Visitante abre o site
-2. Clica em QUERO AJUDAR AGORA
+2. Clica em "QUERO AJUDAR AGORA"
 3. Escolhe valor (R$ 20 a R$ 1.000) e preenche nome
-4. Clica em GERAR PIX AGORA
+4. Clica em "GERAR PIX AGORA"
 5. Backend chama Z.PAY e recebe QR Code
-6. Site mostra o QR Code e o aviso Aguardando pagamento
-7. Site pergunta pra Z.PAY a cada 5 segundos: foi pago?
+6. Site mostra o QR Code e o aviso "Aguardando pagamento"
+7. Site pergunta pra Z.PAY a cada 5 segundos: "foi pago?"
 8. Visitante paga no banco
-9. Em ate 5 segundos, o site detecta e mostra a tela verde Recebido com sucesso
+9. Em até 5 segundos, o site detecta e mostra a tela verde "Recebido com sucesso"
 10. 2 segundos depois, o modal fecha sozinho
-```
 
-**Limites:**
-- Valor minimo: R$ 2,00 (limite da Z.PAY)
-- Valor maximo: R$ 2.000,00 (limite da Z.PAY)
+Limitações:
+- Valor mínimo: R$ 2,00 (limite da Z.PAY)
+- Valor máximo: R$ 2.000,00 (limite da Z.PAY)
 
-**Taxa Z.PAY:**
-- Ate R$ 1.000: R$ 0,50
+Taxa Z.PAY:
+- Até R$ 1.000: R$ 0,50
 - Acima de R$ 1.000: R$ 0,50 + 1% do valor bruto
 
----
 
-## Variaveis de ambiente
+10. VARIÁVEIS DE AMBIENTE
 
-Configure na Vercel em **Settings -> Environment Variables**:
+Configure na Vercel em Settings -> Environment Variables:
 
-| Variavel | Exemplo | Para que serve |
-|---|---|---|
-| ADMIN_USER | admin | Login do dashboard |
-| ADMIN_PASS | voaurea2026 | Senha do dashboard |
-| GITHUB_TOKEN | ghp_xxx | Token do GitHub pra salvar config |
-| GITHUB_REPO | SnowzzZxz/voaurea | Repositorio do projeto |
+- ADMIN_USER: admin (login do painel)
+- ADMIN_PASS: voaurea2026 (senha do dashboard)
+- GITHUB_TOKEN: ghp_xxx (token do GitHub para salvar config)
+- GITHUB_REPO: SnowzzZxz/voaurea (repositório do projeto)
 
 Sempre marque os 3 ambientes: Production, Preview e Development.
 
----
 
-## Como hospedar
+11. COMO HOSPEDAR
 
-O site ja esta hospedado na Vercel. Para atualizar:
+O site já está hospedado na Vercel. Para atualizar:
 
-### Deploy automatico (recomendado)
-
-1. Faz o commit no GitHub
+Deploy automático (recomendado):
+1. Faça o commit no GitHub
 2. Vercel detecta e faz deploy em ~30 segundos
-3. Site atualiza sozinho
+3. Site atualizado sozinho
 
-### Deploy manual
-
-```bash
+Deploy manual:
 vercel --prod
-```
 
----
 
-## Solucao de problemas
+12. SOLUÇÃO DE PROBLEMAS
 
-### Login nao funciona
+- Login não funciona:
+  Confirme as env vars ADMIN_USER e ADMIN_PASS na Vercel.
+  Faça redeploy depois de mexer nas env vars.
+  Teste em aba anônima (Ctrl+Shift+N).
 
-- Confirma as env vars `ADMIN_USER` e `ADMIN_PASS` na Vercel
-- Faz redeploy depois de mexer nas env vars
-- Testa em aba anonima (Ctrl+Shift+N)
+- Salvar textos ou config dá erro:
+  Confirme que GITHUB_TOKEN e GITHUB_REPO estão configurados.
+  Verifique se o token tem permissão repo.
+  Veja os logs em Vercel -> Deployments -> Functions.
 
-### Salvar textos ou config da erro
+- Site não atualiza depois de editar:
+  Espere 30 segundos (deploy automático).
+  Recarregue com Ctrl+F5 (limpar cache).
+  Confira se apareceu commit novo em github.com/SnowzzZxz/voaurea/commits/main.
 
-- Confirma que `GITHUB_TOKEN` e `GITHUB_REPO` estao configurados
-- Verifica se o token tem permissao `repo`
-- Ve os logs em Vercel -> Deployments -> Functions
+- Pix não gera:
+  Confira se a Z.PAY está online.
+  Verifique se as credenciais (zpk_, zsk_) estão certas.
+  Veja os logs: Vercel -> Deployments -> Functions -> criar-pagamento.
 
-### Site nao atualiza depois de editar
+- Tela de manutenção não sai:
+  Vá em /admin/ -> toggle -> ative o site.
+  Ou edite config.json no GitHub -> "site_ativo": true.
 
-- Espera 30 segundos (deploy automatico)
-- Recarrega com Ctrl+F5 (limpa cache)
-- Confere se apareceu commit novo em github.com/SnowzzZxz/voaurea/commits/main
+- F12 mostra a senha:
+  Não deveria mais. Se aparecer, confira se substituiu o admin/index.html.
+  A senha agora só existe na Vercel.
 
-### Pix nao gera
 
-- Confere se a Z.PAY esta online
-- Verifica se as credenciais (zpk_, zsk_) estao certas
-- Ve os logs: Vercel -> Deployments -> Functions -> criar-pagamento
-
-### Tela de manutencao nao sai
-
-- Vai no /admin/ -> toggle -> ativa o site
-- Ou edita o config.json no GitHub -> "site_ativo": true
-
-### F12 mostra a senha
-
-- Nao deveria mais. Se aparecer, confere se substituiu o admin/index.html
-- A senha agora so existe na Vercel
-
----
-
-## Contato
-
-**Abrigo Vo Aurea**
-
+CONTATO
+Abrigo Vó Áurea
 - CNPJ: 66.916.269/0001-20
 - WhatsApp: (13) 98113-3912
-- Email: SUPORTE@VOAUREA.COM.BR
+- E-mail: SUPORTE@VOAUREA.COM.BR
 - Instagram: @netinhosdavoaurea
 - YouTube: @abrigovoaurea
 - TikTok: @abrigovoaurea
 - Facebook: /abrigovoaurea
 
----
 
-## Changelog
-
-### Outubro 2026
-
-- Login seguro com env vars (sem senha no codigo)
-- Editor de textos pelo dashboard
+CHANGELOG (Outubro 2026)
+- Login seguro com env vars (sem senha no código)
+- Editor de textos pelo painel
 - Pausar ou ativar site pelo dashboard
-- Polling automatico de pagamento (a cada 5 segundos)
-- Tela verde Recebido com sucesso
+- Polling automático de pagamento (a cada 5 segundos)
+- Tela verde "Recebido com sucesso"
 - QR Code com zoom
-- Contador de pessoas que ja doaram
+- Contador de pessoas que já doaram
 - Barra de meta mensal
-- Feed de ultimas doacoes
-- Dashboard com stats e grafico
-- Export CSV de doacoes
+- Dashboard com estatísticas e gráficos
+- Exportar CSV de doações
