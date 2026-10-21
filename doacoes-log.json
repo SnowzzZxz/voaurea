@@ -1245,7 +1245,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 5,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-10-21T16:55:15.136Z",
       "paid_at": null
