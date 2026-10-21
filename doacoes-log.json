@@ -1172,6 +1172,17 @@
       "metodo": "pix",
       "created_at": "2026-10-21T05:23:34.737Z",
       "paid_at": null
+    },
+    {
+      "id": "6ad8a136613e3c5e6735fc53",
+      "nome": "Maria Rita Lima",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-21T11:25:42.948Z",
+      "paid_at": null
     }
   ]
 }
