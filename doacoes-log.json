@@ -1414,6 +1414,17 @@
       "metodo": "pix",
       "created_at": "2026-10-22T02:44:06.795Z",
       "paid_at": null
+    },
+    {
+      "id": "6ad97876a6c4d4336e12b305",
+      "nome": "Iago",
+      "email": null,
+      "whatsapp": null,
+      "valor": 50,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-22T02:44:06.743Z",
+      "paid_at": null
     }
   ]
 }
