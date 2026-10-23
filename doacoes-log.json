@@ -1535,6 +1535,17 @@
       "metodo": "pix",
       "created_at": "2026-10-23T00:29:32.383Z",
       "paid_at": null
+    },
+    {
+      "id": "6adb6010e84c7f01c7d2d1a5",
+      "nome": "duduko",
+      "email": null,
+      "whatsapp": null,
+      "valor": 5,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-23T13:24:32.235Z",
+      "paid_at": null
     }
   ]
 }
