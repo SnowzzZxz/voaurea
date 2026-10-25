@@ -14,7 +14,7 @@
   "meta_mensal": 2000,
   "contador_base": 0,
   "mensagem_manutencao": "Estamos atualizando o site. Voltamos em alguns minutos! 🐾",
-  "destaque_doacao": 150,
+  "destaque_doacao": 10,
   "textos": {
     "hero_titulo": "",
     "hero_botao_mensal": "",
