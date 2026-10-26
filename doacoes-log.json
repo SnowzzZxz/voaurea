@@ -1872,7 +1872,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 10,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-10-26T04:09:23.901Z",
       "paid_at": null
