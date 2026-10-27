@@ -1905,10 +1905,10 @@
       "email": null,
       "whatsapp": null,
       "valor": 7.99,
-      "status": "pending",
+      "status": "paid",
       "metodo": "pix",
       "created_at": "2026-10-27T00:17:59.301Z",
-      "paid_at": null
+      "paid_at": "2026-10-27T00:18:29.324Z"
     },
     {
       "id": "6adfee0f4a2c6de4bd900295",
