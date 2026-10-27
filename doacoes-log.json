@@ -1942,6 +1942,17 @@
       "metodo": "pix",
       "created_at": "2026-10-27T00:21:04.710Z",
       "paid_at": null
+    },
+    {
+      "id": "6adfeea216685c7b95d63efb",
+      "nome": "Anônimo",
+      "email": null,
+      "whatsapp": null,
+      "valor": 20,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-27T00:21:54.222Z",
+      "paid_at": null
     }
   ]
 }
