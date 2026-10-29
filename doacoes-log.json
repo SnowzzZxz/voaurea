@@ -2140,6 +2140,17 @@
       "metodo": "pix",
       "created_at": "2026-10-29T12:48:45.520Z",
       "paid_at": null
+    },
+    {
+      "id": "6ae340dd16685c7b95d64094",
+      "nome": "Snow Lindão",
+      "email": null,
+      "whatsapp": null,
+      "valor": 150,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-29T12:49:33.028Z",
+      "paid_at": null
     }
   ]
 }
