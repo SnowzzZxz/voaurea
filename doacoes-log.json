@@ -2092,7 +2092,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 14.9,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-10-29T12:15:52.514Z",
       "paid_at": null
