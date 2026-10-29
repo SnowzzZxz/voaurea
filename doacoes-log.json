@@ -2030,6 +2030,17 @@
       "metodo": "pix",
       "created_at": "2026-10-29T02:13:02.509Z",
       "paid_at": null
+    },
+    {
+      "id": "6ae2ac417bd1b71c2267b875",
+      "nome": "Thalyta Da Silva",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-10-29T02:15:29.614Z",
+      "paid_at": null
     }
   ]
 }
