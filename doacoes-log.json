@@ -2217,6 +2217,17 @@
       "metodo": "pix",
       "created_at": "2026-10-30T20:25:49.626Z",
       "paid_at": "2026-10-30T20:27:22.563Z"
+    },
+    {
+      "id": "6ae8e79316685c7b95d64364",
+      "nome": "2ed",
+      "email": null,
+      "whatsapp": null,
+      "valor": 10,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-02T19:42:11.969Z",
+      "paid_at": null
     }
   ]
 }
