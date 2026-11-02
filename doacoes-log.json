@@ -2261,6 +2261,17 @@
       "metodo": "pix",
       "created_at": "2026-11-02T19:50:58.303Z",
       "paid_at": null
+    },
+    {
+      "id": "6ae8e9af16685c7b95d64369",
+      "nome": "32edrw",
+      "email": null,
+      "whatsapp": null,
+      "valor": 10,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-02T19:51:11.491Z",
+      "paid_at": null
     }
   ]
 }
