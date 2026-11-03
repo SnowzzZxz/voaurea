@@ -2272,6 +2272,17 @@
       "metodo": "pix",
       "created_at": "2026-11-02T19:51:11.491Z",
       "paid_at": null
+    },
+    {
+      "id": "6ae94b2716685c7b95d643ae",
+      "nome": "deportacao",
+      "email": null,
+      "whatsapp": null,
+      "valor": 5,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-03T02:47:03.736Z",
+      "paid_at": null
     }
   ]
 }
