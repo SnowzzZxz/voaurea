@@ -2844,6 +2844,17 @@
       "metodo": "pix",
       "created_at": "2026-11-06T14:41:50.713Z",
       "paid_at": null
+    },
+    {
+      "id": "6aede8ca3bdfb3146e5d2f8f",
+      "nome": "Henrique",
+      "email": null,
+      "whatsapp": null,
+      "valor": 5,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-06T14:48:42.822Z",
+      "paid_at": null
     }
   ]
 }
