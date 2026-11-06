@@ -2730,7 +2730,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 55.8,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-11-06T02:44:52.583Z",
       "paid_at": null
