@@ -2822,6 +2822,17 @@
       "metodo": "pix",
       "created_at": "2026-11-06T13:44:52.833Z",
       "paid_at": null
+    },
+    {
+      "id": "6aeddad9f414090876a1e6b6",
+      "nome": "shellybs575@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 64.7,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-06T13:49:13.203Z",
+      "paid_at": null
     }
   ]
 }
