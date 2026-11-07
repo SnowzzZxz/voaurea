@@ -3830,7 +3830,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 119.9,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-11-07T15:18:05.917Z",
       "paid_at": null
