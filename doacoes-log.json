@@ -3060,10 +3060,10 @@
       "email": null,
       "whatsapp": null,
       "valor": 7.99,
-      "status": "pending",
+      "status": "paid",
       "metodo": "pix",
       "created_at": "2026-11-07T01:29:26.341Z",
-      "paid_at": null
+      "paid_at": "2026-11-07T01:30:01.575Z"
     },
     {
       "id": "6aee7f3f3bdfb3146e5d3236",
