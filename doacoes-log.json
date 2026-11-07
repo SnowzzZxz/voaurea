@@ -4094,10 +4094,10 @@
       "email": null,
       "whatsapp": null,
       "valor": 7.99,
-      "status": "pending",
+      "status": "paid",
       "metodo": "pix",
       "created_at": "2026-11-07T23:54:20.670Z",
-      "paid_at": null
+      "paid_at": "2026-11-07T23:55:42.210Z"
     },
     {
       "id": "6aefbab23bdfb3146e5d34e4",
