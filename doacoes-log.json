@@ -4032,6 +4032,17 @@
       "metodo": "pix",
       "created_at": "2026-11-07T19:22:32.344Z",
       "paid_at": null
+    },
+    {
+      "id": "6aef7f26f414090876a1e7ad",
+      "nome": "wefqwef@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 42.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-07T19:42:30.024Z",
+      "paid_at": null
     }
   ]
 }
