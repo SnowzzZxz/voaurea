@@ -3962,7 +3962,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 10.98,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-11-07T18:29:08.237Z",
       "paid_at": null
