@@ -3867,6 +3867,17 @@
       "metodo": "pix",
       "created_at": "2026-11-07T15:31:48.409Z",
       "paid_at": null
+    },
+    {
+      "id": "6aef4462f414090876a1e78d",
+      "nome": "drael@teste.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 2,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-07T15:31:46.568Z",
+      "paid_at": null
     }
   ]
 }
