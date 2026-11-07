@@ -4043,6 +4043,17 @@
       "metodo": "pix",
       "created_at": "2026-11-07T19:42:30.024Z",
       "paid_at": null
+    },
+    {
+      "id": "6aef8b78f414090876a1e7b6",
+      "nome": "ankaraNey@proton.me",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-07T20:35:04.274Z",
+      "paid_at": null
     }
   ]
 }
