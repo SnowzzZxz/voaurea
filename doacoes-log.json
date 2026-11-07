@@ -3819,7 +3819,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 900.9,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-11-07T12:07:11.140Z",
       "paid_at": null
