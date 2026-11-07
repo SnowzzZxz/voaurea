@@ -4065,6 +4065,17 @@
       "metodo": "pix",
       "created_at": "2026-11-07T21:50:24.332Z",
       "paid_at": null
+    },
+    {
+      "id": "6aefa7c7f414090876a1e7c6",
+      "nome": "medinahenrique663@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 35.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-07T22:35:51.198Z",
+      "paid_at": null
     }
   ]
 }
