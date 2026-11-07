@@ -3790,6 +3790,17 @@
       "metodo": "pix",
       "created_at": "2026-11-07T09:53:57.907Z",
       "paid_at": null
+    },
+    {
+      "id": "6aef0af6f414090876a1e77e",
+      "nome": "ivanmarcello2026@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-07T11:26:46.284Z",
+      "paid_at": null
     }
   ]
 }
