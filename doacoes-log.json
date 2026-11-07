@@ -3720,10 +3720,10 @@
       "email": null,
       "whatsapp": null,
       "valor": 7.99,
-      "status": "pending",
+      "status": "paid",
       "metodo": "pix",
       "created_at": "2026-11-07T08:08:09.235Z",
-      "paid_at": null
+      "paid_at": "2026-11-07T08:08:40.041Z"
     },
     {
       "id": "6aeedc963bdfb3146e5d32ec",
