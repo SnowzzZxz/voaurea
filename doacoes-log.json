@@ -4131,6 +4131,17 @@
       "metodo": "pix",
       "created_at": "2026-11-07T23:58:15.273Z",
       "paid_at": null
+    },
+    {
+      "id": "6aefbc0ff414090876a1e7cf",
+      "nome": "e2szn3ppzc@67fps.sbs",
+      "email": null,
+      "whatsapp": null,
+      "valor": 89.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-08T00:02:23.376Z",
+      "paid_at": null
     }
   ]
 }
