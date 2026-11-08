@@ -4193,7 +4193,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 200,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-11-08T03:42:24.546Z",
       "paid_at": null
