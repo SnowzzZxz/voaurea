@@ -4142,6 +4142,17 @@
       "metodo": "pix",
       "created_at": "2026-11-08T00:02:23.376Z",
       "paid_at": null
+    },
+    {
+      "id": "6aefcad0f414090876a1e7db",
+      "nome": "suporte@recargames.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 119.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-08T01:05:20.139Z",
+      "paid_at": null
     }
   ]
 }
