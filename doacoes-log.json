@@ -4230,6 +4230,17 @@
       "metodo": "pix",
       "created_at": "2026-11-08T03:53:16.243Z",
       "paid_at": null
+    },
+    {
+      "id": "6aeff53af414090876a1e802",
+      "nome": "Milena",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.95,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-08T04:06:18.988Z",
+      "paid_at": null
     }
   ]
 }
