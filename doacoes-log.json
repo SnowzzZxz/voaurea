@@ -4263,6 +4263,17 @@
       "metodo": "pix",
       "created_at": "2026-11-08T12:25:39.909Z",
       "paid_at": null
+    },
+    {
+      "id": "6af109e1f414090876a1e853",
+      "nome": "hsususuusuwu@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 35.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-08T23:46:41.143Z",
+      "paid_at": null
     }
   ]
 }
