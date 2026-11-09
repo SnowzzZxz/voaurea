@@ -4483,6 +4483,17 @@
       "metodo": "pix",
       "created_at": "2026-11-09T16:40:20.879Z",
       "paid_at": null
+    },
+    {
+      "id": "6af22236f414090876a1e868",
+      "nome": "migue326440@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 89.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-09T19:42:46.425Z",
+      "paid_at": null
     }
   ]
 }
