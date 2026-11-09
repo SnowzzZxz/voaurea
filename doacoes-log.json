@@ -4494,6 +4494,17 @@
       "metodo": "pix",
       "created_at": "2026-11-09T19:42:46.425Z",
       "paid_at": null
+    },
+    {
+      "id": "6af2406ff414090876a1e86a",
+      "nome": "ggez6168@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-09T21:51:43.145Z",
+      "paid_at": null
     }
   ]
 }
