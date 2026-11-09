@@ -4325,10 +4325,10 @@
       "email": null,
       "whatsapp": null,
       "valor": 7.99,
-      "status": "pending",
+      "status": "paid",
       "metodo": "pix",
       "created_at": "2026-11-09T03:13:34.476Z",
-      "paid_at": null
+      "paid_at": "2026-11-09T03:14:31.326Z"
     }
   ]
 }
