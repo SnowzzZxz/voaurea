@@ -4314,7 +4314,7 @@
       "email": null,
       "whatsapp": null,
       "valor": 7.99,
-      "status": "pending",
+      "status": "expired",
       "metodo": "pix",
       "created_at": "2026-11-09T02:53:24.391Z",
       "paid_at": null
