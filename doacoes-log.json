@@ -4527,6 +4527,17 @@
       "metodo": "pix",
       "created_at": "2026-11-10T05:34:44.044Z",
       "paid_at": null
+    },
+    {
+      "id": "6af2acf3a4ba71e944d5ca5f",
+      "nome": "Lopez",
+      "email": null,
+      "whatsapp": null,
+      "valor": 10,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-10T05:34:43.765Z",
+      "paid_at": null
     }
   ]
 }
