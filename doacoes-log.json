@@ -4505,6 +4505,17 @@
       "metodo": "pix",
       "created_at": "2026-11-09T21:51:43.145Z",
       "paid_at": null
+    },
+    {
+      "id": "6af26e85f414090876a1e86f",
+      "nome": "royalboy9911@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 42.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-10T01:08:21.126Z",
+      "paid_at": null
     }
   ]
 }
