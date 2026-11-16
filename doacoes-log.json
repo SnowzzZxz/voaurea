@@ -4714,6 +4714,17 @@
       "metodo": "pix",
       "created_at": "2026-11-16T17:07:19.502Z",
       "paid_at": null
+    },
+    {
+      "id": "6afb81c083f6c97e511e29aa",
+      "nome": "Ivan Marcello",
+      "email": null,
+      "whatsapp": null,
+      "valor": 126.84,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-16T22:20:48.327Z",
+      "paid_at": null
     }
   ]
 }
