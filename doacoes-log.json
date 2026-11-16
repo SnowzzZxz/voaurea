@@ -4703,6 +4703,17 @@
       "metodo": "pix",
       "created_at": "2026-11-16T17:03:36.712Z",
       "paid_at": null
+    },
+    {
+      "id": "6afb384783f6c97e511e29a9",
+      "nome": "seu@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 19.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-16T17:07:19.502Z",
+      "paid_at": null
     }
   ]
 }
