@@ -4736,6 +4736,17 @@
       "metodo": "pix",
       "created_at": "2026-11-16T23:29:24.250Z",
       "paid_at": null
+    },
+    {
+      "id": "6afb999483f6c97e511e29ac",
+      "nome": "teddygamerv7@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 85.8,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-17T00:02:28.876Z",
+      "paid_at": null
     }
   ]
 }
