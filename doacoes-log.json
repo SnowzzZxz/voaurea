@@ -4747,6 +4747,17 @@
       "metodo": "pix",
       "created_at": "2026-11-17T00:02:28.876Z",
       "paid_at": null
+    },
+    {
+      "id": "6afbb69383f6c97e511e29ad",
+      "nome": "jvpessoal15@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 42.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-17T02:06:11.439Z",
+      "paid_at": null
     }
   ]
 }
