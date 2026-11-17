@@ -4758,6 +4758,17 @@
       "metodo": "pix",
       "created_at": "2026-11-17T02:06:11.439Z",
       "paid_at": null
+    },
+    {
+      "id": "6afca7cb83f6c97e511e29b1",
+      "nome": "dienaltic@gmail.com",
+      "email": null,
+      "whatsapp": null,
+      "valor": 59.9,
+      "status": "pending",
+      "metodo": "pix",
+      "created_at": "2026-11-17T19:15:23.857Z",
+      "paid_at": null
     }
   ]
 }
